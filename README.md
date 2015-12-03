@@ -22,3 +22,26 @@ You may want to adjust config_dev and config_prod to output logs to stderr (so t
 ``
 path:  "php://stderr"
 ``
+
+3. Docker composer
+
+You can you this docker-compose.yml file to develop:
+
+```
+www:
+  build: jakubsacha/symfony-docker:www5-dev
+  volumes:
+    - ".:/var/www/html"
+  ports:
+    - "80:80"
+```
+
+# Build production image
+
+You can build production image with
+
+```
+FROM jakubsacha/symfony-docker:www5
+ADD . /var/www/html
+```
+
