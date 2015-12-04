@@ -1,5 +1,5 @@
 # symfony-docker
-Docker image tailed to run symfony application
+Docker image tailed to run symfony application. Check https://hub.docker.com/r/jakubsacha/symfony-docker
 
 ## What's here?
 
@@ -79,7 +79,7 @@ RUN rm -rf /var/www/html/web/app_dev.php
 * xdebug (only in dev images)
 
 ## How do i install additional php extensions?
-This work is based on official dockerhub php images. You can use docker-php-ext-install to add new extensions. More informations can be found [https://hub.docker.com/_/php/]
+This work is based on official dockerhub php images. You can use docker-php-ext-install to add new extensions. More informations can be found https://hub.docker.com/_/php/
 
 ## Warning
 Xdebug for PHP7 is in beta currently. If you have problems with php crashing, please use non-dev image.
