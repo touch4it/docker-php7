@@ -33,6 +33,7 @@ www:
   ports:
     - "80:80"
 ```
+Of course you are free to add some linked containers like database, caching etc.
 
 ### Adjust your syfony app kernel to write cache and logs to /tmp dir
 ```
@@ -66,6 +67,7 @@ ADD . /var/www/html
 # Add your application build steps here, for example:
 # RUN ./var/www/html/web/bin/
 RUN rm -rf /var/www/html/web/app_dev.php
+RUN rm -rf /var/www/html/web/config.php
 ```
 
 # FAQ
@@ -83,3 +85,6 @@ This work is based on official dockerhub php images. You can use docker-php-ext-
 
 ## Warning
 Xdebug for PHP7 is in beta currently. If you have problems with php crashing, please use non-dev image.
+
+## Why can't i access app_dev.php?
+By default symfony block requests to app_dev.php that come from non localhost sources. You can change that editing app_dev.php file.
