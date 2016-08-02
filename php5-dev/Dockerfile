@@ -1,5 +1,6 @@
 FROM php:5-apache
 ADD apache2.conf /etc/apache2/apache2.conf
+ADD 000-default.conf /etc/apache2/sites-available/000-default.conf
 ADD symfony.ini /usr/local/etc/php/conf.d/symfony.ini
 
 RUN apt-get update \
