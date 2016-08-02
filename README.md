@@ -27,15 +27,15 @@ You can you this docker-compose.yml file to develop:
 
 ```
 www:
-  build: jakubsacha/symfony-docker:php5-dev
+  image: jakubsacha/symfony-docker:php5-dev
   volumes:
     - ".:/var/www/html"
   ports:
     - "80:80"
 ```
-Of course you are free to add some linked containers like database, caching etc.
+Of course you are free to add linked containers like database, caching etc.
 
-### Adjust your syfony app kernel to write cache and logs to /tmp dir
+### Adjust your symfony app kernel to write cache and logs to /tmp dir
 ```
     public function getCacheDir()
     {
