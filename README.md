@@ -3,12 +3,14 @@ Docker image tailed to run symfony application. Check https://hub.docker.com/r/j
 
 ## What's here?
 
-This repository is a source code for 4 docker images that allow relatively easly work with symfony php framework. Included images:
+This repository is a source code for following docker images that allow relatively easily work with symfony php framework. Included images:
 
 * jakubsacha/symfony-docker:php5
 * jakubsacha/symfony-docker:php5-dev
 * jakubsacha/symfony-docker:php7
 * jakubsacha/symfony-docker:php7-dev
+* jakubsacha/symfony-docker:php7.1
+* jakubsacha/symfony-docker:php7.1-dev
 
 ## What is the concept here?
 
@@ -62,10 +64,10 @@ path:  "php://stderr"
 You can build production ready image with dockerfile like this:
 
 ```
-FROM jakubsacha/symfony-docker:php5
+FROM jakubsacha/symfony-docker:php7.1
 ADD . /var/www/html
 # Add your application build steps here, for example:
-# RUN ./var/www/html/web/bin/
+# RUN ./var/www/html/web/bin/...
 RUN rm -rf /var/www/html/web/app_dev.php
 RUN rm -rf /var/www/html/web/config.php
 ```
@@ -81,10 +83,7 @@ RUN rm -rf /var/www/html/web/config.php
 * xdebug (only in dev images)
 
 ## How do i install additional php extensions?
-This work is based on official dockerhub php images. You can use docker-php-ext-install to add new extensions. More informations can be found https://hub.docker.com/_/php/
-
-## Warning
-Xdebug for PHP7 is in beta currently. If you have problems with php crashing, please use non-dev image.
+This work is based on official dockerhub php images. You can use docker-php-ext-install to add new extensions. More informations can be found [https://hub.docker.com/_/php/]
 
 ## Why can't i access app_dev.php?
 By default symfony block requests to app_dev.php that come from non localhost sources. You can change that editing app_dev.php file.
