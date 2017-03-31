@@ -83,7 +83,7 @@ RUN rm -rf /var/www/html/web/config.php
 * xdebug (only in dev images)
 
 ## How do i install additional php extensions?
-This work is based on official dockerhub php images. You can use docker-php-ext-install to add new extensions. More informations can be found [https://hub.docker.com/_/php/]
+This work is based on official dockerhub php images. You can use docker-php-ext-install to add new extensions. More informations can be found https://hub.docker.com/_/php/
 
 ## Why can't i access app_dev.php?
 By default symfony block requests to app_dev.php that come from non localhost sources. You can change that editing app_dev.php file.
