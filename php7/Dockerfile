@@ -19,11 +19,8 @@ RUN apt-get update \
 		acl \
 		cron \
 		git \
-		pecl \
-		xdebug \
+		php-pear \
 		zip \
-	&& apt-get clean \
-	&& rm -rf /var/lib/apt/lists/* \
 	&& curl -sS https://getcomposer.org/installer | php \
 	&& mv composer.phar /usr/local/bin/composer \
     && pecl install xdebug \
@@ -52,4 +49,6 @@ RUN apt-get update \
 	&& setfacl -R -m u:"$APACHE_RUN_USER":rwX var \
 	&& setfacl -dR -m u:"$APACHE_RUN_USER":rwX var \
 	&& mkdir -p /etc/cron.d/ \
+	&& apt-get clean \
+	&& rm -rf /var/lib/apt/lists/* \
 	&& service cron start
