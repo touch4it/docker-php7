@@ -23,9 +23,9 @@ RUN apt-get update \
 		zip \
 	&& curl -sS https://getcomposer.org/installer | php \
 	&& mv composer.phar /usr/local/bin/composer \
-    && pecl install xdebug \
-    && docker-php-ext-configure gd --with-png-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-freetype-dir=/usr/include/ \
-    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
+	&& pecl install xdebug \
+	&& docker-php-ext-configure gd --with-png-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-freetype-dir=/usr/include/ \
+	&& docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
 	&& docker-php-ext-install \
 		exif \
 		gd \
