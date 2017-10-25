@@ -16,7 +16,7 @@ You can you this docker-compose.yml file to develop:
 
 ```
 www:
-  image: touch4it/php7-apache-symfony:php5-dev
+  image: touch4it/php7-apache-symfony:php7
   volumes:
     - ".:/var/www/html"
   ports:
@@ -51,7 +51,7 @@ path:  "php://stderr"
 You can build production ready image with dockerfile like this:
 
 ```
-FROM touch4it/php7-apache-symfony:php7.1
+FROM touch4it/php7-apache-symfony:php7
 ADD . /var/www/html
 # Add your application build steps here, for example:
 # RUN ./var/www/html/web/bin/...
