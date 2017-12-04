@@ -10,11 +10,11 @@ ADD 000-default.conf $APACHE_CONFDIR/sites-available/000-default.conf
 ADD symfony.ini $PHP_INI_DIR/conf.d/symfony.ini
 
 RUN apt-get update \
-	&& apt-get install -y \
+	&& apt-get install -y -f apt-transport-https \
 		libicu-dev \
 		libfreetype6-dev \
 		libjpeg62-turbo-dev \
-		libpng12-dev \
+		libpng-dev \
 		libpq-dev \
 		acl \
 		cron \
@@ -23,7 +23,6 @@ RUN apt-get update \
 		zip \
 	&& curl -sS https://getcomposer.org/installer | php \
 	&& mv composer.phar /usr/local/bin/composer \
-	&& pecl install xdebug \
 	&& docker-php-ext-configure gd --with-png-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-freetype-dir=/usr/include/ \
 	&& docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
 	&& docker-php-ext-install \
