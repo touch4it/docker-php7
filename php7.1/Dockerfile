@@ -43,8 +43,8 @@ RUN apt-get update \
 	&& setfacl -R -m u:"$APACHE_RUN_USER":rwX web/uploads \
 	&& setfacl -dR -m u:"$APACHE_RUN_USER":rwX web/uploads \
 	&& mkdir -p /var/www/html/web/media \
-	&& setfacl -R -m u:"$APACHE_RUN_USER":rwX web/uploads \
-	&& setfacl -dR -m u:"$APACHE_RUN_USER":rwX web/uploads \
+	&& setfacl -R -m u:"$APACHE_RUN_USER":rwX web/media \
+	&& setfacl -dR -m u:"$APACHE_RUN_USER":rwX web/media \
 	&& mkdir -p /var/www/html/var \
 	&& setfacl -R -m u:"$APACHE_RUN_USER":rwX var \
 	&& setfacl -dR -m u:"$APACHE_RUN_USER":rwX var \
