@@ -127,7 +127,6 @@ Default value: `32M`
 * pdo_mysql
 * pdo_pgsql
 * zip
-* xdebug
 
 ## How do i install additional php extensions?
 This work is based on official Docker Hub `php` images. You can use docker-php-ext-install to add new extensions. More information can be found https://hub.docker.com/_/php/
