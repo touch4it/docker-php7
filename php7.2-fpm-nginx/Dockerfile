@@ -1,0 +1,227 @@
+FROM php:7.2-fpm-alpine3.7
+
+LABEL maintainer="Touch4IT <admin@touch4it.com>"
+
+ENV NGINX_VERSION 1.13.8
+ENV NGINX_RUN_USER nginx
+ENV NGINX_RUN_GROUP nginx
+ENV NGINX_PORT 80
+
+ENV PHP_CONF /usr/local/etc/php-fpm.conf
+ENV FPM_CONF /usr/local/etc/php-fpm.d/www.conf
+ENV PHP_VARS /usr/local/etc/php/conf.d/docker-vars.ini
+
+ENV PHP_TIME_ZONE Europe/London
+ENV PHP_MEMORY_LIMIT 128M
+ENV PHP_UPLOAD_MAX_FILESIZE 32M
+ENV PHP_POST_MAX_SIZE 32M
+
+# Nginx
+#
+RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
+	&& CONFIG="\
+		--prefix=/etc/nginx \
+		--sbin-path=/usr/sbin/nginx \
+		--modules-path=/usr/lib/nginx/modules \
+		--conf-path=/etc/nginx/nginx.conf \
+		--error-log-path=/var/log/nginx/error.log \
+		--http-log-path=/var/log/nginx/access.log \
+		--pid-path=/var/run/nginx.pid \
+		--lock-path=/var/run/nginx.lock \
+		--http-client-body-temp-path=/var/cache/nginx/client_temp \
+		--http-proxy-temp-path=/var/cache/nginx/proxy_temp \
+		--http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp \
+		--http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp \
+		--http-scgi-temp-path=/var/cache/nginx/scgi_temp \
+		--user=$NGINX_RUN_USER \
+		--group=$NGINX_RUN_GROUP \
+		--with-http_ssl_module \
+		--with-http_realip_module \
+		--with-http_addition_module \
+		--with-http_sub_module \
+		--with-http_dav_module \
+		--with-http_flv_module \
+		--with-http_mp4_module \
+		--with-http_gunzip_module \
+		--with-http_gzip_static_module \
+		--with-http_random_index_module \
+		--with-http_secure_link_module \
+		--with-http_stub_status_module \
+		--with-http_auth_request_module \
+		--with-http_xslt_module=dynamic \
+		--with-http_image_filter_module=dynamic \
+		--with-http_geoip_module=dynamic \
+		--with-threads \
+		--with-stream \
+		--with-stream_ssl_module \
+		--with-stream_ssl_preread_module \
+		--with-stream_realip_module \
+		--with-stream_geoip_module=dynamic \
+		--with-http_slice_module \
+		--with-mail \
+		--with-mail_ssl_module \
+		--with-compat \
+		--with-file-aio \
+		--with-http_v2_module \
+	" \
+	&& addgroup -S $NGINX_RUN_GROUP \
+	&& adduser -D -S -h /var/cache/nginx -s /sbin/nologin -G $NGINX_RUN_GROUP $NGINX_RUN_USER \
+	&& apk add --no-cache --virtual .build-deps \
+		gcc \
+		libc-dev \
+		make \
+		openssl-dev \
+		pcre-dev \
+		zlib-dev \
+		linux-headers \
+		curl \
+		gnupg \
+		libxslt-dev \
+		gd-dev \
+		geoip-dev \
+	&& curl -fSL http://nginx.org/download/nginx-$NGINX_VERSION.tar.gz -o nginx.tar.gz \
+	&& curl -fSL http://nginx.org/download/nginx-$NGINX_VERSION.tar.gz.asc  -o nginx.tar.gz.asc \
+	&& export GNUPGHOME="$(mktemp -d)" \
+	&& found=''; \
+	for server in \
+		ha.pool.sks-keyservers.net \
+		hkp://keyserver.ubuntu.com:80 \
+		hkp://p80.pool.sks-keyservers.net:80 \
+		pgp.mit.edu \
+	; do \
+		echo "Fetching GPG key $GPG_KEYS from $server"; \
+		gpg --keyserver "$server" --keyserver-options timeout=10 --recv-keys "$GPG_KEYS" && found=yes && break; \
+	done; \
+	test -z "$found" && echo >&2 "error: failed to fetch GPG key $GPG_KEYS" && exit 1; \
+	gpg --batch --verify nginx.tar.gz.asc nginx.tar.gz \
+	&& rm -r "$GNUPGHOME" nginx.tar.gz.asc \
+	&& mkdir -p /usr/src \
+	&& tar -zxC /usr/src -f nginx.tar.gz \
+	&& rm nginx.tar.gz \
+	&& cd /usr/src/nginx-$NGINX_VERSION \
+	&& ./configure $CONFIG --with-debug \
+	&& make -j$(getconf _NPROCESSORS_ONLN) \
+	&& mv objs/nginx objs/nginx-debug \
+	&& mv objs/ngx_http_xslt_filter_module.so objs/ngx_http_xslt_filter_module-debug.so \
+	&& mv objs/ngx_http_image_filter_module.so objs/ngx_http_image_filter_module-debug.so \
+	&& mv objs/ngx_http_geoip_module.so objs/ngx_http_geoip_module-debug.so \
+	&& mv objs/ngx_stream_geoip_module.so objs/ngx_stream_geoip_module-debug.so \
+	&& ./configure $CONFIG \
+	&& make -j$(getconf _NPROCESSORS_ONLN) \
+	&& make install \
+	&& rm -rf /etc/nginx/html/ \
+	&& mkdir /etc/nginx/conf.d/ \
+	&& mkdir -p /usr/share/nginx/html/ \
+	&& install -m644 html/index.html /usr/share/nginx/html/ \
+	&& install -m644 html/50x.html /usr/share/nginx/html/ \
+	&& install -m755 objs/nginx-debug /usr/sbin/nginx-debug \
+	&& install -m755 objs/ngx_http_xslt_filter_module-debug.so /usr/lib/nginx/modules/ngx_http_xslt_filter_module-debug.so \
+	&& install -m755 objs/ngx_http_image_filter_module-debug.so /usr/lib/nginx/modules/ngx_http_image_filter_module-debug.so \
+	&& install -m755 objs/ngx_http_geoip_module-debug.so /usr/lib/nginx/modules/ngx_http_geoip_module-debug.so \
+	&& install -m755 objs/ngx_stream_geoip_module-debug.so /usr/lib/nginx/modules/ngx_stream_geoip_module-debug.so \
+	&& ln -s ../../usr/lib/nginx/modules /etc/nginx/modules \
+	&& strip /usr/sbin/nginx* \
+	&& strip /usr/lib/nginx/modules/*.so \
+	&& rm -rf /usr/src/nginx-$NGINX_VERSION \
+	\
+	# Bring in gettext so we can get `envsubst`, then throw
+	# the rest away. To do this, we need to install `gettext`
+	# then move `envsubst` out of the way so `gettext` can
+	# be deleted completely, then move `envsubst` back.
+	&& apk add --no-cache --virtual .gettext gettext \
+	&& mv /usr/bin/envsubst /tmp/ \
+	\
+	&& runDeps="$( \
+		scanelf --needed --nobanner --format '%n#p' /usr/sbin/nginx /usr/lib/nginx/modules/*.so /tmp/envsubst \
+			| tr ',' '\n' \
+			| sort -u \
+			| awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
+	)" \
+	&& apk add --no-cache --virtual .nginx-rundeps $runDeps \
+	&& apk del .build-deps \
+	&& apk del .gettext \
+	&& mv /tmp/envsubst /usr/local/bin/ \
+	\
+	# Bring in tzdata so users could set the timezones through the environment
+	# variables
+	&& apk add --no-cache tzdata \
+	\
+	# forward request and error logs to docker log collector
+	&& ln -sf /dev/stdout /var/log/nginx/access.log \
+	&& ln -sf /dev/stderr /var/log/nginx/error.log
+
+# PHP
+#
+RUN apk add --no-cache \
+		acl \
+		bash \
+#		cron \
+		freetype-dev \
+		git \
+		icu-dev \
+		libjpeg-turbo-dev \
+		libpng-dev \
+		postgresql-dev \
+		zip \
+	&& curl -sS https://getcomposer.org/installer | php \
+	&& mv composer.phar /usr/local/bin/composer \
+	&& docker-php-ext-configure gd \
+		--with-png-dir=/usr/include/ \
+		--with-jpeg-dir=/usr/include/ \
+		--with-freetype-dir=/usr/include/ \
+	&& docker-php-ext-configure pgsql \
+		-with-pgsql=/usr/local/pgsql \
+	&& docker-php-ext-install \
+		exif \
+		gd \
+		intl \
+		mbstring \
+		opcache \
+		pdo \
+		pdo_mysql \
+		pdo_pgsql \
+		pgsql \
+		zip \
+	&& echo "cgi.fix_pathinfo=0" > ${PHP_VARS} &&\
+		echo "upload_max_filesize = $PHP_UPLOAD_MAX_FILESIZE"  >> ${PHP_VARS} &&\
+		echo "post_max_size = $PHP_POST_MAX_SIZE"  >> ${PHP_VARS} &&\
+		echo "variables_order = \"EGPCS\""  >> ${PHP_VARS} && \
+		echo "memory_limit = $PHP_MEMORY_LIMIT"  >> ${PHP_VARS} && \
+		echo "date.timezone = $PHP_TIME_ZONE"  >> ${PHP_VARS} && \
+		sed -i \
+			-e "s/;catch_workers_output\s*=\s*yes/catch_workers_output = yes/g" \
+			-e "s/pm.max_children = 5/pm.max_children = 4/g" \
+			-e "s/pm.start_servers = 2/pm.start_servers = 3/g" \
+			-e "s/pm.min_spare_servers = 1/pm.min_spare_servers = 2/g" \
+			-e "s/pm.max_spare_servers = 3/pm.max_spare_servers = 4/g" \
+			-e "s/;pm.max_requests = 500/pm.max_requests = 200/g" \
+			-e "s/user = www-data/user = nginx/g" \
+			-e "s/group = www-data/group = nginx/g" \
+			-e "s/;listen.mode = 0660/listen.mode = 0666/g" \
+			-e "s/;listen.owner = www-data/listen.owner = $NGINX_RUN_USER/g" \
+			-e "s/;listen.group = www-data/listen.group = $NGINX_RUN_GROUP/g" \
+			${FPM_CONF}
+
+# Symfony
+#
+RUN mkdir -p /var/www/html/web \
+	&& mkdir -p /var/www/html/web/uploads \
+	&& setfacl -R -m u:"$NGINX_RUN_USER":rwX web/uploads \
+	&& setfacl -dR -m u:"$NGINX_RUN_USER":rwX web/uploads \
+	&& mkdir -p /var/www/html/web/media \
+	&& setfacl -R -m u:"$NGINX_RUN_USER":rwX web/media \
+	&& setfacl -dR -m u:"$NGINX_RUN_USER":rwX web/media \
+	&& mkdir -p /var/www/html/var \
+	&& setfacl -R -m u:"$NGINX_RUN_USER":rwX var \
+	&& setfacl -dR -m u:"$NGINX_RUN_USER":rwX var \
+	&& mkdir -p /etc/cron.d/ \
+	&& /usr/sbin/crond -f -l 8
+
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY nginx.vh.default.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+
+STOPSIGNAL SIGTERM
+
+CMD ["nginx", "-g", "daemon off;"]

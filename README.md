@@ -64,7 +64,7 @@ RUN rm -rf /var/www/html/web/config.php
 
 This image uses several environment variables which are easy to miss. While none of the variables are required, they may significantly aid you in using the image.
 
-### `APACHE_ADMIN_EMAIL`
+### `ADMIN_EMAIL`
 
 The ServerAdmin sets the contact address that the server includes in any error messages it returns to the client.
 If the httpd doesn't recognize the supplied argument as an URL, it assumes, that it's an email-address and prepends it with `mailto:` in hyperlink targets.
