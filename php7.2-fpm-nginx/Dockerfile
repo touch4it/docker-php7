@@ -37,7 +37,7 @@ RUN apk add --no-cache \
 		zip
 
 # Add common config.
-COPY php.ini /usr/local/etc/php/conf.d/docker-vars.ini
+COPY docker-vars.ini /usr/local/etc/php/conf.d/docker-vars.ini
 
 # Reconfigure locales
 RUN locale-gen en_US en_US.UTF-8 sk_SK sk_SK.UTF-8
