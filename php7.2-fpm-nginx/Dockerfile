@@ -39,10 +39,6 @@ RUN apk add --no-cache \
 # Add common config.
 COPY docker-vars.ini /usr/local/etc/php/conf.d/docker-vars.ini
 
-# Reconfigure locales
-RUN locale-gen en_US en_US.UTF-8 sk_SK sk_SK.UTF-8
-RUN dpkg-reconfigure -f noninteractive locales
-
 # Override with our fpm conf.
 COPY www.conf /usr/local/etc/php-fpm.d/www.conf
 
