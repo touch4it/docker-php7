@@ -202,21 +202,6 @@ RUN apk add --no-cache \
 			-e "s/;listen.group = www-data/listen.group = $NGINX_RUN_GROUP/g" \
 			${FPM_CONF}
 
-# Symfony
-#
-RUN mkdir -p /var/www/html/web \
-	&& mkdir -p /var/www/html/web/uploads \
-	&& setfacl -R -m u:"$NGINX_RUN_USER":rwX web/uploads \
-	&& setfacl -dR -m u:"$NGINX_RUN_USER":rwX web/uploads \
-	&& mkdir -p /var/www/html/web/media \
-	&& setfacl -R -m u:"$NGINX_RUN_USER":rwX web/media \
-	&& setfacl -dR -m u:"$NGINX_RUN_USER":rwX web/media \
-	&& mkdir -p /var/www/html/var \
-	&& setfacl -R -m u:"$NGINX_RUN_USER":rwX var \
-	&& setfacl -dR -m u:"$NGINX_RUN_USER":rwX var \
-	&& mkdir -p /etc/cron.d/ \
-	&& /usr/sbin/crond -f -l 8
-
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY nginx.vh.default.conf /etc/nginx/conf.d/default.conf
 

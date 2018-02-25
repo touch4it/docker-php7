@@ -1,4 +1,4 @@
-FROM php:7.0-apache
+FROM php:7.1-apache
 
 ENV ADMIN_EMAIL webmaster@localhost
 ENV PHP_TIME_ZONE Europe/London
@@ -7,7 +7,7 @@ ENV PHP_UPLOAD_MAX_FILESIZE 32M
 ENV PHP_POST_MAX_SIZE 32M
 
 ADD 000-default.conf $APACHE_CONFDIR/sites-available/000-default.conf
-ADD symfony.ini $PHP_INI_DIR/conf.d/symfony.ini
+ADD php-override.ini $PHP_INI_DIR/conf.d/php-override.ini
 
 RUN apt-get update \
 	&& apt-get install -y \
@@ -36,17 +36,9 @@ RUN apt-get update \
 		pdo_pgsql \
 		zip \
 	&& a2enmod rewrite \
-	&& mkdir -p /var/www/html/web \
-	&& mkdir -p /var/www/html/web/uploads \
-	&& setfacl -R -m u:"$APACHE_RUN_USER":rwX web/uploads \
-	&& setfacl -dR -m u:"$APACHE_RUN_USER":rwX web/uploads \
-	&& mkdir -p /var/www/html/web/media \
-	&& setfacl -R -m u:"$APACHE_RUN_USER":rwX web/media \
-	&& setfacl -dR -m u:"$APACHE_RUN_USER":rwX web/media \
-	&& mkdir -p /var/www/html/var \
-	&& setfacl -R -m u:"$APACHE_RUN_USER":rwX var \
-	&& setfacl -dR -m u:"$APACHE_RUN_USER":rwX var \
 	&& mkdir -p /etc/cron.d/ \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/* \
-	&& service cron start
+	&& service cron start \
+	&& ln -sf /dev/stdout /var/log/apache2/access.log \
+	&& ln -sf /dev/stderr /var/log/apache2/error.log

@@ -1,13 +1,16 @@
 # php7-apache-symfony
-Docker image tailored to run Symfony application. Check https://hub.docker.com/r/touch4it/php7-apache-symfony
+Docker image tailored to run PHP application. Check https://hub.docker.com/r/touch4it/php7
 
 ## What's here?
 
-This repository is a source code for following docker images that allow relatively easily work with symfony php framework. Included images:
+This repository is a source code for following Docker images that allow relatively easily work with PHP frameworks. Included images:
 
-* touch4it/php7-apache-symfony:php7
-* touch4it/php7-apache-symfony:php7.1
-* touch4it/php7-apache-symfony:php7.2
+* Debian + Apache + mod_php
+  * touch4it/php7:php7-apache
+  * touch4it/php7:php7.1-apache
+  * touch4it/php7:php7.2-apache
+* Alpine + Nginx + PHP-FPM
+  * touch4it/php7:php7.2-fpm-nginx
 
 # Usage
 
@@ -17,47 +20,23 @@ You can you this docker-compose.yml file to develop:
 
 ```
 www:
-  image: touch4it/php7-apache-symfony:php7
+  image: touch4it/php7:php7
   volumes:
     - ".:/var/www/html"
   ports:
-    - "80:80"
+    - "80"
 ```
 Of course you are free to add linked containers like database, caching etc.
 
-## Adjust your symfony app kernel to write cache and logs to /tmp dir
-```
-    public function getCacheDir()
-    {
-        return sys_get_temp_dir().'/cache/'.$this->getEnvironment();
-    }
-
-    public function getLogDir()
-    {
-        return sys_get_temp_dir().'/logs/'.$this->getEnvironment();
-    }
-```
-
 Use ```docker-compose up``` command to start your development environment.
-
-## Output logs to stderr (optional)
-
-You may want to adjust config_dev and config_prod to output logs to stderr (so they will be handled correctly by docker)
-``
-path:  "php://stderr"
-``
 
 ## Build production image
 
-You can build production ready image with dockerfile like this:
+You can build production ready image with Dockerfile like this:
 
 ```
-FROM touch4it/php7-apache-symfony:php7
+FROM touch4it/php7:php7
 ADD . /var/www/html
-# Add your application build steps here, for example:
-# RUN ./var/www/html/web/bin/...
-RUN rm -rf /var/www/html/web/app_dev.php
-RUN rm -rf /var/www/html/web/config.php
 ```
 
 ## Environment variables
@@ -72,6 +51,8 @@ However, it's recommended to actually use an email address, since there are a lo
 If you want to use an URL, it should point to another server under your control. Otherwise users may not be able to contact you in case of errors.
 
 Default value: `webmaster@localhost`
+
+For Apache-based images
 
 ### `PHP_TIME_ZONE`
 
@@ -115,6 +96,8 @@ Default value: `32M`
 
 * mod_rewrite
 
+For Apache-based images
+
 ### PHP
 
 * exif
@@ -131,5 +114,8 @@ Default value: `32M`
 ## How do i install additional php extensions?
 This work is based on official Docker Hub `php` images. You can use docker-php-ext-install to add new extensions. More information can be found https://hub.docker.com/_/php/
 
-## Why can't i access app_dev.php?
-By default symfony block requests to app_dev.php that come from non localhost sources. You can change that editing app_dev.php file.
+## How do I change default PHP variables?
+You can add an ini file into `$PHP_INI_DIR/conf.d` directory 
+
+## Why is my .htaccess file not working?
+Check if you have not selected Nginx-based image
