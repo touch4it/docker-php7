@@ -98,6 +98,10 @@ Default value: `32M`
 
 For Apache-based images
 
+* mod_http2
+
+for Apache 2.4.26+ based images
+
 ### PHP
 
 * exif
