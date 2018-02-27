@@ -2,22 +2,56 @@ FROM php:7.2-fpm-alpine3.7
 
 LABEL maintainer="Touch4IT <admin@touch4it.com>"
 
-ENV NGINX_VERSION 1.13.8
+#
+# PHP
+#
+RUN apk add --no-cache \
+		acl \
+		bash \
+		dcron \
+		freetype-dev \
+		git \
+		icu-dev \
+		libjpeg-turbo-dev \
+		libpng-dev \
+		postgresql-dev \
+		zip \
+	&& curl -sS https://getcomposer.org/installer | php \
+	&& mv composer.phar /usr/local/bin/composer \
+	&& docker-php-ext-configure gd \
+		--with-png-dir=/usr/include/ \
+		--with-jpeg-dir=/usr/include/ \
+		--with-freetype-dir=/usr/include/ \
+	&& docker-php-ext-configure pgsql \
+		-with-pgsql=/usr/local/pgsql \
+	&& docker-php-ext-install \
+		exif \
+		gd \
+		intl \
+		mbstring \
+		opcache \
+		pdo \
+		pdo_mysql \
+		pdo_pgsql \
+		pgsql \
+		zip
+
+# Add common config.
+COPY docker-vars.ini /usr/local/etc/php/conf.d/docker-vars.ini
+
+# Override with our fpm conf.
+COPY www.conf /usr/local/etc/php-fpm.d/www.conf
+
+#
+# NGINX
+#
+
+# env variables are used in configs too, not just this Dockerfile
+ENV NGINX_VERSION 1.13.9
 ENV NGINX_RUN_USER nginx
 ENV NGINX_RUN_GROUP nginx
 ENV NGINX_PORT 80
 
-ENV PHP_CONF /usr/local/etc/php-fpm.conf
-ENV FPM_CONF /usr/local/etc/php-fpm.d/www.conf
-ENV PHP_VARS /usr/local/etc/php/conf.d/docker-vars.ini
-
-ENV PHP_TIME_ZONE Europe/London
-ENV PHP_MEMORY_LIMIT 128M
-ENV PHP_UPLOAD_MAX_FILESIZE 32M
-ENV PHP_POST_MAX_SIZE 32M
-
-# Nginx
-#
 RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	&& CONFIG="\
 		--prefix=/etc/nginx \
@@ -33,8 +67,8 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 		--http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp \
 		--http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp \
 		--http-scgi-temp-path=/var/cache/nginx/scgi_temp \
-		--user=$NGINX_RUN_USER \
-		--group=$NGINX_RUN_GROUP \
+		--user=nginx \
+		--group=nginx \
 		--with-http_ssl_module \
 		--with-http_realip_module \
 		--with-http_addition_module \
@@ -64,13 +98,13 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 		--with-file-aio \
 		--with-http_v2_module \
 	" \
-	&& addgroup -S $NGINX_RUN_GROUP \
-	&& adduser -D -S -h /var/cache/nginx -s /sbin/nologin -G $NGINX_RUN_GROUP $NGINX_RUN_USER \
+	&& addgroup -S nginx \
+	&& adduser -D -S -h /var/cache/nginx -s /sbin/nologin -G nginx nginx \
 	&& apk add --no-cache --virtual .build-deps \
 		gcc \
 		libc-dev \
 		make \
-		openssl-dev \
+#		openssl-dev \
 		pcre-dev \
 		zlib-dev \
 		linux-headers \
@@ -79,8 +113,8 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 		libxslt-dev \
 		gd-dev \
 		geoip-dev \
-	&& curl -fSL http://nginx.org/download/nginx-$NGINX_VERSION.tar.gz -o nginx.tar.gz \
-	&& curl -fSL http://nginx.org/download/nginx-$NGINX_VERSION.tar.gz.asc  -o nginx.tar.gz.asc \
+	&& curl -fSL https://nginx.org/download/nginx-$NGINX_VERSION.tar.gz -o nginx.tar.gz \
+	&& curl -fSL https://nginx.org/download/nginx-$NGINX_VERSION.tar.gz.asc  -o nginx.tar.gz.asc \
 	&& export GNUPGHOME="$(mktemp -d)" \
 	&& found=''; \
 	for server in \
@@ -150,58 +184,6 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	&& ln -sf /dev/stdout /var/log/nginx/access.log \
 	&& ln -sf /dev/stderr /var/log/nginx/error.log
 
-# PHP
-#
-RUN apk add --no-cache \
-		acl \
-		bash \
-#		cron \
-		freetype-dev \
-		git \
-		icu-dev \
-		libjpeg-turbo-dev \
-		libpng-dev \
-		postgresql-dev \
-		zip \
-	&& curl -sS https://getcomposer.org/installer | php \
-	&& mv composer.phar /usr/local/bin/composer \
-	&& docker-php-ext-configure gd \
-		--with-png-dir=/usr/include/ \
-		--with-jpeg-dir=/usr/include/ \
-		--with-freetype-dir=/usr/include/ \
-	&& docker-php-ext-configure pgsql \
-		-with-pgsql=/usr/local/pgsql \
-	&& docker-php-ext-install \
-		exif \
-		gd \
-		intl \
-		mbstring \
-		opcache \
-		pdo \
-		pdo_mysql \
-		pdo_pgsql \
-		pgsql \
-		zip \
-	&& echo "cgi.fix_pathinfo=0" > ${PHP_VARS} &&\
-		echo "upload_max_filesize = $PHP_UPLOAD_MAX_FILESIZE"  >> ${PHP_VARS} &&\
-		echo "post_max_size = $PHP_POST_MAX_SIZE"  >> ${PHP_VARS} &&\
-		echo "variables_order = \"EGPCS\""  >> ${PHP_VARS} && \
-		echo "memory_limit = $PHP_MEMORY_LIMIT"  >> ${PHP_VARS} && \
-		echo "date.timezone = $PHP_TIME_ZONE"  >> ${PHP_VARS} && \
-		sed -i \
-			-e "s/;catch_workers_output\s*=\s*yes/catch_workers_output = yes/g" \
-			-e "s/pm.max_children = 5/pm.max_children = 4/g" \
-			-e "s/pm.start_servers = 2/pm.start_servers = 3/g" \
-			-e "s/pm.min_spare_servers = 1/pm.min_spare_servers = 2/g" \
-			-e "s/pm.max_spare_servers = 3/pm.max_spare_servers = 4/g" \
-			-e "s/;pm.max_requests = 500/pm.max_requests = 200/g" \
-			-e "s/user = www-data/user = nginx/g" \
-			-e "s/group = www-data/group = nginx/g" \
-			-e "s/;listen.mode = 0660/listen.mode = 0666/g" \
-			-e "s/;listen.owner = www-data/listen.owner = $NGINX_RUN_USER/g" \
-			-e "s/;listen.group = www-data/listen.group = $NGINX_RUN_GROUP/g" \
-			${FPM_CONF}
-
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY nginx.vh.default.conf /etc/nginx/conf.d/default.conf
 
@@ -209,4 +191,4 @@ EXPOSE 80
 
 STOPSIGNAL SIGTERM
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["php-fpm", "&&", "nginx", "-g", "daemon off;"]
