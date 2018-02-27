@@ -1,16 +1,16 @@
-# php7-apache-symfony
-Docker image tailored to run PHP application. Check https://hub.docker.com/r/touch4it/php7
+# docker-php7
+Docker image tailored to run PHP application. Check https://hub.docker.com/r/touch4it/docker-php7
 
 ## What's here?
 
 This repository is a source code for following Docker images that allow relatively easily work with PHP frameworks. Included images:
 
 * Debian + Apache + mod_php
-  * touch4it/php7:php7-apache
-  * touch4it/php7:php7.1-apache
-  * touch4it/php7:php7.2-apache
+  * touch4it/docker-php7:php7-apache
+  * touch4it/docker-php7:php7.1-apache
+  * touch4it/docker-php7:php7.2-apache
 * Alpine + Nginx + PHP-FPM
-  * touch4it/php7:php7.2-fpm-nginx
+  * touch4it/docker-php7:php7.2-fpm-nginx
 
 # Usage
 
@@ -20,7 +20,7 @@ You can you this docker-compose.yml file to develop:
 
 ```
 www:
-  image: touch4it/php7:php7
+  image: touch4it/docker-php7:php7
   volumes:
     - ".:/var/www/html"
   ports:
@@ -35,7 +35,7 @@ Use ```docker-compose up``` command to start your development environment.
 You can build production ready image with Dockerfile like this:
 
 ```
-FROM touch4it/php7:php7
+FROM touch4it/docker-php7:php7
 ADD . /var/www/html
 ```
 

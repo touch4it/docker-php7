@@ -2,7 +2,7 @@
 
 ```yaml
 www:
-  image: touch4it/php7.2-fpm-nginx
+  image: touch4it/docker-php7:php7.2-fpm-nginx
   volumes:
     - "app:/var/www/html/web"
   ports:
@@ -13,7 +13,7 @@ www:
 
 ```yaml
 www:
-  image: touch4it/php7.2-fpm-nginx
+  image: touch4it/docker-php7:php7.2-fpm-nginx
   volumes:
     - "app:/var/www/html/web"
     - "php.ini:/usr/local/etc/php/conf.d/docker-vars.ini"
