@@ -191,4 +191,6 @@ EXPOSE 80
 
 STOPSIGNAL SIGTERM
 
-CMD ["php-fpm", "&&", "nginx", "-g", "daemon off;"]
+COPY entrypoint.sh /entrypoint.sh
+
+CMD ["/entrypoint.sh"]
