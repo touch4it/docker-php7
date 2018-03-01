@@ -1,10 +1,9 @@
-## Minimal docker-compose configuration
+## docker-compose.yml
 
 ```yaml
 version: '2'
 services:
   php:
-    #image: drupal:8.4.4
     image: touch4it/docker-php7:php7.2-fpm-nginx-drupal8.4.4
     expose:
       - 80
@@ -23,7 +22,7 @@ services:
       - 3306
 ```
 
-## Full docker-compose configuration
+## docker-compose.override.yml
 
 ```yaml
 version: '2'
@@ -44,5 +43,4 @@ services:
       - ./db/init:/docker-entrypoint-initdb.d
       - ./db/data:/var/lib/mysql
       - ./db/dump:/dump
-
 ```
