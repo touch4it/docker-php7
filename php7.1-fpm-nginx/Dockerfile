@@ -29,6 +29,7 @@ RUN apk add --no-cache \
 		gd \
 		intl \
 		mbstring \
+		mysqli \
 		opcache \
 		pdo \
 		pdo_mysql \
