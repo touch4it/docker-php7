@@ -5,11 +5,13 @@ LABEL maintainer="Touch4IT <admin@touch4it.com>"
 #
 # PHP
 #
+
 RUN apk add --no-cache \
 		acl \
 		bash \
 		dcron \
 		freetype-dev \
+		gettext-dev \
 		git \
 		icu-dev \
 		libjpeg-turbo-dev \
@@ -27,6 +29,7 @@ RUN apk add --no-cache \
 	&& docker-php-ext-install \
 		exif \
 		gd \
+		gettext \
 		intl \
 		mbstring \
 		mysqli \
@@ -159,23 +162,14 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	&& strip /usr/lib/nginx/modules/*.so \
 	&& rm -rf /usr/src/nginx-$NGINX_VERSION \
 	\
-	# Bring in gettext so we can get `envsubst`, then throw
-	# the rest away. To do this, we need to install `gettext`
-	# then move `envsubst` out of the way so `gettext` can
-	# be deleted completely, then move `envsubst` back.
-	&& apk add --no-cache --virtual .gettext gettext \
-	&& mv /usr/bin/envsubst /tmp/ \
-	\
 	&& runDeps="$( \
-		scanelf --needed --nobanner --format '%n#p' /usr/sbin/nginx /usr/lib/nginx/modules/*.so /tmp/envsubst \
+		scanelf --needed --nobanner --format '%n#p' /usr/sbin/nginx /usr/lib/nginx/modules/*.so \
 			| tr ',' '\n' \
 			| sort -u \
 			| awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
 	)" \
 	&& apk add --no-cache --virtual .nginx-rundeps $runDeps \
 	&& apk del .build-deps \
-	&& apk del .gettext \
-	&& mv /tmp/envsubst /usr/local/bin/ \
 	\
 	# Bring in tzdata so users could set the timezones through the environment
 	# variables
