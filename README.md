@@ -109,6 +109,7 @@ for Apache 2.4.26+ based images
 
 * exif
 * gd
+* gettext
 * intl
 * mbstring
 * opcache
