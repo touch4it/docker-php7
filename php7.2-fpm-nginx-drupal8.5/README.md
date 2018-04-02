@@ -4,7 +4,7 @@
 version: '2'
 services:
   php:
-    image: touch4it/docker-php7:php7.2-fpm-nginx-drupal8.5
+    image: touch4it/drupal-php-fpm-nginx:8.5
     expose:
       - 80
     links:
