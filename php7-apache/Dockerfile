@@ -31,6 +31,7 @@ RUN apt-get update \
 	&& docker-php-ext-install \
 		exif \
 		gd \
+		gettext \
 		intl \
 		mbstring \
 		mysqli \
