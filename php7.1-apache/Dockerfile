@@ -16,6 +16,7 @@ RUN apt-get update \
 		libjpeg62-turbo-dev \
 		libpng12-dev \
 		libpq-dev \
+		libzip-dev \
 		acl \
 		cron \
 		git \
@@ -28,6 +29,8 @@ RUN apt-get update \
 		--with-freetype-dir=/usr/include/ \
 	&& docker-php-ext-configure pgsql \
 		-with-pgsql=/usr/local/pgsql \
+	&& docker-php-ext-configure zip \
+		--with-libzip \
 	&& docker-php-ext-install \
 		exif \
 		gd \
