@@ -10,36 +10,36 @@ docker build ./php7.2-fpm-nginx-drupal8.5 \
 
 docker build ./php7.1-fpm-nginx-drupal8.5 \
 	-t touch4it/drupal-php-fpm-nginx:8.5-php7.1 \
-	< ./php7.1-fpm-nginx-drupal8.5/Dockerfile
+	-f ./php7.1-fpm-nginx-drupal8.5/Dockerfile
 
 docker build ./php7.2-fpm-nginx-drupal8.4 \
 	-t touch4it/drupal-php-fpm-nginx:8.4-php7.2 \
-	< ./php7.2-fpm-nginx-drupal8.4/Dockerfile
+	-f ./php7.2-fpm-nginx-drupal8.4/Dockerfile
 
 docker build ./php7.1-fpm-nginx-drupal8.4 \
 	-t touch4it/drupal-php-fpm-nginx:8.4-php7.1 \
 	-t touch4it/drupal-php-fpm-nginx:8.4 \
 	-t touch4it/drupal-php-fpm-nginx:8.4.6 \
-	< ./php7.1-fpm-nginx-drupal8.4/Dockerfile
+	-f ./php7.1-fpm-nginx-drupal8.4/Dockerfile
 
 # Build development images
 docker build ./php7.2-fpm-nginx-drupal8.5-dev \
 	-t touch4it/drupal-php-fpm-nginx:8.5-php7.2-dev \
 	-t touch4it/drupal-php-fpm-nginx:8.5-dev \
-	< ./php7.2-fpm-nginx-drupal8.5-dev/Dockerfile
+	-f ./php7.2-fpm-nginx-drupal8.5-dev/Dockerfile
 
 docker build ./php7.1-fpm-nginx-drupal8.5-dev \
 	-t touch4it/drupal-php-fpm-nginx:8.5-php7.1-dev \
-	< ./php7.1-fpm-nginx-drupal8.5-dev/Dockerfile
+	-f ./php7.1-fpm-nginx-drupal8.5-dev/Dockerfile
 
 docker build ./php7.2-fpm-nginx-drupal8.4-dev \
 	-t touch4it/drupal-php-fpm-nginx:8.4-php7.2-dev \
-	< ./php7.2-fpm-nginx-drupal8.4-dev/Dockerfile
+	-f ./php7.2-fpm-nginx-drupal8.4-dev/Dockerfile
 
 docker build ./php7.1-fpm-nginx-drupal8.4-dev \
 	-t touch4it/drupal-php-fpm-nginx:8.4-php7.1-dev \
 	-t touch4it/drupal-php-fpm-nginx:8.4-dev \
-	< ./php7.1-fpm-nginx-drupal8.4-dev/Dockerfile
+	-f ./php7.1-fpm-nginx-drupal8.4-dev/Dockerfile
 
 # Deploy production images
 docker push touch4it/drupal-php-fpm-nginx:latest
