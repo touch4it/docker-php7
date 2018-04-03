@@ -3,7 +3,7 @@
 ```yaml
 version: '2'
 services:
-  php:
+  drupal:
     image: touch4it/drupal-php-fpm-nginx:8.4
     expose:
       - 80
@@ -12,7 +12,7 @@ services:
     depends_on:
       - mariadb
   mariadb:
-    image: mariadb:10.1.26
+    image: mariadb:10.1
     environment:
       MYSQL_ROOT_PASSWORD: drupal
       MYSQL_DATABASE: drupal
@@ -27,11 +27,10 @@ services:
 ```yaml
 version: '2'
 services:
-  apache:
+  drupal:
     ports:
       - 8080:80
     volumes:
-      - ./drupal/etc/passwd:/etc/passwd
       - ./drupal/private:/var/www/private
       - ./drupal/sites:/var/www/html/sites
       - ./drupal/themes:/var/www/html/themes
