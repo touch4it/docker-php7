@@ -14,6 +14,7 @@ RUN apt-get update \
 		libicu-dev \
 		libfreetype6-dev \
 		libjpeg62-turbo-dev \
+		libmcrypt-dev \
 		libpng12-dev \
 		libpq-dev \
 		libzip-dev \
