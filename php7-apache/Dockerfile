@@ -37,6 +37,7 @@ RUN apt-get update \
 		gettext \
 		intl \
 		mbstring \
+		mcrypt \
 		mysqli \
 		opcache \
 		pgsql \
