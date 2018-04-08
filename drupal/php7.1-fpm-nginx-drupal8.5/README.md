@@ -82,6 +82,16 @@ services:
 
 Use ```docker-compose up``` command to start your development environment.
 
+# Using Drupal console
+
+You can directly execute Drupal Console commands from image command line, e.g.
+
+```drupal cache:rebuild```
+
+or
+
+```/var/www/html/vendor/drupal/console/bin/drupal cache:rebuild```
+
 ## Build production image
 
 You can build production ready image with Dockerfile like this:
