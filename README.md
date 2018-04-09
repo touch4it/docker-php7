@@ -7,6 +7,7 @@ This repository is a source code for following Docker images that allow relative
 
 * Debian + Apache + mod_php
   * touch4it/docker-php7:php7-apache
+  * touch4it/docker-php7:php7-apache-dev
   * touch4it/docker-php7:php7.1-apache
   * touch4it/docker-php7:php7.2-apache
 * Alpine + Nginx + PHP-FPM
@@ -14,6 +15,15 @@ This repository is a source code for following Docker images that allow relative
   * touch4it/docker-php7:php7.1-fpm-nginx-dev
   * touch4it/docker-php7:php7.2-fpm-nginx
   * touch4it/docker-php7:php7.2-fpm-nginx-dev
+* Drupal
+  * touch4it/drupal-php-fpm-nginx:latest, 8.5, 8.5-php7.2
+  * touch4it/drupal-php-fpm-nginx:8.4, 8.4-php7.1
+  * touch4it/drupal-php-fpm-nginx:8.5-php7.1
+  * touch4it/drupal-php-fpm-nginx:8.4-php7.2
+  * touch4it/drupal-php-fpm-nginx:8.5-dev, 8.5-php7.2-dev
+  * touch4it/drupal-php-fpm-nginx:8.4-dev, 8.4-php7.1-dev
+  * touch4it/drupal-php-fpm-nginx:8.5-php7.1-dev
+  * touch4it/drupal-php-fpm-nginx:8.4-php7.2-dev
 
 # Usage
 
