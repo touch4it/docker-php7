@@ -1,4 +1,4 @@
-FROM touch4it/docker-php7:php7.2-fpm-nginx
+FROM touch4it/docker-php7:php7.1-fpm-nginx
 
 ENV VERSION_COMPOSER_ASSET_PLUGIN=^1.3.0
 
