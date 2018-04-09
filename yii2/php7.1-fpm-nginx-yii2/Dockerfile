@@ -41,5 +41,5 @@ COPY nginx.vh.default.conf /etc/nginx/conf.d/default.conf
 WORKDIR /var/www/html
 
 COPY entrypoint.sh /entrypoint.sh
-
+RUN chmod +x /entrypoint.sh
 CMD ["/entrypoint.sh"]
