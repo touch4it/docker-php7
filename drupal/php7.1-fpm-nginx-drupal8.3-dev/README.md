@@ -22,7 +22,7 @@ This repository is a source code for following Docker images:
 * Production images
   * 8.5.1, 8.5, 8.5-php7.2
   * 8.4.6, 8.4, 8.4-php7.1
-  * 8.3.5, 8.3, 8.3-php7.1
+  * 8.3.9, 8.3, 8.3-php7.1
   * 8.5-php7.1
   * 8.4-php7.2
   * 8.3-php7.1
