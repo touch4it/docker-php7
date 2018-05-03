@@ -33,6 +33,7 @@ RUN apt-get update \
 	&& docker-php-ext-configure zip \
 		--with-libzip \
 	&& docker-php-ext-install \
+		bcmath \
 		exif \
 		gd \
 		gettext \

@@ -22,8 +22,24 @@ This repository is a source code for following Docker images that allow relative
   * touch4it/drupal-php-fpm-nginx:8.4-php7.2
   * touch4it/drupal-php-fpm-nginx:8.5-dev, 8.5-php7.2-dev
   * touch4it/drupal-php-fpm-nginx:8.4-dev, 8.4-php7.1-dev
+  * touch4it/drupal-php-fpm-nginx:8.3-dev, 8.3-php7.1-dev
   * touch4it/drupal-php-fpm-nginx:8.5-php7.1-dev
   * touch4it/drupal-php-fpm-nginx:8.4-php7.2-dev
+* Symfony
+  * touch4it/php7-apache-symfony:php7
+  * touch4it/php7-apache-symfony:php7.1
+  * touch4it/php7-apache-symfony:php7.2
+  * touch4it/php-nginx-symfony:php7.1-fpm-nginx
+  * touch4it/php-nginx-symfony:php7.1-fpm-nginx-dev
+  * touch4it/php-nginx-symfony:php7.2-fpm-nginx
+  * touch4it/php-nginx-symfony:php7.2-fpm-nginx-dev
+* Yii2
+  * touch4it/yii2-php-fpm-nginx:7
+  * touch4it/yii2-php-fpm-nginx:7.1, latest
+  * touch4it/yii2-php-fpm-nginx:7.2
+  * touch4it/yii2-php-fpm-nginx:7-dev
+  * touch4it/yii2-php-fpm-nginx:7.1-dev
+  * touch4it/yii2-php-fpm-nginx:7.2-dev
 
 # Usage
 
@@ -117,6 +133,7 @@ for Apache 2.4.26+ based images
 
 ### PHP
 
+* bcmath
 * exif
 * gd
 * gettext

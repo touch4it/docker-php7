@@ -30,6 +30,7 @@ RUN apk add --no-cache \
 	&& docker-php-ext-configure zip \
 		--with-libzip \
 	&& docker-php-ext-install \
+		bcmath \
 		exif \
 		gd \
 		gettext \

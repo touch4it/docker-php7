@@ -16,8 +16,8 @@ RUN apk add --no-cache \
 		icu-dev \
 		libjpeg-turbo-dev \
 		libpng-dev \
-		libzip-dev \
 		postgresql-dev \
+		zlib-dev \
 		zip \
 	&& curl -sS https://getcomposer.org/installer | php \
 	&& mv composer.phar /usr/local/bin/composer \
@@ -28,8 +28,9 @@ RUN apk add --no-cache \
 	&& docker-php-ext-configure pgsql \
 		-with-pgsql=/usr/local/pgsql \
 	&& docker-php-ext-configure zip \
-		--with-libzip \
+		--with-zlib \
 	&& docker-php-ext-install \
+		bcmath \
 		exif \
 		gd \
 		gettext \
