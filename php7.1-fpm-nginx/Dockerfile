@@ -42,7 +42,8 @@ RUN apk add --no-cache \
 		pdo_mysql \
 		pdo_pgsql \
 		pgsql \
-		zip
+		zip \
+    && docker-php-ext-configure bcmath --enable-bcmath
 
 # Add common config.
 COPY docker-vars.ini /usr/local/etc/php/conf.d/docker-vars.ini
