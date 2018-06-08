@@ -1,4 +1,4 @@
-FROM php:7.1-fpm-alpine3.4
+FROM php:7.1-fpm-alpine3.7
 
 LABEL maintainer="Touch4IT <admin@touch4it.com>"
 
@@ -56,7 +56,7 @@ COPY www.conf /usr/local/etc/php-fpm.d/www.conf
 #
 
 # env variables are used in configs too, not just this Dockerfile
-ENV NGINX_VERSION 1.13.9
+ENV NGINX_VERSION 1.14.0
 ENV NGINX_RUN_USER nginx
 ENV NGINX_RUN_GROUP nginx
 ENV NGINX_PORT 80

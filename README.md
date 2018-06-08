@@ -150,3 +150,9 @@ You can add an ini file into `$PHP_INI_DIR/conf.d` directory
 
 ## Why is my .htaccess file not working?
 Check if you have not selected Nginx-based image
+
+## What Apache version is on Apache-based images?
+Same as in similar official PHP image on Docker Hub
+
+## What Nginx version is on Nginx-based images?
+1.14.0
