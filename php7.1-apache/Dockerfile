@@ -1,5 +1,7 @@
 FROM php:7.1-apache
 
+LABEL maintainer="Touch4IT <admin@touch4it.com>"
+
 ENV ADMIN_EMAIL webmaster@localhost
 ENV PHP_TIME_ZONE Europe/London
 ENV PHP_MEMORY_LIMIT 256M
