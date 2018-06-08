@@ -2,6 +2,12 @@ FROM php:7.2-fpm-alpine3.7
 
 LABEL maintainer="Touch4IT <admin@touch4it.com>"
 
+ENV ADMIN_EMAIL webmaster@localhost
+ENV PHP_TIME_ZONE Europe/London
+ENV PHP_MEMORY_LIMIT 256M
+ENV PHP_UPLOAD_MAX_FILESIZE 32M
+ENV PHP_POST_MAX_SIZE 32M
+
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 RUN apk add --no-cache \
