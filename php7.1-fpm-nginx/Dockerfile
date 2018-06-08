@@ -2,9 +2,7 @@ FROM php:7.1-fpm-alpine3.7
 
 LABEL maintainer="Touch4IT <admin@touch4it.com>"
 
-#
-# PHP
-#
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 RUN apk add --no-cache \
 		acl \
@@ -16,11 +14,9 @@ RUN apk add --no-cache \
 		icu-dev \
 		libjpeg-turbo-dev \
 		libpng-dev \
+		libzip-dev \
 		postgresql-dev \
-		zlib-dev \
 		zip \
-	&& curl -sS https://getcomposer.org/installer | php \
-	&& mv composer.phar /usr/local/bin/composer \
 	&& docker-php-ext-configure gd \
 		--with-png-dir=/usr/include/ \
 		--with-jpeg-dir=/usr/include/ \
@@ -28,7 +24,7 @@ RUN apk add --no-cache \
 	&& docker-php-ext-configure pgsql \
 		-with-pgsql=/usr/local/pgsql \
 	&& docker-php-ext-configure zip \
-		--with-zlib \
+		--with-libzip \
 	&& docker-php-ext-install \
 		bcmath \
 		exif \
@@ -137,7 +133,7 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	done; \
 	test -z "$found" && echo >&2 "error: failed to fetch GPG key $GPG_KEYS" && exit 1; \
 	gpg --batch --verify nginx.tar.gz.asc nginx.tar.gz \
-	&& rm -r "$GNUPGHOME" nginx.tar.gz.asc \
+	&& rm -rf "$GNUPGHOME" nginx.tar.gz.asc \
 	&& mkdir -p /usr/src \
 	&& tar -zxC /usr/src -f nginx.tar.gz \
 	&& rm nginx.tar.gz \
@@ -167,14 +163,23 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	&& strip /usr/lib/nginx/modules/*.so \
 	&& rm -rf /usr/src/nginx-$NGINX_VERSION \
 	\
+	# Bring in gettext so we can get `envsubst`, then throw
+	# the rest away. To do this, we need to install `gettext`
+	# then move `envsubst` out of the way so `gettext` can
+	# be deleted completely, then move `envsubst` back.
+	&& apk add --no-cache --virtual .gettext gettext \
+	&& mv /usr/bin/envsubst /tmp/ \
+	\
 	&& runDeps="$( \
-		scanelf --needed --nobanner --format '%n#p' /usr/sbin/nginx /usr/lib/nginx/modules/*.so \
+		scanelf --needed --nobanner --format '%n#p' /usr/sbin/nginx /usr/lib/nginx/modules/*.so /tmp/envsubst \
 			| tr ',' '\n' \
 			| sort -u \
 			| awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
 	)" \
 	&& apk add --no-cache --virtual .nginx-rundeps $runDeps \
 	&& apk del .build-deps \
+	&& apk del .gettext \
+	&& mv /tmp/envsubst /usr/local/bin/ \
 	\
 	# Bring in tzdata so users could set the timezones through the environment
 	# variables
