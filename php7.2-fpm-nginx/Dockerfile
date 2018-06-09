@@ -3,7 +3,7 @@ FROM php:7.2-fpm-alpine3.7
 LABEL maintainer="Touch4IT <admin@touch4it.com>"
 
 ENV ADMIN_EMAIL webmaster@localhost
-ENV PHP_TIME_ZONE Europe/London
+ENV PHP_TIME_ZONE UTC
 ENV PHP_MEMORY_LIMIT 256M
 ENV PHP_UPLOAD_MAX_FILESIZE 32M
 ENV PHP_POST_MAX_SIZE 32M
@@ -46,12 +46,6 @@ RUN apk add --no-cache \
 		pgsql \
 		zip \
     && docker-php-ext-configure bcmath --enable-bcmath
-
-# Add common config.
-COPY docker-vars.ini /usr/local/etc/php/conf.d/docker-vars.ini
-
-# Override with our fpm conf.
-COPY www.conf /usr/local/etc/php-fpm.d/www.conf
 
 #
 # NGINX
@@ -195,6 +189,10 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	&& ln -sf /dev/stdout /var/log/nginx/access.log \
 	&& ln -sf /dev/stderr /var/log/nginx/error.log
 
+
+# Add configuration
+COPY docker-vars.ini /usr/local/etc/php/conf.d/docker-vars.ini
+COPY www.conf /usr/local/etc/php-fpm.d/www.conf
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY nginx.vh.default.conf /etc/nginx/conf.d/default.conf
 
