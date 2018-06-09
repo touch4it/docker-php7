@@ -1,0 +1,10 @@
+version: '2'
+services:
+  apache:
+    image: touch4it/docker-php7:php7.1-fpm-nginx
+    ports:
+      - 8080:80
+    volumes:
+      - ./index.php:/var/www/html/index.php
+    environment:
+      - PHP_MEMORY_LIMIT=32M
