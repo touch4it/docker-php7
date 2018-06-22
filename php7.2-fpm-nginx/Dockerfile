@@ -6,7 +6,7 @@ LABEL maintainer="Touch4IT <admin@touch4it.com>"
 # PHP
 #
 
-RUN apk add --no-cache \
+RUN apk --update add --no-cache \
 		acl \
 		bash \
 		dcron \
@@ -19,6 +19,7 @@ RUN apk add --no-cache \
 		libzip-dev \
 		postgresql-dev \
 		zip \
+		grep \
 	&& curl -sS https://getcomposer.org/installer | php \
 	&& mv composer.phar /usr/local/bin/composer \
 	&& docker-php-ext-configure gd \
