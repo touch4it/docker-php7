@@ -2,9 +2,13 @@ FROM php:7.2-fpm-alpine3.7
 
 LABEL maintainer="Touch4IT <admin@touch4it.com>"
 
-#
-# PHP
-#
+ENV ADMIN_EMAIL webmaster@localhost
+ENV PHP_TIME_ZONE UTC
+ENV PHP_MEMORY_LIMIT 256M
+ENV PHP_UPLOAD_MAX_FILESIZE 32M
+ENV PHP_POST_MAX_SIZE 32M
+
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 RUN apk --update add --no-cache \
 		acl \
@@ -20,8 +24,6 @@ RUN apk --update add --no-cache \
 		postgresql-dev \
 		zip \
 		grep \
-	&& curl -sS https://getcomposer.org/installer | php \
-	&& mv composer.phar /usr/local/bin/composer \
 	&& docker-php-ext-configure gd \
 		--with-png-dir=/usr/include/ \
 		--with-jpeg-dir=/usr/include/ \
@@ -46,18 +48,12 @@ RUN apk --update add --no-cache \
 		zip \
     && docker-php-ext-configure bcmath --enable-bcmath
 
-# Add common config.
-COPY docker-vars.ini /usr/local/etc/php/conf.d/docker-vars.ini
-
-# Override with our fpm conf.
-COPY www.conf /usr/local/etc/php-fpm.d/www.conf
-
 #
 # NGINX
 #
 
 # env variables are used in configs too, not just this Dockerfile
-ENV NGINX_VERSION 1.13.9
+ENV NGINX_VERSION 1.14.0
 ENV NGINX_RUN_USER nginx
 ENV NGINX_RUN_GROUP nginx
 ENV NGINX_PORT 80
@@ -138,7 +134,7 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	done; \
 	test -z "$found" && echo >&2 "error: failed to fetch GPG key $GPG_KEYS" && exit 1; \
 	gpg --batch --verify nginx.tar.gz.asc nginx.tar.gz \
-	&& rm -r "$GNUPGHOME" nginx.tar.gz.asc \
+	&& rm -rf "$GNUPGHOME" nginx.tar.gz.asc \
 	&& mkdir -p /usr/src \
 	&& tar -zxC /usr/src -f nginx.tar.gz \
 	&& rm nginx.tar.gz \
@@ -168,14 +164,23 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	&& strip /usr/lib/nginx/modules/*.so \
 	&& rm -rf /usr/src/nginx-$NGINX_VERSION \
 	\
+	# Bring in gettext so we can get `envsubst`, then throw
+	# the rest away. To do this, we need to install `gettext`
+	# then move `envsubst` out of the way so `gettext` can
+	# be deleted completely, then move `envsubst` back.
+	&& apk add --no-cache --virtual .gettext gettext \
+	&& mv /usr/bin/envsubst /tmp/ \
+	\
 	&& runDeps="$( \
-		scanelf --needed --nobanner --format '%n#p' /usr/sbin/nginx /usr/lib/nginx/modules/*.so \
+		scanelf --needed --nobanner --format '%n#p' /usr/sbin/nginx /usr/lib/nginx/modules/*.so /tmp/envsubst \
 			| tr ',' '\n' \
 			| sort -u \
 			| awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
 	)" \
 	&& apk add --no-cache --virtual .nginx-rundeps $runDeps \
 	&& apk del .build-deps \
+	&& apk del .gettext \
+	&& mv /tmp/envsubst /usr/local/bin/ \
 	\
 	# Bring in tzdata so users could set the timezones through the environment
 	# variables
@@ -185,6 +190,10 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	&& ln -sf /dev/stdout /var/log/nginx/access.log \
 	&& ln -sf /dev/stderr /var/log/nginx/error.log
 
+
+# Add configuration
+COPY docker-vars.ini /usr/local/etc/php/conf.d/docker-vars.ini
+COPY www.conf /usr/local/etc/php-fpm.d/www.conf
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY nginx.vh.default.conf /etc/nginx/conf.d/default.conf
 
