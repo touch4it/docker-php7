@@ -10,7 +10,7 @@ ENV PHP_POST_MAX_SIZE 32M
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-RUN apk add --no-cache \
+RUN apk --update add --no-cache \
 		acl \
 		bash \
 		dcron \
@@ -23,6 +23,7 @@ RUN apk add --no-cache \
 		libzip-dev \
 		postgresql-dev \
 		zip \
+		grep \
 	&& docker-php-ext-configure gd \
 		--with-png-dir=/usr/include/ \
 		--with-jpeg-dir=/usr/include/ \
