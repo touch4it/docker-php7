@@ -9,5 +9,8 @@ indent_size = 4
 [Dockerfile]
 indent_style = tab
 
+[*.conf]
+indent_style = tab
+
 [*.md]
 trim_trailing_whitespace = false
