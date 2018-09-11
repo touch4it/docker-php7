@@ -16,20 +16,15 @@ https://github.com/touch4it/docker-php7
 
 This repository is a source code for following Docker images:
 
-
 * Latest release
   * touch4it/drupal-php-fpm-nginx:latest
 * Production images
+  * 8.6.0, 8.6, 8.6-php7.2
   * 8.5.7, 8.5, 8.5-php7.2
-  * 8.4.8, 8.4, 8.4-php7.1
-  * 8.5-php7.1
-  * 8.4-php7.2
 * Development images
+  * 8.6-dev
   * 8.5-dev, 8.5-php7.2-dev
-  * 8.4-dev, 8.4-php7.1-dev
-  * 8.5-php7.1-dev
-  * 8.4-php7.2-dev
-
+  
 # Usage
 
 ## Example Docker compose
