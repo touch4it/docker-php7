@@ -192,15 +192,15 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 
 
 # Add configuration
-COPY docker-vars.ini /usr/local/etc/php/conf.d/docker-vars.ini
-COPY www.conf /usr/local/etc/php-fpm.d/www.conf
-COPY nginx.conf /etc/nginx/nginx.conf
-COPY nginx.vh.default.conf /etc/nginx/conf.d/default.conf
+COPY ./docker-vars.ini /usr/local/etc/php/conf.d/docker-vars.ini
+COPY ./www.conf /usr/local/etc/php-fpm.d/www.conf
+COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY ./nginx.vh.default.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 
 STOPSIGNAL SIGTERM
 
-COPY entrypoint.sh /entrypoint.sh
+COPY ./entrypoint.sh /entrypoint.sh
 
 CMD ["/entrypoint.sh"]

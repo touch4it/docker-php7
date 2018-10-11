@@ -13,7 +13,8 @@ docker build ./php7.2-fpm-nginx-drupal8.5 \
 	-t touch4it/drupal-php-fpm-nginx:8.5-php7.2 \
 	-t touch4it/drupal-php-fpm-nginx:8.5 \
 	-t touch4it/drupal-php-fpm-nginx:8.5.7 \
-	-f ./php7.2-fpm-nginx-drupal8./Dockerfile
+	-t touch4it/drupal-php-fpm-nginx:8.5.7-1 \
+	-f ./php7.2-fpm-nginx-drupal8.5/Dockerfile
 
 # Build development images
 
