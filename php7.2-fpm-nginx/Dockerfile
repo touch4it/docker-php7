@@ -53,7 +53,7 @@ RUN apk --update add --no-cache \
 #
 
 # env variables are used in configs too, not just this Dockerfile
-ENV NGINX_VERSION 1.14.0
+ENV NGINX_VERSION 1.14.1
 ENV NGINX_RUN_USER nginx
 ENV NGINX_RUN_GROUP nginx
 ENV NGINX_PORT 80
@@ -105,7 +105,7 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 		--with-http_v2_module \
 	" \
 	&& addgroup -S nginx \
-	&& adduser -D -S -h /var/cache/nginx -s /sbin/nologin -G nginx nginx \
+	&& adduser -D -S -h /var/cache/nginx -s /sbin/nologin -G $NGINX_RUN_GROUP $NGINX_RUN_USER \
 	&& apk add --no-cache --virtual .build-deps \
 		gcc \
 		libc-dev \

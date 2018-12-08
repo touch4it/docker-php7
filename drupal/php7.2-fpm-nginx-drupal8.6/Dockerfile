@@ -1,7 +1,7 @@
 FROM touch4it/docker-php7:php7.2-fpm-nginx
 
 COPY nginx.vh.default.conf /etc/nginx/conf.d/default.conf
-COPY --from=drupal:8.6.3-fpm-alpine /var/www/html /var/www/html
+COPY --from=drupal:8.6.4-fpm-alpine /var/www/html /var/www/html
 
 RUN composer require drupal/console:~1.0 \
     --prefer-dist \

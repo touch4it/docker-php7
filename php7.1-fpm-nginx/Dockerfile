@@ -53,7 +53,7 @@ RUN apk --update add --no-cache \
 #
 
 # env variables are used in configs too, not just this Dockerfile
-ENV NGINX_VERSION 1.14.0
+ENV NGINX_VERSION 1.14.1
 ENV NGINX_RUN_USER nginx
 ENV NGINX_RUN_GROUP nginx
 ENV NGINX_PORT 80
