@@ -1,41 +1,44 @@
 # docker-php7
+
 Docker image tailored to run PHP application. Check https://hub.docker.com/r/touch4it/docker-php7
 
 ## What's here?
 
 This repository is a source code for following Docker images that allow relatively easily work with PHP frameworks. Included images:
 
-* Debian + Apache + mod_php
-  * touch4it/docker-php7:php7-apache
-  * touch4it/docker-php7:php7-apache-dev
-  * touch4it/docker-php7:php7.1-apache
-  * touch4it/docker-php7:php7.2-apache
-* Alpine + Nginx + PHP-FPM
-  * touch4it/docker-php7:php7.1-fpm-nginx
-  * touch4it/docker-php7:php7.1-fpm-nginx-dev
-  * touch4it/docker-php7:php7.2-fpm-nginx
-  * touch4it/docker-php7:php7.2-fpm-nginx-dev
-* Drupal
-  * touch4it/drupal-php-fpm-nginx:latest, 8.5, 8.5-php7.2
-  * touch4it/drupal-php-fpm-nginx:8.4, 8.4-php7.1
-  * touch4it/drupal-php-fpm-nginx:8.5-php7.1
-  * touch4it/drupal-php-fpm-nginx:8.5-dev, 8.5-php7.2-dev
-  * touch4it/drupal-php-fpm-nginx:8.5-php7.1-dev
-* Symfony
-  * touch4it/php7-apache-symfony:php7
-  * touch4it/php7-apache-symfony:php7.1
-  * touch4it/php7-apache-symfony:php7.2
-  * touch4it/php-nginx-symfony:php7.1-fpm-nginx
-  * touch4it/php-nginx-symfony:php7.1-fpm-nginx-dev
-  * touch4it/php-nginx-symfony:php7.2-fpm-nginx
-  * touch4it/php-nginx-symfony:php7.2-fpm-nginx-dev
-* Yii2
-  * touch4it/yii2-php-fpm-nginx:7
-  * touch4it/yii2-php-fpm-nginx:7.1, latest
-  * touch4it/yii2-php-fpm-nginx:7.2
-  * touch4it/yii2-php-fpm-nginx:7-dev
-  * touch4it/yii2-php-fpm-nginx:7.1-dev
-  * touch4it/yii2-php-fpm-nginx:7.2-dev
+*   Debian + Apache + mod_php
+    *   touch4it/docker-php7:php7-apache
+    *   touch4it/docker-php7:php7-apache-dev
+    *   touch4it/docker-php7:php7.1-apache
+    *   touch4it/docker-php7:php7.2-apache
+*   Alpine + Nginx + PHP-FPM
+    *   touch4it/docker-php7:php7.1-fpm-nginx
+    *   touch4it/docker-php7:php7.1-fpm-nginx-dev
+    *   touch4it/docker-php7:php7.2-fpm-nginx
+    *   touch4it/docker-php7:php7.2-fpm-nginx-dev
+*   Drupal
+    *   touch4it/drupal-php-fpm-nginx:latest, 8.5, 8.5-php7.2
+    *   touch4it/drupal-php-fpm-nginx:8.4, 8.4-php7.1
+    *   touch4it/drupal-php-fpm-nginx:8.5-php7.1
+    *   touch4it/drupal-php-fpm-nginx:8.5-dev, 8.5-php7.2-dev
+    *   touch4it/drupal-php-fpm-nginx:8.5-php7.1-dev
+*   Drupal console
+    *   touch4it/drupal-php-fpm-nginx:console
+*   Symfony
+    *   touch4it/php7-apache-symfony:php7
+    *   touch4it/php7-apache-symfony:php7.1
+    *   touch4it/php7-apache-symfony:php7.2
+    *   touch4it/php-nginx-symfony:php7.1-fpm-nginx
+    *   touch4it/php-nginx-symfony:php7.1-fpm-nginx-dev
+    *   touch4it/php-nginx-symfony:php7.2-fpm-nginx
+    *   touch4it/php-nginx-symfony:php7.2-fpm-nginx-dev
+*   Yii2
+    *   touch4it/yii2-php-fpm-nginx:7
+    *   touch4it/yii2-php-fpm-nginx:7.1, latest
+    *   touch4it/yii2-php-fpm-nginx:7.2
+    *   touch4it/yii2-php-fpm-nginx:7-dev
+    *   touch4it/yii2-php-fpm-nginx:7.1-dev
+    *   touch4it/yii2-php-fpm-nginx:7.2-dev
 
 # Usage
 
@@ -51,6 +54,7 @@ www:
   ports:
     - "80"
 ```
+
 Of course you are free to add linked containers like database, caching etc.
 
 Use ```docker-compose up``` command to start your development environment.
@@ -60,7 +64,7 @@ Use ```docker-compose up``` command to start your development environment.
 You can build production ready image with Dockerfile like this:
 
 ```
-FROM touch4it/docker-php7:php7
+FROM touch4it/docker-php7:php7.2
 ADD . /var/www/html
 ```
 
@@ -143,16 +147,21 @@ for Apache 2.4.26+ based images
 * zip
 
 ## How do i install additional php extensions?
+
 This work is based on official Docker Hub `php` images. You can use docker-php-ext-install to add new extensions. More information can be found https://hub.docker.com/_/php/
 
 ## How do I change default PHP variables?
+
 You can add an ini file into `$PHP_INI_DIR/conf.d` directory 
 
 ## Why is my .htaccess file not working?
+
 Check if you have not selected Nginx-based image
 
 ## What Apache version is on Apache-based images?
+
 Same as in similar official PHP image on Docker Hub
 
 ## What Nginx version is on Nginx-based images?
+
 1.14.0

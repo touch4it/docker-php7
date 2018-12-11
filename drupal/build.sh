@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Build Drupal console
+
+docker build ./console \
+	-t touch4it/drupal-php-fpm-nginx:console \
+	-f ./console/Dockerfile
+
 # Build production images
 
 docker build ./php7.2-fpm-nginx-drupal8.6 \
@@ -27,6 +33,10 @@ docker build ./php7.2-fpm-nginx-drupal8.5-dev \
 	-t touch4it/drupal-php-fpm-nginx:8.5-php7.2-dev \
 	-t touch4it/drupal-php-fpm-nginx:8.5-dev \
 	-f ./php7.2-fpm-nginx-drupal8.5-dev/Dockerfile
+
+# Deploy Docker console
+
+docker push touch4it/drupal-php-fpm-nginx:console
 
 # Deploy production images
 
