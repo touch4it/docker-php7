@@ -111,9 +111,9 @@ You can add an ini file into `$PHP_INI_DIR/conf.d` directory
 # What other PHP images do we have?
 
 * Debian + Apache + mod_php
-  * touch4it/docker-php7:php7-apache
   * touch4it/docker-php7:php7.1-apache
   * touch4it/docker-php7:php7.2-apache
+  * touch4it/docker-php7:php7.3-apache
   * touch4it/php7-apache-symfony:php7
   * touch4it/php7-apache-symfony:php7.2
 * Alpine + Nginx + PHP-FPM
@@ -125,13 +125,11 @@ You can add an ini file into `$PHP_INI_DIR/conf.d` directory
   * touch4it/php-nginx-symfony:php7.1-fpm-nginx-dev
   * touch4it/php-nginx-symfony:php7.2-fpm-nginx
   * touch4it/php-nginx-symfony:php7.2-fpm-nginx-dev
+  * touch4it/php-nginx-symfony:php7.3-fpm-nginx
+  * touch4it/php-nginx-symfony:php7.3-fpm-nginx-dev
 * Drupal
   * touch4it/drupal-php-fpm-nginx:latest
-  * touch4it/drupal-php-fpm-nginx:8.5, 8.5-php7.2
-  * touch4it/drupal-php-fpm-nginx:8.4, 8.4-php7.1
-  * touch4it/drupal-php-fpm-nginx:8.5-php7.1
-  * touch4it/drupal-php-fpm-nginx:8.4-php7.2
-  * touch4it/drupal-php-fpm-nginx:8.5-dev, 8.5-php7.2-dev
-  * touch4it/drupal-php-fpm-nginx:8.4-dev, 8.4-php7.1-dev
-  * touch4it/drupal-php-fpm-nginx:8.5-php7.1-dev
-  * touch4it/drupal-php-fpm-nginx:8.4-php7.2-dev
+  * touch4it/drupal-php-fpm-nginx:8.6
+  * touch4it/drupal-php-fpm-nginx:8.5
+  * touch4it/drupal-php-fpm-nginx:8.6-dev
+  * touch4it/drupal-php-fpm-nginx:8.5-dev
