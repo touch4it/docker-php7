@@ -19,8 +19,8 @@ This repository is a source code for following Docker images:
 *   Latest release
     *   touch4it/drupal-php-fpm-nginx:latest
 *   Production images
-    *   8.6.14, 8.6, 8.6-php7.2, 8.6-php7.3
-    *   8.5.14, 8.5, 8.5-php7.2
+    *   8.6.15, 8.6, 8.6-php7.2, 8.6-php7.3
+    *   8.5.15, 8.5, 8.5-php7.2
 *   Development images
     *   8.6-dev
     *   8.5-dev, 8.5-php7.2-dev, 8.6-php7.3-dev
@@ -88,6 +88,14 @@ You can directly execute Drupal Console commands from image command line, e.g.
 or
 
 ```/var/www/html/vendor/drupal/console/bin/drupal cache:rebuild```
+
+or
+
+```drush cache:rebuild```
+
+or
+
+```/var/www/html/vendor/drush/drush/drush cache:rebuild```
 
 ## Build production image
 
