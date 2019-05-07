@@ -2,6 +2,12 @@
 
 # Build production images
 
+docker build ./php7.3-fpm-nginx-drupal8.7 \
+	-t touch4it/drupal-php-fpm-nginx:8.7-php7.3 \
+	-t touch4it/drupal-php-fpm-nginx:8.7 \
+	-t touch4it/drupal-php-fpm-nginx:8.7.0 \
+	-f ./php7.3-fpm-nginx-drupal8.7/Dockerfile
+
 docker build ./php7.2-fpm-nginx-drupal8.6 \
 	-t touch4it/drupal-php-fpm-nginx:8.6-php7.2 \
 	-t touch4it/drupal-php-fpm-nginx:8.6 \
@@ -18,6 +24,11 @@ docker build ./php7.3-fpm-nginx-drupal8.5 \
 	-f ./php7.3-fpm-nginx-drupal8.5/Dockerfile
 
 # Build development images
+
+docker build ./php7.3-fpm-nginx-drupal8.7-dev \
+	-t touch4it/drupal-php-fpm-nginx:8.7-php7.3-dev \
+	-t touch4it/drupal-php-fpm-nginx:8.7-dev \
+	-f ./php7.3-fpm-nginx-drupal8.7-dev/Dockerfile
 
 docker build ./php7.2-fpm-nginx-drupal8.6-dev \
 	-t touch4it/drupal-php-fpm-nginx:8.6-php7.2-dev \
@@ -43,6 +54,10 @@ docker build ./console \
 
 docker push touch4it/drupal-php-fpm-nginx:latest
 
+docker push touch4it/drupal-php-fpm-nginx:8.7.0
+docker push touch4it/drupal-php-fpm-nginx:8.7
+docker push touch4it/drupal-php-fpm-nginx:8.7-php7.3
+
 docker push touch4it/drupal-php-fpm-nginx:8.6.15
 docker push touch4it/drupal-php-fpm-nginx:8.6
 docker push touch4it/drupal-php-fpm-nginx:8.6-php7.2
@@ -53,6 +68,9 @@ docker push touch4it/drupal-php-fpm-nginx:8.5
 docker push touch4it/drupal-php-fpm-nginx:8.5-php7.2
 
 # Deploy dev images
+
+docker push touch4it/drupal-php-fpm-nginx:8.7-dev
+docker push touch4it/drupal-php-fpm-nginx:8.7-php7.3-dev
 
 docker push touch4it/drupal-php-fpm-nginx:8.6-dev
 docker push touch4it/drupal-php-fpm-nginx:8.6-php7.2-dev
