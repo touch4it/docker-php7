@@ -13,6 +13,6 @@ RUN curl -fSL "https://ftp.drupal.org/files/projects/drupal-${DRUPAL_VERSION}.ta
 	&& rm drupal.tar.gz \
 	&& chown -R www-data:www-data sites modules themes
 
-RUN composer require drupal/console:~1.0 drush/drush --prefer-dist --optimize-autoloader \
+RUN composer require drupal/console drush/drush --prefer-dist --optimize-autoloader \
 	&& ln -s /var/www/html/vendor/drupal/console/bin/drupal /usr/local/bin/drupal \
 	&& ln -s /var/www/html/vendor/drush/drush/drush /usr/local/bin/drush
