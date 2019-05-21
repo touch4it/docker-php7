@@ -46,6 +46,7 @@ docker build ./php7.3-fpm-nginx-dev \
 docker push touch4it/docker-php7:php7.1-apache
 docker push touch4it/docker-php7:php7.2-apache
 docker push touch4it/docker-php7:php7.3-apache
+
 docker push touch4it/docker-php7:php7.1-fpm-nginx
 docker push touch4it/docker-php7:php7.2-fpm-nginx
 docker push touch4it/docker-php7:php7.3-fpm-nginx
