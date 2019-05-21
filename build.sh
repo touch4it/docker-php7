@@ -29,15 +29,15 @@ docker build --no-cache ./php7.3-fpm-nginx \
 
 # Build development images
 
-docker build --no-cache ./php7.1-fpm-nginx-dev \
+docker build ./php7.1-fpm-nginx-dev \
 	-t touch4it/docker-php7:php7.1-fpm-nginx-dev \
 	-f ./php7.1-fpm-nginx-dev/Dockerfile
 
-docker build --no-cache ./php7.2-fpm-nginx-dev \
+docker build ./php7.2-fpm-nginx-dev \
 	-t touch4it/docker-php7:php7.2-fpm-nginx-dev \
 	-f ./php7.2-fpm-nginx-dev/Dockerfile
 
-docker build --no-cache ./php7.3-fpm-nginx-dev \
+docker build ./php7.3-fpm-nginx-dev \
 	-t touch4it/docker-php7:php7.3-fpm-nginx-dev \
 	-f ./php7.3-fpm-nginx-dev/Dockerfile
 

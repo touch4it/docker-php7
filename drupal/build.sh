@@ -25,21 +25,21 @@ docker build --no-cache ./php7.3-fpm-nginx-drupal8.5 \
 
 # Build development images
 
-docker build --no-cache ./php7.3-fpm-nginx-drupal8.7-dev \
+docker build ./php7.3-fpm-nginx-drupal8.7-dev \
 	-t touch4it/drupal-php-fpm-nginx:8.7-php7.3-dev \
 	-t touch4it/drupal-php-fpm-nginx:8.7-dev \
 	-f ./php7.3-fpm-nginx-drupal8.7-dev/Dockerfile
 
-docker build --no-cache ./php7.2-fpm-nginx-drupal8.6-dev \
+docker build ./php7.2-fpm-nginx-drupal8.6-dev \
 	-t touch4it/drupal-php-fpm-nginx:8.6-php7.2-dev \
 	-t touch4it/drupal-php-fpm-nginx:8.6-dev \
 	-f ./php7.2-fpm-nginx-drupal8.6-dev/Dockerfile
 
-docker build --no-cache ./php7.3-fpm-nginx-drupal8.6-dev \
+docker build ./php7.3-fpm-nginx-drupal8.6-dev \
 	-t touch4it/drupal-php-fpm-nginx:8.6-php7.3-dev \
 	-f ./php7.3-fpm-nginx-drupal8.6-dev/Dockerfile
 
-docker build --no-cache ./php7.2-fpm-nginx-drupal8.5-dev \
+docker build ./php7.2-fpm-nginx-drupal8.5-dev \
 	-t touch4it/drupal-php-fpm-nginx:8.5-php7.2-dev \
 	-t touch4it/drupal-php-fpm-nginx:8.5-dev \
 	-f ./php7.2-fpm-nginx-drupal8.5-dev/Dockerfile

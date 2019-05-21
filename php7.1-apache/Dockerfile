@@ -25,6 +25,7 @@ RUN apt-get update \
 		zip \
 	&& curl -sS https://getcomposer.org/installer | php \
 	&& mv composer.phar /usr/local/bin/composer \
+	&& composer self-update \
 	&& docker-php-ext-configure gd \
 		--with-png-dir=/usr/include/ \
 		--with-jpeg-dir=/usr/include/ \
