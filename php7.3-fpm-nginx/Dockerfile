@@ -24,6 +24,8 @@ RUN apk --update add --no-cache \
 		libjpeg-turbo-dev \
 		libpng-dev \
 		libzip-dev \
+		php7-dom \
+		php7-xml \
 		postgresql-dev \
 		zip \
 		grep \
@@ -37,7 +39,6 @@ RUN apk --update add --no-cache \
 		--with-libzip \
 	&& docker-php-ext-install \
 		bcmath \
-		dom \
 		exif \
 		gd \
 		gettext \
@@ -50,7 +51,6 @@ RUN apk --update add --no-cache \
 		pdo_mysql \
 		pdo_pgsql \
 		pgsql \
-		xml \
 		zip \
     && docker-php-ext-configure bcmath --enable-bcmath
 
