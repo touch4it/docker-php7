@@ -2,7 +2,7 @@ FROM php:7.2-cli-alpine
 
 LABEL maintainer="Touch4IT <admin@touch4it.com>"
 
-COPY --from=touch4it/drupal-php-fpm-nginx:latest /usr/bin/composer /usr/bin/composer
+COPY --from=touch4it/drupal-php-fpm-nginx:latest /usr/local/bin/composer /usr/local/bin/composer
 COPY --from=touch4it/drupal-php-fpm-nginx:latest /var/www/html/vendor/drupal/console/bin/drupal /usr/local/bin/drupal
 COPY --from=touch4it/drupal-php-fpm-nginx:latest /var/www/html/vendor/drush/drush/drush /usr/local/bin/drush
 
