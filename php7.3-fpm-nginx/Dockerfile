@@ -16,7 +16,6 @@ ENV PHP_POST_MAX_SIZE 32M
 RUN apk --update add --no-cache \
 		acl \
 		bash \
-		dcron \
 		freetype-dev \
 		gettext-dev \
 		git \
@@ -53,6 +52,14 @@ RUN apk --update add --no-cache \
 		pgsql \
 		zip \
     && docker-php-ext-configure bcmath --enable-bcmath
+
+#
+# CRON
+#
+
+RUN mkdir -m 0644 -p /etc/cron.d \
+	&& mkdir -m 0644 -p /var/log/cron \
+	&& touch /var/log/cron/cron.log
 
 #
 # COMPOSER
