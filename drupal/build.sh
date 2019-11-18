@@ -5,7 +5,7 @@
 docker build --no-cache ./php7.3-fpm-nginx-drupal8.7 \
 	-t touch4it/drupal-php-fpm-nginx:8.7-php7.3 \
 	-t touch4it/drupal-php-fpm-nginx:8.7 \
-	-t touch4it/drupal-php-fpm-nginx:8.7.8 \
+	-t touch4it/drupal-php-fpm-nginx:8.7.9 \
 	-f ./php7.3-fpm-nginx-drupal8.7/Dockerfile
 
 docker build --no-cache ./php7.2-fpm-nginx-drupal8.6 \
@@ -45,7 +45,7 @@ docker build --no-cache ./console \
 
 docker push touch4it/drupal-php-fpm-nginx:latest
 
-docker push touch4it/drupal-php-fpm-nginx:8.7.8
+docker push touch4it/drupal-php-fpm-nginx:8.7.9
 docker push touch4it/drupal-php-fpm-nginx:8.7
 docker push touch4it/drupal-php-fpm-nginx:8.7-php7.3
 
