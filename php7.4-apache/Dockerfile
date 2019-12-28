@@ -1,6 +1,4 @@
-FROM php:7.1-apache
-
-LABEL maintainer="Touch4IT <admin@touch4it.com>"
+FROM php:7.4-apache
 
 ENV ADMIN_EMAIL webmaster@localhost
 ENV PHP_TIME_ZONE Europe/London
@@ -12,7 +10,7 @@ ADD 000-default.conf $APACHE_CONFDIR/sites-available/000-default.conf
 ADD php-override.ini $PHP_INI_DIR/conf.d/php-override.ini
 
 RUN apt-get update \
-	&& apt-get install -y \
+	&& apt-get install -y -f apt-transport-https \
 		libicu-dev \
 		libfreetype6-dev \
 		libjpeg62-turbo-dev \
@@ -49,6 +47,7 @@ RUN apt-get update \
 		pdo_pgsql \
 		zip \
 	&& a2enmod rewrite \
+	&& a2enmod http2 \
 	&& mkdir -p /etc/cron.d/ \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/* \

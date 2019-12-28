@@ -4,9 +4,13 @@ Docker image tailored to run Drupal 8
 
 ## More info
 
-[Docker hub](https://hub.docker.com/r/touch4it/drupal-php-fpm-nginx)
+Docker hub
 
-[Github repository](https://github.com/touch4it/docker-php7)
+https://hub.docker.com/r/touch4it/drupal-php-fpm-nginx
+
+Github repository
+
+https://github.com/touch4it/docker-php7
 
 ## What's here?
 
@@ -15,14 +19,16 @@ This repository is a source code for following Docker images:
 *   Latest release
     *   touch4it/drupal-php-fpm-nginx:latest
 *   Production images
-    *   8.7.10, 8.7, 8.7-php7.3
-    *   8.6.18, 8.6, 8.6-php7.2, 8.6-php7.3
-    *   8.5.15, 8.5, 8.5-php7.2
+    *   8.8.1, 8.8, 8.8-php7.3
+    *   8.7.11, 8.7, 8.7-php7.3
 *   Development images
-    *   8.6-dev
-    *   8.5-dev, 8.5-php7.2-dev, 8.6-php7.3-dev
+    *   8.8-dev
+    *   8.7-dev
 *   Drupal console
     *   console
+*   Legacy images
+    *   8.6.18, 8.6, 8.6-php7.2, 8.6-php7.3
+    *   8.5.15, 8.5, 8.5-php7.2
 
 # Usage
 
@@ -34,7 +40,7 @@ This repository is a source code for following Docker images:
 version: '2'
 services:
   drupal:
-    image: touch4it/drupal-php-fpm-nginx:latest
+    image: touch4it/drupal-php-fpm-nginx:8.6
     expose:
       - 80
     links:
@@ -56,7 +62,6 @@ services:
 
 ```yaml
 version: '2'
-
 services:
   drupal:
     ports:
@@ -68,7 +73,6 @@ services:
       - ./drupal/modules:/var/www/html/modules
       - ./drupal/libraries:/var/www/html/libraries
       - ./drupal/etc/php/local.ini:/usr/local/etc/php/conf.d/local.ini
-
   db:
     volumes:
       - ./db/init:/docker-entrypoint-initdb.d
@@ -76,28 +80,32 @@ services:
       - ./db/dump:/dump
 ```
 
-Use `docker-compose up` command to start your development environment.
+Use ```docker-compose up``` command to start your development environment.
 
 # Using Drupal console
 
 You can directly execute Drupal Console commands from image command line, e.g.
 
-```
-drupal cache:rebuild
-```
+```drupal cache:rebuild```
 
 or
 
-```
-/var/www/html/vendor/drupal/console/bin/drupal cache:rebuild
-```
+```/var/www/html/vendor/drupal/console/bin/drupal cache:rebuild```
+
+or
+
+```drush cache:rebuild```
+
+or
+
+```/var/www/html/vendor/drush/drush/drush cache:rebuild```
 
 ## Build production image
 
 You can build production ready image with Dockerfile like this:
 
 ```
-FROM touch4it/drupal-php-fpm-nginx:latest
+FROM touch4it/docker-php7:php7
 ADD . /var/www/html
 ```
 
@@ -107,40 +115,38 @@ ADD . /var/www/html
 
 ### PHP
 
-*   exif
-*   gd
-*   gettext
-*   intl
-*   mbstring
-*   opcache
-*   pgsql
-*   pdo
-*   pdo_mysql
-*   pdo_pgsql
-*   zip
+* exif
+* gd
+* gettext
+* intl
+* mbstring
+* opcache
+* pgsql
+* pdo
+* pdo_mysql
+* pdo_pgsql
+* zip
 
 ## How do i install additional php extensions?
-
 This work is based on official Docker Hub `php` images. You can use docker-php-ext-install to add new extensions. More information can be found https://hub.docker.com/_/php/
 
 ## How do I change default PHP variables?
-
 You can add an ini file into `$PHP_INI_DIR/conf.d` directory
 
 # What other PHP images do we have?
 
-*   Debian + Apache + mod_php
-    *   touch4it/docker-php7:php7-apache
-    *   touch4it/docker-php7:php7.1-apache
-    *   touch4it/docker-php7:php7.2-apache
-    *   touch4it/php7-apache-symfony:php7
-    *   touch4it/php7-apache-symfony:php7.2
-*   Alpine + Nginx + PHP-FPM
-    *   touch4it/docker-php7:php7.1-fpm-nginx
-    *   touch4it/docker-php7:php7.1-fpm-nginx-dev
-    *   touch4it/docker-php7:php7.2-fpm-nginx
-    *   touch4it/docker-php7:php7.2-fpm-nginx-dev
-    *   touch4it/php-nginx-symfony:php7.1-fpm-nginx
-    *   touch4it/php-nginx-symfony:php7.1-fpm-nginx-dev
-    *   touch4it/php-nginx-symfony:php7.2-fpm-nginx
-    *   touch4it/php-nginx-symfony:php7.2-fpm-nginx-dev
+* Debian + Apache + mod_php
+  * touch4it/docker-php7:php7-apache
+  * touch4it/docker-php7:php7.1-apache
+  * touch4it/docker-php7:php7.2-apache
+  * touch4it/php7-apache-symfony:php7
+  * touch4it/php7-apache-symfony:php7.2
+* Alpine + Nginx + PHP-FPM
+  * touch4it/docker-php7:php7.1-fpm-nginx
+  * touch4it/docker-php7:php7.1-fpm-nginx-dev
+  * touch4it/docker-php7:php7.2-fpm-nginx
+  * touch4it/docker-php7:php7.2-fpm-nginx-dev
+  * touch4it/php-nginx-symfony:php7.1-fpm-nginx
+  * touch4it/php-nginx-symfony:php7.1-fpm-nginx-dev
+  * touch4it/php-nginx-symfony:php7.2-fpm-nginx
+  * touch4it/php-nginx-symfony:php7.2-fpm-nginx-dev
