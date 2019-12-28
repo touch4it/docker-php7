@@ -2,6 +2,8 @@
 
 # Build production images
 
+echo "Building PHP images"
+
 ## Apache + mod_php
 
 docker build --no-cache ./php7.2-apache \
@@ -52,6 +54,8 @@ docker build ./php7.4-fpm-nginx-dev \
 
 # Deploy production images
 
+echo "Pushing PHP images"
+
 docker push touch4it/docker-php7:php7.2-apache
 docker push touch4it/docker-php7:php7.3-apache
 docker push touch4it/docker-php7:php7.4-apache
@@ -71,5 +75,6 @@ docker push touch4it/docker-php7:php7.4-fpm-nginx-dev
 
 # Build and deploy specific images
 
-sh ./drupal/build.sh
-sh ./yii2/build.sh
+(cd ./drupal/ ; sh build.sh)
+(cd ./yii2/ ; sh build.sh)
+(cd ./symfony/ ; sh build.sh)

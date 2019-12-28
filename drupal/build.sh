@@ -2,6 +2,8 @@
 
 # Build production images
 
+echo "Building Drupal images"
+
 docker build --no-cache ./php7.3-fpm-nginx-drupal8.8 \
 	-t touch4it/drupal-php-fpm-nginx:8.8-php7.3 \
 	-t touch4it/drupal-php-fpm-nginx:8.8 \
@@ -33,7 +35,9 @@ docker build --no-cache ./console \
 	-t touch4it/drupal-php-fpm-nginx:console \
 	-f ./console/Dockerfile
 
-# Deploy production images
+# Push production images
+
+echo "Pushing Drupal images"
 
 docker push touch4it/drupal-php-fpm-nginx:latest
 
@@ -45,7 +49,7 @@ docker push touch4it/drupal-php-fpm-nginx:8.7.11
 docker push touch4it/drupal-php-fpm-nginx:8.7
 docker push touch4it/drupal-php-fpm-nginx:8.7-php7.3
 
-# Deploy dev images
+# Push dev images
 
 docker push touch4it/drupal-php-fpm-nginx:8.8-dev
 docker push touch4it/drupal-php-fpm-nginx:8.8-php7.3-dev
@@ -53,6 +57,6 @@ docker push touch4it/drupal-php-fpm-nginx:8.8-php7.3-dev
 docker push touch4it/drupal-php-fpm-nginx:8.7-dev
 docker push touch4it/drupal-php-fpm-nginx:8.7-php7.3-dev
 
-# Deploy Docker console
+# Push Docker console
 
 docker push touch4it/drupal-php-fpm-nginx:console
