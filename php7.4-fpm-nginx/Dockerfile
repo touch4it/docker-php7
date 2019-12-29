@@ -23,19 +23,19 @@ RUN apk --update add --no-cache \
 		libjpeg-turbo-dev \
 		libpng-dev \
 		libzip-dev \
+		oniguruma-dev \
 		php7-dom \
 		php7-xml \
 		postgresql-dev \
 		zip \
 		grep \
 	&& docker-php-ext-configure gd \
-		--with-png=/usr/include/ \
-		--with-jpeg=/usr/include/ \
-		--with-freetype=/usr/include/ \
+		--with-jpeg \
+		--with-freetype \
 	&& docker-php-ext-configure pgsql \
 		-with-pgsql=/usr/local/pgsql \
 	&& docker-php-ext-configure zip \
-		--with-libzip \
+		--with-zip \
 	&& docker-php-ext-install \
 		bcmath \
 		exif \

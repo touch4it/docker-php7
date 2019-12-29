@@ -1,4 +1,4 @@
-FROM php:7.4-apache
+FROM php:7.4-apache-buster
 
 ENV ADMIN_EMAIL webmaster@localhost
 ENV PHP_TIME_ZONE Europe/London
@@ -14,6 +14,7 @@ RUN apt-get update \
 		libicu-dev \
 		libfreetype6-dev \
 		libjpeg62-turbo-dev \
+		libonig-dev \
 		libpng-dev \
 		libpq-dev \
 		libzip-dev \
@@ -25,13 +26,12 @@ RUN apt-get update \
 	&& mv composer.phar /usr/local/bin/composer \
 	&& composer self-update \
 	&& docker-php-ext-configure gd \
-		--with-png=/usr/include/ \
-		--with-jpeg=/usr/include/ \
-		--with-freetype=/usr/include/ \
+		--with-jpeg \
+		--with-freetype \
 	&& docker-php-ext-configure pgsql \
 		-with-pgsql=/usr/local/pgsql \
 	&& docker-php-ext-configure zip \
-		--with-libzip \
+		--with-zip \
 	&& docker-php-ext-install \
 		bcmath \
 		exif \

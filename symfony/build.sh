@@ -12,12 +12,12 @@ docker build ./php7.2 \
 
 docker build ./php7.3 \
 	-t touch4it/php7-apache-symfony:php7.3 \
-	-f ./php7.3-apache/Dockerfile
+	-f ./php7.3/Dockerfile
 
 docker build ./php7.4 \
 	-t touch4it/php7-apache-symfony:php7.4 \
 	-t touch4it/php7-apache-symfony:latest \
-	-f ./php7.4-apache/Dockerfile
+	-f ./php7.4/Dockerfile
 
 ## Nginx + FPM
 
@@ -51,6 +51,7 @@ docker build ./php7.3-fpm-nginx-dev \
 
 docker build ./php7.4-fpm-nginx-dev \
 	-t touch4it/php-nginx-symfony:php7.4-fpm-nginx-dev \
+	-t touch4it/php-nginx-symfony:php7.4-dev \
 	-t touch4it/php-nginx-symfony:latest-dev \
 	-f ./php7.4-fpm-nginx-dev/Dockerfile
 

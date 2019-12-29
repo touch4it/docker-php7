@@ -22,6 +22,7 @@ RUN apt-get update \
 		libicu-dev \
 		libjpeg-dev \
 		libfreetype6-dev \
+		libonig-dev \
 		libpng-dev \
 		libpq-dev \
 		libxml2-dev \
@@ -29,13 +30,12 @@ RUN apt-get update \
 		zip \
 		grep \
 	&& docker-php-ext-configure gd \
-		--with-png=/usr/include/ \
-		--with-jpeg=/usr/include/ \
-		--with-freetype=/usr/include/ \
+		--with-jpeg \
+		--with-freetype \
 	&& docker-php-ext-configure pgsql \
 		-with-pgsql=/usr/local/pgsql \
 	&& docker-php-ext-configure zip \
-		--with-libzip \
+		--with-zip \
 	&& docker-php-ext-install \
 		bcmath \
 		exif \
