@@ -29,9 +29,9 @@ RUN apt-get update \
 		zip \
 		grep \
 	&& docker-php-ext-configure gd \
-		--with-png-dir=/usr/include/ \
-		--with-jpeg-dir=/usr/include/ \
-		--with-freetype-dir=/usr/include/ \
+		--with-png=/usr/include/ \
+		--with-jpeg=/usr/include/ \
+		--with-freetype=/usr/include/ \
 	&& docker-php-ext-configure pgsql \
 		-with-pgsql=/usr/local/pgsql \
 	&& docker-php-ext-configure zip \

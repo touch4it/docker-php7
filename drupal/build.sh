@@ -4,14 +4,14 @@
 
 echo "Building Drupal images"
 
-docker build --no-cache ./php7.3-fpm-nginx-drupal8.8 \
+docker build ./php7.3-fpm-nginx-drupal8.8 \
 	-t touch4it/drupal-php-fpm-nginx:8.8-php7.3 \
 	-t touch4it/drupal-php-fpm-nginx:8.8 \
 	-t touch4it/drupal-php-fpm-nginx:8.8.1 \
 	-t touch4it/drupal-php-fpm-nginx:latest \
 	-f ./php7.3-fpm-nginx-drupal8.8/Dockerfile
 
-docker build --no-cache ./php7.3-fpm-nginx-drupal8.7 \
+docker build ./php7.3-fpm-nginx-drupal8.7 \
 	-t touch4it/drupal-php-fpm-nginx:8.7-php7.3 \
 	-t touch4it/drupal-php-fpm-nginx:8.7 \
 	-t touch4it/drupal-php-fpm-nginx:8.7.11 \
@@ -31,7 +31,7 @@ docker build ./php7.3-fpm-nginx-drupal8.7-dev \
 
 # Build Drupal console
 
-docker build --no-cache ./console \
+docker build ./console \
 	-t touch4it/drupal-php-fpm-nginx:console \
 	-f ./console/Dockerfile
 
