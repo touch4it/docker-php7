@@ -4,7 +4,7 @@ COPY nginx.vh.default.conf /etc/nginx/conf.d/default.conf
 
 WORKDIR /var/www/html
 
-ENV DRUPAL_VERSION 8.8.5
+ENV DRUPAL_VERSION 8.8.6
 ENV DRUPAL_MD5 11e595f6aa42fca4ab4423bff0b09c28
 
 RUN curl -fSL "https://ftp.drupal.org/files/projects/drupal-${DRUPAL_VERSION}.tar.gz" -o drupal.tar.gz \
@@ -15,4 +15,6 @@ RUN curl -fSL "https://ftp.drupal.org/files/projects/drupal-${DRUPAL_VERSION}.ta
 
 RUN composer require drupal/console drush/drush --prefer-dist --optimize-autoloader \
 	&& ln -s /var/www/html/vendor/drupal/console/bin/drupal /usr/local/bin/drupal \
-	&& ln -s /var/www/html/vendor/drush/drush/drush /usr/local/bin/drush
+	&& chmod a+x /usr/local/bin/drupal \
+	&& ln -s /var/www/html/vendor/drush/drush/drush /usr/local/bin/drush \
+	&& chmod a+x /usr/local/bin/drush

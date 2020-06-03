@@ -7,7 +7,7 @@ echo "Building Drupal images"
 docker build ./php7.3-fpm-nginx-drupal8.8 \
 	-t touch4it/drupal-php-fpm-nginx:8.8-php7.3 \
 	-t touch4it/drupal-php-fpm-nginx:8.8 \
-	-t touch4it/drupal-php-fpm-nginx:8.8.5 \
+	-t touch4it/drupal-php-fpm-nginx:8.8.6 \
 	-t touch4it/drupal-php-fpm-nginx:latest \
 	-f ./php7.3-fpm-nginx-drupal8.8/Dockerfile
 
@@ -18,7 +18,7 @@ docker build ./php7.4-fpm-nginx-drupal8.8 \
 docker build ./php7.3-fpm-nginx-drupal8.7 \
 	-t touch4it/drupal-php-fpm-nginx:8.7-php7.3 \
 	-t touch4it/drupal-php-fpm-nginx:8.7 \
-	-t touch4it/drupal-php-fpm-nginx:8.7.13 \
+	-t touch4it/drupal-php-fpm-nginx:8.7.14 \
 	-f ./php7.3-fpm-nginx-drupal8.7/Dockerfile
 
 # Build development images
@@ -49,13 +49,13 @@ echo "Pushing Drupal images"
 
 docker push touch4it/drupal-php-fpm-nginx:latest
 
-docker push touch4it/drupal-php-fpm-nginx:8.8.5
+docker push touch4it/drupal-php-fpm-nginx:8.8.6
 docker push touch4it/drupal-php-fpm-nginx:8.8
 docker push touch4it/drupal-php-fpm-nginx:8.8-php7.3
 
 docker push touch4it/drupal-php-fpm-nginx:8.8-php7.4
 
-docker push touch4it/drupal-php-fpm-nginx:8.7.13
+docker push touch4it/drupal-php-fpm-nginx:8.7.14
 docker push touch4it/drupal-php-fpm-nginx:8.7
 docker push touch4it/drupal-php-fpm-nginx:8.7-php7.3
 

@@ -12,22 +12,23 @@ Docker image tailored to run Drupal 8
 
 This repository is a source code for following Docker images:
 
-*   Latest release
-*   Latest release
-    *   touch4it/drupal-php-fpm-nginx:latest
-*   Production images
-    *   8.8.5, 8.8, 8.8-php7.3
-    *   8.8-php7.4
-    *   8.7.13, 8.7, 8.7-php7.3
-*   Development images
-    *   8.8-dev
-    *   8.8-php7.4-dev
-    *   8.7-dev
-*   Drupal console
-    *   console
-*   Legacy images
-    *   8.6.18, 8.6, 8.6-php7.2, 8.6-php7.3
-    *   8.5.15, 8.5, 8.5-php7.2
+* Latest release
+  * touch4it/drupal-php-fpm-nginx:latest
+* Production images
+  * latest, 8.8.6, 8.8, 8.8-php7.3
+  * 8.8-php7.4
+  * 8.7.14, 8.7, 8.7-php7.3
+* Development images
+  * 8.8-dev
+  * 8.8-php7.4-dev
+  * 8.7-dev
+* Drupal console
+  * console
+* Legacy images
+  * 8.6, 8.6-php7.2, 8.6-php7.3
+  * 8.5, 8.5-php7.2
+  * 8.4, 8.4-php7.2
+  * 8.3, 8.3-php7.1
 
 # Usage
 
@@ -47,7 +48,7 @@ services:
     depends_on:
       - mariadb
   db:
-    image: mariadb:10.1
+    image: mariadb:10.3
     environment:
       MYSQL_ROOT_PASSWORD: drupal
       MYSQL_DATABASE: drupal
@@ -134,18 +135,27 @@ You can add an ini file into `$PHP_INI_DIR/conf.d` directory
 
 # What other PHP images do we have?
 
-*   Debian + Apache + mod_php
-    *   touch4it/docker-php7:php7-apache
-    *   touch4it/docker-php7:php7.1-apache
-    *   touch4it/docker-php7:php7.2-apache
-    *   touch4it/php7-apache-symfony:php7
-    *   touch4it/php7-apache-symfony:php7.2
-*   Alpine + Nginx + PHP-FPM
-    *   touch4it/docker-php7:php7.1-fpm-nginx
-    *   touch4it/docker-php7:php7.1-fpm-nginx-dev
-    *   touch4it/docker-php7:php7.2-fpm-nginx
-    *   touch4it/docker-php7:php7.2-fpm-nginx-dev
-    *   touch4it/php-nginx-symfony:php7.1-fpm-nginx
-    *   touch4it/php-nginx-symfony:php7.1-fpm-nginx-dev
-    *   touch4it/php-nginx-symfony:php7.2-fpm-nginx
-    *   touch4it/php-nginx-symfony:php7.2-fpm-nginx-dev
+* Debian + Apache + mod_php
+  * touch4it/docker-php7:php7.2-apache
+  * touch4it/docker-php7:php7.3-apache
+  * touch4it/docker-php7:php7.4-apache
+* Debian + Apache + PHP-FPM
+  * touch4it/docker-php7:php7.3-fpm-apache
+  * touch4it/docker-php7:php7.4-fpm-apache
+* Alpine + Nginx + PHP-FPM
+  * touch4it/docker-php7:php7.2-fpm-nginx
+  * touch4it/docker-php7:php7.2-fpm-nginx-dev
+  * touch4it/docker-php7:php7.3-fpm-nginx
+  * touch4it/docker-php7:php7.3-fpm-nginx-dev
+  * touch4it/docker-php7:php7.4-fpm-nginx
+  * touch4it/docker-php7:php7.4-fpm-nginx-dev
+* Symfony
+  * touch4it/php7-apache-symfony:php7.2
+  * touch4it/php7-apache-symfony:php7.3
+  * touch4it/php7-apache-symfony:php7.4
+  * touch4it/php-nginx-symfony:php7.2-fpm-nginx
+  * touch4it/php-nginx-symfony:php7.2-fpm-nginx-dev
+  * touch4it/php-nginx-symfony:php7.3-fpm-nginx
+  * touch4it/php-nginx-symfony:php7.3-fpm-nginx-dev
+  * touch4it/php-nginx-symfony:latest, php7.4-fpm-nginx
+  * touch4it/php-nginx-symfony:php7.4-fpm-nginx-dev

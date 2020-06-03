@@ -43,7 +43,7 @@ services:
     depends_on:
       - db
   db:
-    image: mariadb:10.1
+    image: mariadb:10.3
     environment:
       MYSQL_ROOT_PASSWORD: yii
       MYSQL_DATABASE: yii
@@ -128,8 +128,6 @@ You can add an ini file into `$PHP_INI_DIR/conf.d` directory
   * touch4it/php-nginx-symfony:php7.3-fpm-nginx
   * touch4it/php-nginx-symfony:php7.3-fpm-nginx-dev
 * Drupal
-  * touch4it/drupal-php-fpm-nginx:latest
-  * touch4it/drupal-php-fpm-nginx:8.6
-  * touch4it/drupal-php-fpm-nginx:8.5
-  * touch4it/drupal-php-fpm-nginx:8.6-dev
-  * touch4it/drupal-php-fpm-nginx:8.5-dev
+  * touch4it/drupal-php-fpm-nginx:latest, 8.8, 8.8-php7.3
+  * touch4it/drupal-php-fpm-nginx:8.8-php7.4
+  * touch4it/drupal-php-fpm-nginx:8.7
