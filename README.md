@@ -31,9 +31,11 @@ This repository is a source code for following Docker images that allow relative
   * touch4it/php-nginx-symfony:latest, php7.4-fpm-nginx
   * touch4it/php-nginx-symfony:php7.4-fpm-nginx-dev
 * Drupal
-  * touch4it/drupal-php-fpm-nginx:latest, 8.8.7, 8.8, 8.8-php7.3
+  * touch4it/drupal-php-fpm-nginx:latest, 9.0.0, 9.0
+  * touch4it/drupal-php-fpm-nginx:8.9.0, 8.9, 8.9-php7.3
+  * touch4it/drupal-php-fpm-nginx:8.9-php7.4
+  * touch4it/drupal-php-fpm-nginx:8.8.7, 8.8, 8.8-php7.3
   * touch4it/drupal-php-fpm-nginx:8.8-php7.4
-  * touch4it/drupal-php-fpm-nginx:8.7.14, 8.7
 * Drupal console
   * touch4it/drupal-php-fpm-nginx:console
 * Symfony

@@ -15,16 +15,21 @@ This repository is a source code for following Docker images:
 * Latest release
   * touch4it/drupal-php-fpm-nginx:latest
 * Production images
-  * latest, 8.8.7, 8.8, 8.8-php7.3
+  * latest, 9.0.0, 9.0, 9.0-php7.4
+  * 8.9.0, 8.9, 8.9-php7.3
+  * 8.9-php7.4
+  * 8.8.7, 8.8, 8.8-php7.3
   * 8.8-php7.4
-  * 8.7.14, 8.7, 8.7-php7.3
 * Development images
+  * 9.0-dev
+  * 8.9-dev
+  * 8.9-php7.4-dev
   * 8.8-dev
   * 8.8-php7.4-dev
-  * 8.7-dev
 * Drupal console
   * console
 * Legacy images
+  * 8.7, 8.7-php7.3
   * 8.6, 8.6-php7.2, 8.6-php7.3
   * 8.5, 8.5-php7.2
   * 8.4, 8.4-php7.2
