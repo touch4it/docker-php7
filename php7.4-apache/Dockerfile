@@ -22,7 +22,7 @@ RUN apt-get update \
 		cron \
 		git \
 		zip \
-	&& curl -sS https://getcomposer.org/installer | php \
+	&& curl https://getcomposer.org/composer-1.phar -s -o composer.phar \
 	&& mv composer.phar /usr/local/bin/composer \
 	&& composer self-update \
 	&& docker-php-ext-configure gd \
