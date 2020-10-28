@@ -20,7 +20,7 @@ RUN apt-get update \
 		cron \
 		git \
 		zip \
-	&& curl -sS https://getcomposer.org/installer --1 | php \
+	&& curl -sS https://getcomposer.org/installer | php \
 	&& mv composer.phar /usr/local/bin/composer \
 	&& docker-php-ext-configure gd --with-png-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-freetype-dir=/usr/include/ \
 	&& docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \

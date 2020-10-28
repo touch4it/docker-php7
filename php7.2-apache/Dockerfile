@@ -21,7 +21,7 @@ RUN apt-get update \
 		cron \
 		git \
 		zip \
-	&& curl -sS https://getcomposer.org/installer --1 | php \
+	&& curl -sS https://getcomposer.org/installer | php \
 	&& mv composer.phar /usr/local/bin/composer \
 	&& composer self-update --1 \
 	&& docker-php-ext-configure gd \
