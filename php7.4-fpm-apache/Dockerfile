@@ -66,9 +66,9 @@ RUN apt-get install -y --no-install-recommends cron \
 # COMPOSER
 #
 
-RUN curl https://getcomposer.org/composer-1.phar -s -o composer.phar \
+RUN curl -sS https://getcomposer.org/installer --1 | php \
 	&& mv composer.phar /usr/local/bin/composer \
-	&& composer self-update
+	&& composer self-update --1
 
 #
 # APACHE
