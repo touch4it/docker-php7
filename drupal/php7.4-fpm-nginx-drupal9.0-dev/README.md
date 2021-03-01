@@ -139,6 +139,8 @@ You can add an ini file into `$PHP_INI_DIR/conf.d` directory
 
 # What other PHP images do we have?
 
+PHP 7
+
 * Debian + Apache + mod_php
   * touch4it/docker-php7:php7.2-apache
   * touch4it/docker-php7:php7.3-apache
@@ -153,6 +155,17 @@ You can add an ini file into `$PHP_INI_DIR/conf.d` directory
   * touch4it/docker-php7:php7.3-fpm-nginx-dev
   * touch4it/docker-php7:php7.4-fpm-nginx
   * touch4it/docker-php7:php7.4-fpm-nginx-dev
+
+PHP 8
+
+* Debian + Apache + mod_php
+  * touch4it/php8:php8.0-apache
+* Debian + Apache + PHP-FPM
+  * touch4it/php8:php8.0-fpm-apache
+* Alpine + Nginx + PHP-FPM
+  * touch4it/php8:latest
+  * touch4it/php8:php8.0-fpm-nginx
+  * touch4it/php8:php8.0-fpm-nginx-dev
 * Symfony
   * touch4it/php7-apache-symfony:php7.2
   * touch4it/php7-apache-symfony:php7.3
