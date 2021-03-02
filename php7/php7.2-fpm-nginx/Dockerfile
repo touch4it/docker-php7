@@ -24,6 +24,7 @@ RUN apk --update add --no-cache \
     libpng-dev \
     libzip-dev \
     oniguruma-dev \
+    patch \
     php7-dom \
     php7-xml \
     postgresql-dev \

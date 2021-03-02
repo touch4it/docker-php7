@@ -33,6 +33,9 @@ PHP 8
   * touch4it/php8:latest
   * touch4it/php8:php8.0-fpm-nginx
   * touch4it/php8:php8.0-fpm-nginx-dev
+
+Frameworks
+
 * Symfony
   * touch4it/php7-apache-symfony:php7.2
   * touch4it/php7-apache-symfony:php7.3
