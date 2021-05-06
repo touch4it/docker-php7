@@ -173,14 +173,14 @@ Same as in similar official PHP image on Docker Hub
 
 ### What Nginx version is on Nginx-based images?
 
-1.16.1
+1.19.6
 
 ### What other PHP images do we have?
 
 * Drupal
-  * touch4it/drupal-php-fpm-nginx:latest, 9.1.3, 9.1
-  * touch4it/drupal-php-fpm-nginx:9.0.11, 9.0
-  * touch4it/drupal-php-fpm-nginx:8.9.13, 8.9, 8.9-php7.3
+  * touch4it/drupal-php-fpm-nginx:latest, 9.1.8, 9.1
+  * touch4it/drupal-php-fpm-nginx:9.0.13, 9.0
+  * touch4it/drupal-php-fpm-nginx:8.9.15, 8.9, 8.9-php7.3
   * touch4it/drupal-php-fpm-nginx:8.9-php7.4
 * Drupal console
   * touch4it/drupal-php-fpm-nginx:console
