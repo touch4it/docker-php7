@@ -32,7 +32,6 @@ RUN apt-get install -y --no-install-recommends \
 
 RUN docker-php-ext-configure gd --with-jpeg --with-freetype \
 	&& docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-	&& docker-php-ext-configure zip --with-zip \
 	&& docker-php-ext-configure bcmath --enable-bcmath \
 	&& docker-php-ext-install \
 		bcmath \
@@ -109,9 +108,6 @@ RUN set -eux; \
 	ln -sfT /dev/stdout "$APACHE_LOG_DIR/access.log"; \
 	ln -sfT /dev/stdout "$APACHE_LOG_DIR/other_vhosts_access.log"; \
 	chown -R --no-dereference "$APACHE_RUN_USER:$APACHE_RUN_GROUP" "$APACHE_LOG_DIR"
-
-RUN ls -l $APACHE_CONFDIR/mods-available
-RUN ls -l $APACHE_CONFDIR/mods-enabled
 
 RUN a2enmod http2 proxy_fcgi rewrite setenvif
 

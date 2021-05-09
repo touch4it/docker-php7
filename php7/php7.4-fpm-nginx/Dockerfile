@@ -33,7 +33,6 @@ RUN apk --update add --no-cache \
 
 RUN docker-php-ext-configure gd --with-jpeg --with-freetype \
 	&& docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-	&& docker-php-ext-configure zip --with-zip \
     && docker-php-ext-configure bcmath --enable-bcmath \
 	&& docker-php-ext-install \
 		bcmath \

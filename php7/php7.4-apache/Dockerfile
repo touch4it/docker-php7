@@ -25,7 +25,6 @@ RUN apt-get install -y -f apt-transport-https \
 
 RUN  docker-php-ext-configure gd --with-jpeg --with-freetype \
 	&& docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-	&& docker-php-ext-configure zip --with-zip \
 	&& docker-php-ext-install \
 		bcmath \
 		exif \

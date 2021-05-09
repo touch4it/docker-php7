@@ -142,15 +142,12 @@ You can add an ini file into `$PHP_INI_DIR/conf.d` directory
 PHP 7
 
 * Debian + Apache + mod_php
-  * touch4it/docker-php7:php7.2-apache
   * touch4it/docker-php7:php7.3-apache
   * touch4it/docker-php7:php7.4-apache
 * Debian + Apache + PHP-FPM
   * touch4it/docker-php7:php7.3-fpm-apache
   * touch4it/docker-php7:php7.4-fpm-apache
 * Alpine + Nginx + PHP-FPM
-  * touch4it/docker-php7:php7.2-fpm-nginx
-  * touch4it/docker-php7:php7.2-fpm-nginx-dev
   * touch4it/docker-php7:php7.3-fpm-nginx
   * touch4it/docker-php7:php7.3-fpm-nginx-dev
   * touch4it/docker-php7:php7.4-fpm-nginx
@@ -167,11 +164,8 @@ PHP 8
   * touch4it/php8:php8.0-fpm-nginx
   * touch4it/php8:php8.0-fpm-nginx-dev
 * Symfony
-  * touch4it/php7-apache-symfony:php7.2
   * touch4it/php7-apache-symfony:php7.3
   * touch4it/php7-apache-symfony:php7.4
-  * touch4it/php-nginx-symfony:php7.2-fpm-nginx
-  * touch4it/php-nginx-symfony:php7.2-fpm-nginx-dev
   * touch4it/php-nginx-symfony:php7.3-fpm-nginx
   * touch4it/php-nginx-symfony:php7.3-fpm-nginx-dev
   * touch4it/php-nginx-symfony:latest, php7.4-fpm-nginx

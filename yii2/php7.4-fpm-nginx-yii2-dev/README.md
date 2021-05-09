@@ -17,13 +17,11 @@ https://github.com/touch4it/docker-php7
 This repository is a source code for following Docker images tagged by PHP version:
 
 * Production images
-  * touch4it/yii2-php-fpm-nginx:7
-  * touch4it/yii2-php-fpm-nginx:7.1, latest
-  * touch4it/yii2-php-fpm-nginx:7.2
+  * touch4it/yii2-php-fpm-nginx:7.3
+  * touch4it/yii2-php-fpm-nginx:7.4, latest
 * Development images
-  * touch4it/yii2-php-fpm-nginx:7-dev
-  * touch4it/yii2-php-fpm-nginx:7.1-dev
-  * touch4it/yii2-php-fpm-nginx:7.2-dev
+  * touch4it/yii2-php-fpm-nginx:7.3-dev
+  * touch4it/yii2-php-fpm-nginx:7.4-dev
 
 # Usage
 
@@ -78,7 +76,7 @@ Use ```docker-compose up``` command to start your development environment.
 You can build production ready image with Dockerfile like this:
 
 ```
-FROM touch4it/docker-php7.2:php7
+FROM touch4it/docker-php4:php7
 ADD . /var/www/html
 ```
 
@@ -111,23 +109,20 @@ You can add an ini file into `$PHP_INI_DIR/conf.d` directory
 # What other PHP images do we have?
 
 * Debian + Apache + mod_php
-  * touch4it/docker-php7:php7.1-apache
-  * touch4it/docker-php7:php7.2-apache
   * touch4it/docker-php7:php7.3-apache
-  * touch4it/php7-apache-symfony:php7
-  * touch4it/php7-apache-symfony:php7.2
+  * touch4it/docker-php7:php7.4-apache
+  * touch4it/php7-apache-symfony:php7.3
+  * touch4it/php7-apache-symfony:php7.4
 * Alpine + Nginx + PHP-FPM
-  * touch4it/docker-php7:php7.1-fpm-nginx
-  * touch4it/docker-php7:php7.1-fpm-nginx-dev
-  * touch4it/docker-php7:php7.2-fpm-nginx
-  * touch4it/docker-php7:php7.2-fpm-nginx-dev
-  * touch4it/php-nginx-symfony:php7.1-fpm-nginx
-  * touch4it/php-nginx-symfony:php7.1-fpm-nginx-dev
-  * touch4it/php-nginx-symfony:php7.2-fpm-nginx
-  * touch4it/php-nginx-symfony:php7.2-fpm-nginx-dev
+  * touch4it/docker-php7:php7.3-fpm-nginx
+  * touch4it/docker-php7:php7.3-fpm-nginx-dev
+  * touch4it/docker-php7:php7.4-fpm-nginx
+  * touch4it/docker-php7:php7.4-fpm-nginx-dev
   * touch4it/php-nginx-symfony:php7.3-fpm-nginx
   * touch4it/php-nginx-symfony:php7.3-fpm-nginx-dev
+  * touch4it/php-nginx-symfony:php7.4-fpm-nginx
+  * touch4it/php-nginx-symfony:php7.4-fpm-nginx-dev
 * Drupal
-  * touch4it/drupal-php-fpm-nginx:latest, 8.8, 8.8-php7.3
-  * touch4it/drupal-php-fpm-nginx:8.8-php7.4
-  * touch4it/drupal-php-fpm-nginx:8.7
+  * touch4it/drupal-php-fpm-nginx:latest, 9.1, 9.1.8
+  * touch4it/drupal-php-fpm-nginx:9.0.13
+  * touch4it/drupal-php-fpm-nginx:8.9.15

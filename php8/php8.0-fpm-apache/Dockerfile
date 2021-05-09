@@ -48,7 +48,6 @@ RUN curl -sS https://getcomposer.org/installer | php \
 #
 RUN  docker-php-ext-configure gd --with-jpeg --with-freetype \
 	&& docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-	&& docker-php-ext-configure zip --with-zip \
 	&& docker-php-ext-configure bcmath --enable-bcmath \
 	&& docker-php-ext-install \
 		bcmath \
@@ -124,9 +123,6 @@ RUN { \
 		echo '</Directory>'; \
 	} | tee "$APACHE_CONFDIR/conf-available/docker-php.conf" \
 	&& a2enconf docker-php
-
-RUN ls -l $APACHE_CONFDIR/mods-available
-RUN ls -l $APACHE_CONFDIR/mods-enabled
 
 RUN a2enmod http2 proxy_fcgi rewrite setenvif
 

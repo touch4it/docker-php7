@@ -9,15 +9,12 @@ This repository is a source code for following Docker images that allow relative
 PHP 7
 
 * Debian + Apache + mod_php
-  * touch4it/docker-php7:php7.2-apache
   * touch4it/docker-php7:php7.3-apache
   * touch4it/docker-php7:php7.4-apache
 * Debian + Apache + PHP-FPM
   * touch4it/docker-php7:php7.3-fpm-apache
   * touch4it/docker-php7:php7.4-fpm-apache
 * Alpine + Nginx + PHP-FPM
-  * touch4it/docker-php7:php7.2-fpm-nginx
-  * touch4it/docker-php7:php7.2-fpm-nginx-dev
   * touch4it/docker-php7:php7.3-fpm-nginx
   * touch4it/docker-php7:php7.3-fpm-nginx-dev
   * touch4it/docker-php7:php7.4-fpm-nginx
@@ -37,11 +34,8 @@ PHP 8
 Frameworks
 
 * Symfony
-  * touch4it/php7-apache-symfony:php7.2
   * touch4it/php7-apache-symfony:php7.3
   * touch4it/php7-apache-symfony:php7.4
-  * touch4it/php-nginx-symfony:php7.2-fpm-nginx
-  * touch4it/php-nginx-symfony:php7.2-fpm-nginx-dev
   * touch4it/php-nginx-symfony:php7.3-fpm-nginx
   * touch4it/php-nginx-symfony:php7.3-fpm-nginx-dev
   * touch4it/php-nginx-symfony:latest, php7.4-fpm-nginx
@@ -54,22 +48,17 @@ Frameworks
 * Drupal console
   * touch4it/drupal-php-fpm-nginx:console
 * Symfony
-  * touch4it/php7-apache-symfony:php7.2
   * touch4it/php7-apache-symfony:php7.3
   * touch4it/php7-apache-symfony:php7.4
-  * touch4it/php-nginx-symfony:php7.2-fpm-nginx
-  * touch4it/php-nginx-symfony:php7.2-fpm-nginx-dev
   * touch4it/php-nginx-symfony:php7.3-fpm-nginx
   * touch4it/php-nginx-symfony:php7.3-fpm-nginx-dev
   * touch4it/php-nginx-symfony:latest, php7.4-fpm-nginx
   * touch4it/php-nginx-symfony:php7.4-fpm-nginx-dev
 * Yii2
-  * touch4it/yii2-php-fpm-nginx:7
-  * touch4it/yii2-php-fpm-nginx:7.1, latest
-  * touch4it/yii2-php-fpm-nginx:7.2
-  * touch4it/yii2-php-fpm-nginx:7-dev
-  * touch4it/yii2-php-fpm-nginx:7.1-dev
-  * touch4it/yii2-php-fpm-nginx:7.2-dev
+  * touch4it/yii2-php-fpm-nginx:7.3
+  * touch4it/yii2-php-fpm-nginx:7.4, latest
+  * touch4it/yii2-php-fpm-nginx:7.3-dev
+  * touch4it/yii2-php-fpm-nginx:7.4-dev
 
 # Usage
 

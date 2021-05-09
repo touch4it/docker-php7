@@ -1,15 +1,18 @@
-FROM touch4it/docker-php7:php7.1-fpm-nginx
+FROM touch4it/docker-php7:php7.3-fpm-nginx
 
-ENV VERSION_COMPOSER_ASSET_PLUGIN=^1.3.0
+ENV VERSION_COMPOSER_ASSET_PLUGIN=^1.4.6
+ENV MEMCACHED_DEPS zlib-dev libmemcached-dev cyrus-sasl-dev
 
 # Memcached
-RUN apk add --no-cache libmemcached-dev zlib-dev cyrus-sasl-dev git \
-    && docker-php-source extract \
-    && git clone --branch php7 https://github.com/php-memcached-dev/php-memcached.git /usr/src/php/ext/memcached/ \
-    && docker-php-ext-configure memcached \
-    && docker-php-ext-install memcached \
-    && docker-php-source delete \
-    && apk del --no-cache zlib-dev cyrus-sasl-dev
+RUN apk add --no-cache --update libmemcached-libs zlib
+RUN set -xe \
+    && apk add --no-cache --update --virtual .phpize-deps $PHPIZE_DEPS \
+    && apk add --no-cache --update --virtual .memcached-deps $MEMCACHED_DEPS \
+    && pecl install memcached \
+    && echo "extension=memcached.so" > /usr/local/etc/php/conf.d/20_memcached.ini \
+    && rm -rf /usr/share/php7 \
+    && rm -rf /tmp/* \
+    && apk del .memcached-deps .phpize-deps
 
 # apcu
 RUN docker-php-source extract \

@@ -47,29 +47,20 @@ RUN curl -sS https://getcomposer.org/installer | php \
 # PHP extensions
 #
 
-RUN docker-php-ext-configure gd \
-		--with-jpeg \
-		--with-freetype \
-	&& docker-php-ext-configure pgsql \
-		-with-pgsql=/usr/local/pgsql \
-	&& docker-php-ext-configure zip \
-		--with-zip \
-	&& docker-php-ext-install \
-		bcmath \
-		exif \
-		gd \
-		gettext \
-		intl \
-		json \
-		mbstring \
-		mysqli \
-		opcache \
-		pdo \
-		pdo_mysql \
-		pdo_pgsql \
-		pgsql \
-		zip \
-    && docker-php-ext-configure bcmath --enable-bcmath
+RUN docker-php-ext-configure gd --with-jpeg --with-freetype
+RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
+RUN docker-php-ext-install bcmath \
+	exif \
+	gd \
+	gettext \
+	intl \
+	mysqli \
+	opcache \
+	pdo_mysql \
+	pdo_pgsql \
+	pgsql \
+	zip
+RUN docker-php-ext-configure bcmath --enable-bcmath
 
 #
 # Apache

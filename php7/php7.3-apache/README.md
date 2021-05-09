@@ -7,15 +7,12 @@ Docker image tailored to run PHP application. Check https://hub.docker.com/r/tou
 PHP 7
 
 * Debian + Apache + mod_php
-  * touch4it/docker-php7:php7.2-apache
   * touch4it/docker-php7:php7.3-apache
   * touch4it/docker-php7:php7.4-apache
 * Debian + Apache + PHP-FPM
   * touch4it/docker-php7:php7.3-fpm-apache
   * touch4it/docker-php7:php7.4-fpm-apache
 * Alpine + Nginx + PHP-FPM
-  * touch4it/docker-php7:php7.2-fpm-nginx
-  * touch4it/docker-php7:php7.2-fpm-nginx-dev
   * touch4it/docker-php7:php7.3-fpm-nginx
   * touch4it/docker-php7:php7.3-fpm-nginx-dev
   * touch4it/docker-php7:php7.4-fpm-nginx
@@ -40,7 +37,7 @@ You can you this docker-compose.yml file to develop:
 
 ```yaml
 www:
-  image: touch4it/docker-php7:php7.2-fpm-nginx
+  image: touch4it/docker-php7:php7.3-fpm-nginx
   volumes:
     - "app:/var/www/html/web"
   ports:
@@ -55,7 +52,7 @@ Use ```docker-compose up``` command to start your development environment.
 
 ```yaml
 www:
-  image: touch4it/docker-php7:php7.2-fpm-nginx
+  image: touch4it/docker-php7:php7.4-fpm-nginx
   volumes:
     - "app:/var/www/html/web"
     - "php.ini:/usr/local/etc/php/conf.d/docker-vars.ini"
@@ -185,19 +182,14 @@ Same as in similar official PHP image on Docker Hub
 * Drupal console
   * touch4it/drupal-php-fpm-nginx:console
 * Symfony
-  * touch4it/php7-apache-symfony:php7.2
   * touch4it/php7-apache-symfony:php7.3
   * touch4it/php7-apache-symfony:php7.4
-  * touch4it/php-nginx-symfony:php7.2-fpm-nginx
-  * touch4it/php-nginx-symfony:php7.2-fpm-nginx-dev
   * touch4it/php-nginx-symfony:php7.3-fpm-nginx
   * touch4it/php-nginx-symfony:php7.3-fpm-nginx-dev
   * touch4it/php-nginx-symfony:latest, php7.4-fpm-nginx
   * touch4it/php-nginx-symfony:php7.4-fpm-nginx-dev
 * Yii2
-  * touch4it/yii2-php-fpm-nginx:7
-  * touch4it/yii2-php-fpm-nginx:7.1, latest
-  * touch4it/yii2-php-fpm-nginx:7.2
-  * touch4it/yii2-php-fpm-nginx:7-dev
-  * touch4it/yii2-php-fpm-nginx:7.1-dev
-  * touch4it/yii2-php-fpm-nginx:7.2-dev
+  * touch4it/yii2-php-fpm-nginx:7.3
+  * touch4it/yii2-php-fpm-nginx:7.4, latest
+  * touch4it/yii2-php-fpm-nginx:7.3-dev
+  * touch4it/yii2-php-fpm-nginx:7.4-dev

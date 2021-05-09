@@ -6,7 +6,7 @@
 version: '2'
 services:
   php:
-    image: touch4it/php-nginx-symfony:php7.2-fpm-nginx-dev
+    image: touch4it/php-nginx-symfony:php7.4-fpm-nginx-dev
     expose:
       - 80
 ```
@@ -28,7 +28,7 @@ services:
 ## Dockerfile
 
 ```
-FROM touch4it/php-nginx-symfony:php7.2-fpm-nginx-symfony
+FROM touch4it/php-nginx-symfony:php7.4-fpm-nginx-symfony
 
 RUN /bin/su -s /bin/bash -c 'composer install -o -a' www-data
 RUN /bin/su -s /bin/bash -c 'composer dump-autoload --optimize --no-dev --classmap-authoritative' www-data
