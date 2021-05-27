@@ -123,6 +123,6 @@ You can add an ini file into `$PHP_INI_DIR/conf.d` directory
   * touch4it/php-nginx-symfony:php7.4-fpm-nginx
   * touch4it/php-nginx-symfony:php7.4-fpm-nginx-dev
 * Drupal
-  * touch4it/drupal-php-fpm-nginx:latest, 9.1, 9.1.8
-  * touch4it/drupal-php-fpm-nginx:9.0.13
-  * touch4it/drupal-php-fpm-nginx:8.9.15
+  * touch4it/drupal-php-fpm-nginx:latest, 9.1, 9.1.9
+  * touch4it/drupal-php-fpm-nginx:9.0.14
+  * touch4it/drupal-php-fpm-nginx:8.9.16

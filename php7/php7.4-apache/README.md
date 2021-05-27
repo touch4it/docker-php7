@@ -175,9 +175,9 @@ Same as in similar official PHP image on Docker Hub
 ### What other PHP images do we have?
 
 * Drupal
-  * touch4it/drupal-php-fpm-nginx:latest, 9.1.8, 9.1
-  * touch4it/drupal-php-fpm-nginx:9.0.13, 9.0
-  * touch4it/drupal-php-fpm-nginx:8.9.15, 8.9, 8.9-php7.3
+  * touch4it/drupal-php-fpm-nginx:latest, 9.1.9, 9.1
+  * touch4it/drupal-php-fpm-nginx:9.0.14, 9.0
+  * touch4it/drupal-php-fpm-nginx:8.9.16, 8.9, 8.9-php7.3
   * touch4it/drupal-php-fpm-nginx:8.9-php7.4
 * Drupal console
   * touch4it/drupal-php-fpm-nginx:console
