@@ -23,7 +23,7 @@ docker build ./php7.4-fpm-nginx-drupal9.0 \
 docker build ./php7.4-fpm-nginx-drupal9.1 \
 	-t touch4it/drupal-php-fpm-nginx:9.1-php7.4 \
 	-t touch4it/drupal-php-fpm-nginx:9.1 \
-	-t touch4it/drupal-php-fpm-nginx:9.1.9 \
+	-t touch4it/drupal-php-fpm-nginx:9.1.10 \
 	-t touch4it/drupal-php-fpm-nginx:latest \
 	-f ./php7.4-fpm-nginx-drupal9.1/Dockerfile
 
@@ -68,7 +68,7 @@ docker push touch4it/drupal-php-fpm-nginx:9.0.14
 docker push touch4it/drupal-php-fpm-nginx:9.0
 docker push touch4it/drupal-php-fpm-nginx:9.0-php7.4
 
-docker push touch4it/drupal-php-fpm-nginx:9.1.9
+docker push touch4it/drupal-php-fpm-nginx:9.1.10
 docker push touch4it/drupal-php-fpm-nginx:9.1
 docker push touch4it/drupal-php-fpm-nginx:9.1-php7.4
 
