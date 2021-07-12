@@ -1,4 +1,4 @@
-FROM php:7.4-apache-buster
+FROM php:7.3.28-apache-buster
 
 ENV ADMIN_EMAIL webmaster@localhost
 ENV PHP_TIME_ZONE Europe/London
