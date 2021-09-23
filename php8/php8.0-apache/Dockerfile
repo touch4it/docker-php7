@@ -1,4 +1,4 @@
-FROM php:8.0-apache-buster
+FROM php:8.0-apache-bullseye
 
 ENV ADMIN_EMAIL webmaster@localhost
 ENV PHP_TIME_ZONE Europe/London
@@ -68,7 +68,7 @@ RUN docker-php-ext-configure bcmath --enable-bcmath
 
 RUN a2enmod rewrite \
 	&& a2enmod http2 \
-	# && apt-get clean \
-	# && rm -rf /var/lib/apt/lists/* \
+	&& apt clean \
+	&& rm -rf /var/lib/apt/lists/* \
 	&& ln -sf /dev/stdout /var/log/apache2/access.log \
 	&& ln -sf /dev/stderr /var/log/apache2/error.log

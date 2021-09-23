@@ -1,4 +1,4 @@
-FROM php:7.4-apache-buster
+FROM php:7.4-apache-bullseye
 
 ENV ADMIN_EMAIL webmaster@localhost
 ENV PHP_TIME_ZONE Europe/London
@@ -9,8 +9,8 @@ ENV PHP_POST_MAX_SIZE 32M
 ADD 000-default.conf $APACHE_CONFDIR/sites-available/000-default.conf
 ADD php-override.ini $PHP_INI_DIR/conf.d/php-override.ini
 
-RUN apt-get update
-RUN apt-get install -y -f apt-transport-https \
+RUN apt update \
+  && apt install -y -f apt-transport-https \
 		libicu-dev \
 		libfreetype6-dev \
 		libjpeg62-turbo-dev \
@@ -47,7 +47,7 @@ RUN curl -sS https://getcomposer.org/installer | php \
 RUN a2enmod rewrite \
 	&& a2enmod http2 \
 	&& mkdir -p /etc/cron.d/ \
-	&& apt-get clean \
+	&& apt clean \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& service cron start \
 	&& ln -sf /dev/stdout /var/log/apache2/access.log \

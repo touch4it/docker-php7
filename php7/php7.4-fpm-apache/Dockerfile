@@ -1,4 +1,4 @@
-FROM php:7.4-fpm-buster
+FROM php:7.4-fpm-bullseye
 
 LABEL maintainer="Touch4IT <admin@touch4it.com>"
 
@@ -13,8 +13,8 @@ ENV PHP_MEMORY_LIMIT 256M
 ENV PHP_UPLOAD_MAX_FILESIZE 32M
 ENV PHP_POST_MAX_SIZE 32M
 
-RUN apt-get update
-RUN apt-get install -y --no-install-recommends \
+RUN apt update \
+  && apt install -y --no-install-recommends \
 		acl \
 		bash \
 		gettext \
@@ -53,7 +53,7 @@ RUN docker-php-ext-configure gd --with-jpeg --with-freetype \
 # CRON
 #
 
-RUN apt-get install -y --no-install-recommends cron \
+RUN apt install -y --no-install-recommends cron \
 	&& mkdir -m 0644 -p /etc/cron.d \
 	&& mkdir -m 0644 -p /var/log/cron \
 	&& touch /var/log/cron/cron.log
@@ -74,8 +74,8 @@ ENV APACHE_CONFDIR /etc/apache2
 ENV APACHE_ENVVARS $APACHE_CONFDIR/envvars
 
 RUN set -eux; \
-	apt-get update; \
-	apt-get install -y --no-install-recommends apache2; \
+	apt update; \
+	apt install -y --no-install-recommends apache2; \
 	rm -rf /var/lib/apt/lists/*; \
 	\
 # generically convert lines like
@@ -112,7 +112,7 @@ RUN set -eux; \
 RUN a2enmod http2 proxy_fcgi rewrite setenvif
 
 # https://httpd.apache.org/docs/2.4/stopping.html#gracefulstop
-STOPSIGNAL WINCH
+STOPSIGNAL SIGQUIT
 
 # Add configuration
 COPY ./docker-vars.ini /usr/local/etc/php/conf.d/docker-vars.ini
