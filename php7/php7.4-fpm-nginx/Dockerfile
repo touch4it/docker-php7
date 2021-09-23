@@ -1,4 +1,4 @@
-FROM php:7.4-fpm-alpine3.12
+FROM php:7.4-fpm-alpine3.14
 
 LABEL maintainer="Touch4IT <admin@touch4it.com>"
 
@@ -70,8 +70,8 @@ RUN curl -sS https://getcomposer.org/installer | php \
 # NGINX
 #
 
-ENV NGINX_VERSION 1.19.6
-ENV NJS_VERSION   0.5.0
+ENV NGINX_VERSION 1.21.3
+ENV NJS_VERSION   0.6.2
 ENV PKG_RELEASE   1
 
 RUN set -x \
@@ -87,7 +87,7 @@ RUN set -x \
         nginx-module-njs=${NGINX_VERSION}.${NJS_VERSION}-r${PKG_RELEASE} \
     " \
     && case "$apkArch" in \
-        x86_64) \
+        x86_64|aarch64) \
             # arches officially built by upstream
             set -x \
             && KEY_SHA512="e7fa8303923d9b95db37a77ad46c68fd4755ff935d0a534d26eba83de193c76166c68bfe7f65471bf8881004ef4aa6df3e34689c305662750c0172fca5d8552a *stdin" \
@@ -181,7 +181,7 @@ COPY ./nginx.vh.default.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 
-STOPSIGNAL SIGTERM
+STOPSIGNAL SIGQUIT
 
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh

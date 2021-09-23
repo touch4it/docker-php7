@@ -1,4 +1,4 @@
-FROM php:8.0-fpm-alpine3.13
+FROM php:8.0-fpm-alpine3.14
 
 LABEL maintainer="Touch4IT <admin@touch4it.com>"
 
@@ -71,12 +71,12 @@ RUN curl -sS https://getcomposer.org/installer | php \
 # NGINX
 #
 
-ENV NGINX_VERSION 1.20.0
-ENV NJS_VERSION   0.5.3
+ENV NGINX_VERSION 1.21.3
+ENV NJS_VERSION   0.6.2
 ENV PKG_RELEASE   1
 
 RUN set -x \
-# create nginx user/group first, to be consistent throughout docker variants
+    # create nginx user/group first, to be consistent throughout docker variants
     && addgroup -g 101 -S nginx \
     && adduser -S -D -H -u 101 -h /var/cache/nginx -s /sbin/nologin -G nginx -g nginx nginx \
     && apkArch="$(cat /etc/apk/arch)" \
@@ -89,7 +89,7 @@ RUN set -x \
     " \
     && case "$apkArch" in \
         x86_64|aarch64) \
-# arches officially built by upstream
+            # arches officially built by upstream
             set -x \
             && KEY_SHA512="e7fa8303923d9b95db37a77ad46c68fd4755ff935d0a534d26eba83de193c76166c68bfe7f65471bf8881004ef4aa6df3e34689c305662750c0172fca5d8552a *stdin" \
             && apk add --no-cache --virtual .cert-deps \
@@ -103,11 +103,11 @@ RUN set -x \
                 exit 1; \
             fi \
             && apk del .cert-deps \
-            && apk add -X "https://nginx.org/packages/alpine/v$(egrep -o '^[0-9]+\.[0-9]+' /etc/alpine-release)/main" --no-cache $nginxPackages \
+            && apk add -X "https://nginx.org/packages/mainline/alpine/v$(egrep -o '^[0-9]+\.[0-9]+' /etc/alpine-release)/main" --no-cache $nginxPackages \
             ;; \
         *) \
-# we're on an architecture upstream doesn't officially build for
-# let's build binaries from the published packaging sources
+            # we're on an architecture upstream doesn't officially build for
+            # let's build binaries from the published packaging sources
             set -x \
             && tempDir="$(mktemp -d)" \
             && chown nobody:nobody $tempDir \
@@ -144,14 +144,14 @@ RUN set -x \
             && apk add -X ${tempDir}/packages/alpine/ --no-cache $nginxPackages \
             ;; \
     esac \
-# if we have leftovers from building, let's purge them (including extra, unnecessary build deps)
+    # if we have leftovers from building, let's purge them (including extra, unnecessary build deps)
     && if [ -n "$tempDir" ]; then rm -rf "$tempDir"; fi \
     && if [ -n "/etc/apk/keys/abuild-key.rsa.pub" ]; then rm -f /etc/apk/keys/abuild-key.rsa.pub; fi \
     && if [ -n "/etc/apk/keys/nginx_signing.rsa.pub" ]; then rm -f /etc/apk/keys/nginx_signing.rsa.pub; fi \
-# Bring in gettext so we can get `envsubst`, then throw
-# the rest away. To do this, we need to install `gettext`
-# then move `envsubst` out of the way so `gettext` can
-# be deleted completely, then move `envsubst` back.
+    # Bring in gettext so we can get `envsubst`, then throw
+    # the rest away. To do this, we need to install `gettext`
+    # then move `envsubst` out of the way so `gettext` can
+    # be deleted completely, then move `envsubst` back.
     && apk add --no-cache --virtual .gettext gettext \
     && mv /usr/bin/envsubst /tmp/ \
     \
@@ -165,16 +165,14 @@ RUN set -x \
     && apk add --no-cache $runDeps \
     && apk del .gettext \
     && mv /tmp/envsubst /usr/local/bin/ \
-# Bring in tzdata so users could set the timezones through the environment
-# variables
+    # Bring in tzdata so users could set the timezones through the environment
+    # variables
     && apk add --no-cache tzdata \
-# Bring in curl and ca-certificates to make registering on DNS SD easier
+    # Bring in curl and ca-certificates to make registering on DNS SD easier
     && apk add --no-cache curl ca-certificates \
-# forward request and error logs to docker log collector
+    # forward request and error logs to docker log collector
     && ln -sf /dev/stdout /var/log/nginx/access.log \
-    && ln -sf /dev/stderr /var/log/nginx/error.log \
-# create a docker-entrypoint.d directory
-    && mkdir /docker-entrypoint.d
+    && ln -sf /dev/stderr /var/log/nginx/error.log
 
 # Add configuration
 COPY ./docker-vars.ini /usr/local/etc/php/conf.d/docker-vars.ini
