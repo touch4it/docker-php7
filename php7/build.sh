@@ -8,47 +8,55 @@ echo "Building PHP 7 images"
 
 docker build ./php7.3-apache \
 	-t touch4it/docker-php7:php7.3-apache \
-	-f ./php7.3-apache/Dockerfile
+	-f ./php7.3-apache/Dockerfile \
+	|| exit 1
 
 docker build ./php7.4-apache \
 	-t touch4it/docker-php7:php7.4-apache \
 	-t touch4it/docker-php7:latest-apache \
-	-f ./php7.4-apache/Dockerfile
+	-f ./php7.4-apache/Dockerfile \
+	|| exit 1
 
 ## Apache + FPM
 
 docker build ./php7.3-fpm-apache \
 	-t touch4it/docker-php7:php7.3-fpm-apache \
-	-f ./php7.3-fpm-apache/Dockerfile
+	-f ./php7.3-fpm-apache/Dockerfile \
+	|| exit 1
 
 docker build ./php7.4-fpm-apache \
 	-t touch4it/docker-php7:php7.4-fpm-apache \
 	-t touch4it/docker-php7:latest-fpm-apache \
-	-f ./php7.4-fpm-apache/Dockerfile
+	-f ./php7.4-fpm-apache/Dockerfile \
+	|| exit 1
 
 ## Nginx + FPM
 
 docker build ./php7.3-fpm-nginx \
 	-t touch4it/docker-php7:php7.3-fpm-nginx \
-	-f ./php7.3-fpm-nginx/Dockerfile
+	-f ./php7.3-fpm-nginx/Dockerfile \
+	|| exit 1
 
 docker build ./php7.4-fpm-nginx \
 	-t touch4it/docker-php7:php7.4-fpm-nginx \
 	-t touch4it/docker-php7:latest-fpm-nginx \
 	-t touch4it/docker-php7:latest \
-	-f ./php7.4-fpm-nginx/Dockerfile
+	-f ./php7.4-fpm-nginx/Dockerfile \
+	|| exit 1
 
 # Build development images
 
 docker build ./php7.3-fpm-nginx-dev \
 	-t touch4it/docker-php7:php7.3-fpm-nginx-dev \
-	-f ./php7.3-fpm-nginx-dev/Dockerfile
+	-f ./php7.3-fpm-nginx-dev/Dockerfile \
+	|| exit 1
 
 docker build ./php7.4-fpm-nginx-dev \
 	-t touch4it/docker-php7:php7.4-fpm-nginx-dev \
 	-t touch4it/docker-php7:latest-fpm-nginx-dev \
 	-t touch4it/docker-php7:latest-dev \
-	-f ./php7.4-fpm-nginx-dev/Dockerfile
+	-f ./php7.4-fpm-nginx-dev/Dockerfile \
+	|| exit 1
 
 # Deploy production images
 

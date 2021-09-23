@@ -6,22 +6,26 @@ echo "Building Yii images"
 
 docker build ./php7.3-fpm-nginx-yii2 \
 	-t touch4it/yii2-php-fpm-nginx:7.3 \
-	-f ./php7.3-fpm-nginx-yii2/Dockerfile
+	-f ./php7.3-fpm-nginx-yii2/Dockerfile \
+	|| exit 1
 
 docker build ./php7.4-fpm-nginx-yii2 \
 	-t touch4it/yii2-php-fpm-nginx:latest \
 	-t touch4it/yii2-php-fpm-nginx:7.4 \
-	-f ./php7.4-fpm-nginx-yii2/Dockerfile
+	-f ./php7.4-fpm-nginx-yii2/Dockerfile \
+	|| exit 1
 
 # Build development images
 
 docker build ./php7.3-fpm-nginx-yii2-dev \
 	-t touch4it/yii2-php-fpm-nginx:7.3-dev \
-	-f ./php7.3-fpm-nginx-yii2-dev/Dockerfile
+	-f ./php7.3-fpm-nginx-yii2-dev/Dockerfile \
+	|| exit 1
 
 docker build ./php7.4-fpm-nginx-yii2-dev \
 	-t touch4it/yii2-php-fpm-nginx:7.4-dev \
-	-f ./php7.4-fpm-nginx-yii2-dev/Dockerfile
+	-f ./php7.4-fpm-nginx-yii2-dev/Dockerfile \
+	|| exit 1
 
 # Push production images
 
