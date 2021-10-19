@@ -47,7 +47,10 @@ RUN curl -sS https://getcomposer.org/installer | php \
 # PHP extensions
 #
 
-RUN docker-php-ext-configure gd --with-jpeg --with-freetype
+RUN docker-php-ext-configure gd \
+	--with-freetype \
+	--with-jpeg \
+	--with-webp
 RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
 RUN docker-php-ext-install bcmath \
 	exif \

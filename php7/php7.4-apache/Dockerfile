@@ -23,7 +23,10 @@ RUN apt update \
 		git \
 		zip
 
-RUN  docker-php-ext-configure gd --with-jpeg --with-freetype \
+RUN  docker-php-ext-configure gd \
+		--with-freetype \
+		--with-jpeg \
+		--with-webp \
 	&& docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
 	&& docker-php-ext-install \
 		bcmath \
