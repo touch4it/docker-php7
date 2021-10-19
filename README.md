@@ -41,7 +41,7 @@ Frameworks
   * touch4it/php-nginx-symfony:latest, php7.4-fpm-nginx
   * touch4it/php-nginx-symfony:php7.4-fpm-nginx-dev
 * Drupal
-  * touch4it/drupal-php-fpm-nginx:latest, 9.2.6, 9.2
+  * touch4it/drupal-php-fpm-nginx:latest, 9.2.7, 9.2
   * touch4it/drupal-php-fpm-nginx:9.1.13, 9.1
   * touch4it/drupal-php-fpm-nginx:8.9.19, 8.9, 8.9-php7.3
   * touch4it/drupal-php-fpm-nginx:8.9-php7.4
