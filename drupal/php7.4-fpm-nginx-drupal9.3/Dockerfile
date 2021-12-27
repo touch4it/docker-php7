@@ -1,11 +1,11 @@
-FROM touch4it/docker-php7:php7.3-fpm-nginx
+FROM touch4it/docker-php7:php7.4-fpm-nginx
 
 COPY nginx.vh.default.conf /etc/nginx/conf.d/default.conf
 
 WORKDIR /var/www/html
 
-ENV DRUPAL_VERSION 8.9.20
-ENV DRUPAL_MD5 03c77251b7332bf7e194b9702b077dd2
+ENV DRUPAL_VERSION 9.3.0
+ENV DRUPAL_MD5 e8baf9fc096b125b384b8a5234fabbc2
 
 RUN curl -fSL "https://ftp.drupal.org/files/projects/drupal-${DRUPAL_VERSION}.tar.gz" -o drupal.tar.gz \
 	&& echo "${DRUPAL_MD5} *drupal.tar.gz" | md5sum -c - \
