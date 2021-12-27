@@ -12,11 +12,13 @@ ADD php-override.ini $PHP_INI_DIR/conf.d/php-override.ini
 RUN apt update \
   && apt install -y -f apt-transport-https \
 		libicu-dev \
+		libjpeg-dev \
 		libfreetype6-dev \
-		libjpeg62-turbo-dev \
 		libonig-dev \
 		libpng-dev \
 		libpq-dev \
+		libwebp-dev \
+		libxml2-dev \
 		libzip-dev \
 		acl \
 		cron \

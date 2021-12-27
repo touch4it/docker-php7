@@ -22,6 +22,7 @@ RUN apt install -y --no-install-recommends \
 		libonig-dev \
 		libpng-dev \
 		libpq-dev \
+		libwebp-dev \
 		libxml2-dev \
 		libzip-dev \
 		zip \

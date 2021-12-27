@@ -22,6 +22,7 @@ RUN apt update \
 		libonig-dev \
 		libpng-dev \
 		libpq-dev \
+		libwebp-dev \
 		libxml2-dev \
 		libzip-dev \
 		zip \

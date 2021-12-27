@@ -63,7 +63,8 @@ docker build ./php8.0-fpm-nginx-dev \
 	-t touch4it/php8:php8-fpm-nginx-dev \
 	-t touch4it/php8:latest-fpm-nginx-dev \
 	-t touch4it/php8:latest-dev \
-	-f ./php8.0-fpm-nginx-dev/Dockerfile
+	-f ./php8.0-fpm-nginx-dev/Dockerfile \
+	|| exit 1
 
 # Deploy development images
 

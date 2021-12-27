@@ -22,6 +22,7 @@ RUN apk --update add --no-cache \
     icu-dev \
     libjpeg-turbo-dev \
     libpng-dev \
+    libwebp-dev \
     libzip-dev \
     oniguruma-dev \
     patch \
