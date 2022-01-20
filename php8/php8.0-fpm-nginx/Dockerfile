@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM php:8.0.14-fpm-alpine3.14
+FROM  php:8.0.14-fpm-alpine3.14
 
 LABEL maintainer="Touch4IT <admin@touch4it.com>"
 

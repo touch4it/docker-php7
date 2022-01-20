@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM touch4it/docker-php7:php7.3-fpm-nginx
+FROM  touch4it/docker-php7:php7.3-fpm-nginx
 
 ENV VERSION_COMPOSER_ASSET_PLUGIN=^1.4.6
 ENV MEMCACHED_DEPS zlib-dev libmemcached-dev cyrus-sasl-dev
