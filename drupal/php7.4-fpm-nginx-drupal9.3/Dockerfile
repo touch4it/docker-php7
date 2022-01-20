@@ -4,8 +4,8 @@ COPY nginx.vh.default.conf /etc/nginx/conf.d/default.conf
 
 WORKDIR /var/www/html
 
-ENV DRUPAL_VERSION 9.3.0
-ENV DRUPAL_MD5 e8baf9fc096b125b384b8a5234fabbc2
+ENV DRUPAL_VERSION 9.3.3
+ENV DRUPAL_MD5 bd4a8b2a42bbfe4a01ea5a740310a1dd
 
 RUN curl -fSL "https://ftp.drupal.org/files/projects/drupal-${DRUPAL_VERSION}.tar.gz" -o drupal.tar.gz \
 	&& echo "${DRUPAL_MD5} *drupal.tar.gz" | md5sum -c - \

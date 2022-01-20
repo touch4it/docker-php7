@@ -1,4 +1,4 @@
-FROM php:7.4.27-fpm-alpine3.14
+FROM --platform=$BUILDPLATFORM php:7.4.27-fpm-alpine3.14
 
 LABEL maintainer="Touch4IT <admin@touch4it.com>"
 

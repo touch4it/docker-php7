@@ -1,4 +1,4 @@
-FROM php:7.3.33-apache-bullseye
+FROM --platform=$BUILDPLATFORM php:7.3.33-apache-bullseye
 
 ENV ADMIN_EMAIL webmaster@localhost
 ENV PHP_TIME_ZONE Europe/London

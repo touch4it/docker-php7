@@ -123,5 +123,5 @@ You can add an ini file into `$PHP_INI_DIR/conf.d` directory
   * touch4it/php-nginx-symfony:php7.4-fpm-nginx
   * touch4it/php-nginx-symfony:php7.4-fpm-nginx-dev
 * Drupal
-  * touch4it/drupal-php-fpm-nginx:latest, 9.3.0, 9.0
-  * touch4it/drupal-php-fpm-nginx:9.2.10, 9.2
+  * touch4it/drupal-php-fpm-nginx:latest, 9.3.3, 9.0
+  * touch4it/drupal-php-fpm-nginx:9.2.11, 9.2
