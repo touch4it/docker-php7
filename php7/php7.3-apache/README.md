@@ -190,8 +190,3 @@ Same as in similar official PHP image on Docker Hub
   * touch4it/php-nginx-symfony:php7.3-fpm-nginx-dev
   * touch4it/php-nginx-symfony:latest, php7.4-fpm-nginx
   * touch4it/php-nginx-symfony:php7.4-fpm-nginx-dev
-* Yii2
-  * touch4it/yii2-php-fpm-nginx:7.3
-  * touch4it/yii2-php-fpm-nginx:7.4, latest
-  * touch4it/yii2-php-fpm-nginx:7.3-dev
-  * touch4it/yii2-php-fpm-nginx:7.4-dev
