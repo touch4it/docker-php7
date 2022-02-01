@@ -1,4 +1,4 @@
-FROM  php:8.0.14-fpm-alpine3.14
+FROM  php:8.0.15-fpm-alpine3.15
 
 LABEL maintainer="Touch4IT <admin@touch4it.com>"
 
@@ -75,8 +75,8 @@ RUN curl -sS https://getcomposer.org/installer | php \
 # NGINX
 #
 
-ENV NGINX_VERSION 1.21.4
-ENV NJS_VERSION   0.7.0
+ENV NGINX_VERSION 1.21.6
+ENV NJS_VERSION   0.7.2
 ENV PKG_RELEASE   1
 
 RUN set -x \

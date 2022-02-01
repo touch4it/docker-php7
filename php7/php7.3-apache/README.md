@@ -22,12 +22,16 @@ PHP 8
 
 * Debian + Apache + mod_php
   * touch4it/php8:php8.0-apache
+  * touch4it/php8:php8.1-apache
 * Debian + Apache + PHP-FPM
   * touch4it/php8:php8.0-fpm-apache
+  * touch4it/php8:php8.1-fpm-apache
 * Alpine + Nginx + PHP-FPM
   * touch4it/php8:latest
   * touch4it/php8:php8.0-fpm-nginx
   * touch4it/php8:php8.0-fpm-nginx-dev
+  * touch4it/php8:php8.1-fpm-nginx
+  * touch4it/php8:php8.1-fpm-nginx-dev
 
 ## Usage
 
@@ -170,7 +174,7 @@ Same as in similar official PHP image on Docker Hub
 
 ### What Nginx version is on Nginx-based images?
 
-1.21.4
+1.21.6
 
 ### What other PHP images do we have?
 

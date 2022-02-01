@@ -1,4 +1,4 @@
-FROM  php:7.3.33-fpm-alpine3.15
+FROM  php:8.1.2-fpm-alpine3.15
 
 LABEL maintainer="Touch4IT <admin@touch4it.com>"
 
@@ -14,46 +14,46 @@ ENV PHP_UPLOAD_MAX_FILESIZE 32M
 ENV PHP_POST_MAX_SIZE 32M
 
 RUN apk --update add --no-cache \
-    acl \
-    bash \
-    freetype-dev \
-    gettext-dev \
-    git \
-    icu-dev \
-    libjpeg-turbo-dev \
-    libpng-dev \
+	acl \
+	bash \
+	dcron \
+	freetype-dev \
+	gettext-dev \
+	git \
+	icu-dev \
+	libjpeg-turbo-dev \
+	libpng-dev \
     libwebp-dev \
-    libzip-dev \
-    oniguruma-dev \
+	libzip-dev \
+	oniguruma-dev \
     patch \
-    php7-dom \
-    php7-xml \
-    postgresql-dev \
-    zip \
-    grep
+	php8-dom \
+	php8-xml \
+	postgresql-dev \
+	zip \
+	grep
 
 RUN docker-php-ext-configure gd \
-        --with-freetype-dir=/usr/include/ \
-        --with-jpeg-dir=/usr/include/ \
-        --with-png-dir=/usr/include/ \
+        --with-freetype \
+        --with-jpeg \
+        --with-webp \
 	&& docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-	&& docker-php-ext-configure zip --with-libzip \
+	&& docker-php-ext-configure bcmath --enable-bcmath \
 	&& docker-php-ext-install \
 		bcmath \
 		exif \
 		gd \
 		gettext \
 		intl \
-		json \
-		mbstring \
+		# json \
+		# mbstring \
 		mysqli \
 		opcache \
-		pdo \
+		# pdo \
 		pdo_mysql \
 		pdo_pgsql \
 		pgsql \
-		zip \
-    && docker-php-ext-configure bcmath --enable-bcmath
+		zip
 
 #
 # CRON
@@ -69,7 +69,7 @@ RUN mkdir -m 0644 -p /etc/cron.d \
 
 RUN curl -sS https://getcomposer.org/installer | php \
 	&& mv composer.phar /usr/local/bin/composer \
-	&& composer self-update --1
+	&& composer self-update
 
 #
 # NGINX
