@@ -1,3 +1,3 @@
-FROM  touch4it/php8:php8.1.2-fpm-nginx
+FROM  touch4it/php8:php8.1.3-fpm-nginx
 
 COPY docker-vars.ini /usr/local/etc/php/conf.d/docker-vars.ini
