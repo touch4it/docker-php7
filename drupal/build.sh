@@ -7,7 +7,7 @@ echo "Building Drupal images"
 docker build ./php7.4-fpm-nginx-drupal9.2 \
 	-t touch4it/drupal-php-fpm-nginx:9.2-php7.4 \
 	-t touch4it/drupal-php-fpm-nginx:9.2 \
-	-t touch4it/drupal-php-fpm-nginx:9.2.11 \
+	-t touch4it/drupal-php-fpm-nginx:9.2.15 \
 	-f ./php7.4-fpm-nginx-drupal9.2/Dockerfile \
 	--platform linux/amd64 \
 	|| exit 1
@@ -15,9 +15,16 @@ docker build ./php7.4-fpm-nginx-drupal9.2 \
 docker build ./php7.4-fpm-nginx-drupal9.3 \
 	-t touch4it/drupal-php-fpm-nginx:9.3-php7.4 \
 	-t touch4it/drupal-php-fpm-nginx:9.3 \
-	-t touch4it/drupal-php-fpm-nginx:9.3.3 \
+	-t touch4it/drupal-php-fpm-nginx:9.3.8 \
 	-t touch4it/drupal-php-fpm-nginx:latest \
 	-f ./php7.4-fpm-nginx-drupal9.3/Dockerfile \
+	--platform linux/amd64 \
+	|| exit 1
+
+docker build ./php8.1-fpm-nginx-drupal9.3 \
+	-t touch4it/drupal-php-fpm-nginx:9.3-php8.1 \
+	-t touch4it/drupal-php-fpm-nginx:9.3.8-php8.1 \
+	-f ./php8.1-fpm-nginx-drupal9.3/Dockerfile \
 	--platform linux/amd64 \
 	|| exit 1
 
@@ -52,13 +59,16 @@ echo "Pushing Drupal images"
 
 docker push touch4it/drupal-php-fpm-nginx:latest
 
-docker push touch4it/drupal-php-fpm-nginx:9.2.11
+docker push touch4it/drupal-php-fpm-nginx:9.2.15
 docker push touch4it/drupal-php-fpm-nginx:9.2
 docker push touch4it/drupal-php-fpm-nginx:9.2-php7.4
 
-docker push touch4it/drupal-php-fpm-nginx:9.3.3
+docker push touch4it/drupal-php-fpm-nginx:9.3.8
 docker push touch4it/drupal-php-fpm-nginx:9.3
 docker push touch4it/drupal-php-fpm-nginx:9.3-php7.4
+
+docker push touch4it/drupal-php-fpm-nginx:9.3.8-php8.1
+docker push touch4it/drupal-php-fpm-nginx:9.3-php8.1
 
 # Push dev images
 

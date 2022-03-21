@@ -1,4 +1,4 @@
-FROM touch4it/docker-php7:php7.4-fpm-nginx
+FROM touch4it/php8:php8.1-fpm-nginx
 
 COPY nginx.vh.default.conf /etc/nginx/conf.d/default.conf
 
