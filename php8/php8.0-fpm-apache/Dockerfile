@@ -19,6 +19,7 @@ RUN apt update \
 		libicu-dev \
 		libjpeg-dev \
 		libfreetype6-dev \
+		libmagickwand-dev \
 		libonig-dev \
 		libpng-dev \
 		libpq-dev \
@@ -47,7 +48,8 @@ RUN curl -sS https://getcomposer.org/installer | php \
 #
 # PHP extensions
 #
-RUN docker-php-ext-configure gd \
+RUN pecl install imagick \
+	docker-php-ext-configure gd \
 		--with-freetype \
 		--with-jpeg \
 		--with-webp \
@@ -64,7 +66,9 @@ RUN docker-php-ext-configure gd \
 		pdo_mysql \
 		pdo_pgsql \
 		pgsql \
-		zip
+		zip \
+	&& docker-php-ext-enable \
+		imagick
 
 #
 # APACHE

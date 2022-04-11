@@ -20,7 +20,10 @@ RUN apk --update add --no-cache \
 	freetype-dev \
 	gettext-dev \
 	git \
+	grep \
 	icu-dev \
+    imagemagick \
+    imagemagick-dev \
 	libjpeg-turbo-dev \
 	libpng-dev \
     libwebp-dev \
@@ -31,9 +34,10 @@ RUN apk --update add --no-cache \
 	php8-xml \
 	postgresql-dev \
 	zip \
-	grep
+    ${PHPIZE_DEPS}
 
-RUN docker-php-ext-configure gd \
+RUN pecl install imagick \
+    docker-php-ext-configure gd \
         --with-freetype \
         --with-jpeg \
         --with-webp \
@@ -45,15 +49,14 @@ RUN docker-php-ext-configure gd \
 		gd \
 		gettext \
 		intl \
-		# json \
-		# mbstring \
 		mysqli \
 		opcache \
-		# pdo \
 		pdo_mysql \
 		pdo_pgsql \
 		pgsql \
-		zip
+		zip \
+    && docker-php-ext-enable \
+        imagick
 
 #
 # CRON

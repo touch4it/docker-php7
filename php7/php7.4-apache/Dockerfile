@@ -14,6 +14,7 @@ RUN apt update \
 		libicu-dev \
 		libjpeg-dev \
 		libfreetype6-dev \
+		libmagickwand-dev \
 		libonig-dev \
 		libpng-dev \
 		libpq-dev \
@@ -25,25 +26,27 @@ RUN apt update \
 		git \
 		zip
 
-RUN  docker-php-ext-configure gd \
+RUN pecl install imagick \
+	docker-php-ext-configure gd \
 		--with-freetype \
 		--with-jpeg \
 		--with-webp \
 	&& docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
+	&& docker-php-ext-configure bcmath --enable-bcmath \
 	&& docker-php-ext-install \
 		bcmath \
 		exif \
 		gd \
 		gettext \
 		intl \
-		mbstring \
 		mysqli \
 		opcache \
-		pgsql \
-		pdo \
 		pdo_mysql \
 		pdo_pgsql \
-		zip
+		pgsql \
+		zip \
+	&& docker-php-ext-enable \
+		imagick
 
 RUN curl -sS https://getcomposer.org/installer | php \
 	&& mv composer.phar /usr/local/bin/composer \

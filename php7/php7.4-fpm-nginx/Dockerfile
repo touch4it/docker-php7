@@ -19,7 +19,10 @@ RUN apk --update add --no-cache \
     freetype-dev \
     gettext-dev \
     git \
+    grep \
     icu-dev \
+    imagemagick \
+    imagemagick-dev \
     libjpeg-turbo-dev \
     libpng-dev \
     libwebp-dev \
@@ -30,29 +33,29 @@ RUN apk --update add --no-cache \
     php7-xml \
     postgresql-dev \
     zip \
-    grep
+    ${PHPIZE_DEPS}
 
-RUN docker-php-ext-configure gd \
+RUN pecl install imagick \
+    docker-php-ext-configure gd \
         --with-freetype \
         --with-jpeg \
         --with-webp \
 	&& docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-    && docker-php-ext-configure bcmath --enable-bcmath \
+	&& docker-php-ext-configure bcmath --enable-bcmath \
 	&& docker-php-ext-install \
 		bcmath \
 		exif \
 		gd \
 		gettext \
 		intl \
-		json \
-		mbstring \
 		mysqli \
 		opcache \
-		pdo \
 		pdo_mysql \
 		pdo_pgsql \
 		pgsql \
-		zip
+		zip \
+    && docker-php-ext-enable \
+        imagick
 
 #
 # CRON

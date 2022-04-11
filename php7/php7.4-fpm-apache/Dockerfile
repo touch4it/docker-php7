@@ -22,6 +22,7 @@ RUN apt update \
 		libicu-dev \
 		libjpeg-dev \
 		libfreetype6-dev \
+		libmagickwand-dev \
 		libonig-dev \
 		libpng-dev \
 		libpq-dev \
@@ -31,7 +32,8 @@ RUN apt update \
 		zip \
 		grep
 
-RUN docker-php-ext-configure gd \
+RUN pecl install imagick \
+	docker-php-ext-configure gd \
 		--with-freetype \
 		--with-jpeg \
 		--with-webp \
@@ -43,15 +45,14 @@ RUN docker-php-ext-configure gd \
 		gd \
 		gettext \
 		intl \
-		json \
-		mbstring \
 		mysqli \
 		opcache \
-		pdo \
 		pdo_mysql \
 		pdo_pgsql \
 		pgsql \
-		zip
+		zip \
+	&& docker-php-ext-enable \
+		imagick
 
 #
 # CRON

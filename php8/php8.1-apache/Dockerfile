@@ -19,6 +19,7 @@ RUN apt install -y --no-install-recommends \
 		libicu-dev \
 		libjpeg-dev \
 		libfreetype6-dev \
+		libmagickwand-dev \
 		libonig-dev \
 		libpng-dev \
 		libpq-dev \
@@ -48,23 +49,27 @@ RUN curl -sS https://getcomposer.org/installer | php \
 # PHP extensions
 #
 
-RUN docker-php-ext-configure gd \
-	--with-freetype \
-	--with-jpeg \
-	--with-webp
-RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
-RUN docker-php-ext-install bcmath \
-	exif \
-	gd \
-	gettext \
-	intl \
-	mysqli \
-	opcache \
-	pdo_mysql \
-	pdo_pgsql \
-	pgsql \
-	zip
-RUN docker-php-ext-configure bcmath --enable-bcmath
+RUN pecl install imagick \
+	docker-php-ext-configure gd \
+		--with-freetype \
+		--with-jpeg \
+		--with-webp \
+	&& docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
+	&& docker-php-ext-configure bcmath --enable-bcmath \
+	&& docker-php-ext-install \
+		bcmath \
+		exif \
+		gd \
+		gettext \
+		intl \
+		mysqli \
+		opcache \
+		pdo_mysql \
+		pdo_pgsql \
+		pgsql \
+		zip \
+	&& docker-php-ext-enable \
+		imagick
 
 #
 # Apache
