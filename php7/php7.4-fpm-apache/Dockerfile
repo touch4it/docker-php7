@@ -33,7 +33,7 @@ RUN apt update \
 		grep
 
 RUN pecl install imagick \
-	docker-php-ext-configure gd \
+	&& docker-php-ext-configure gd \
 		--with-freetype \
 		--with-jpeg \
 		--with-webp \

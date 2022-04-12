@@ -36,7 +36,7 @@ RUN apk --update add --no-cache \
     ${PHPIZE_DEPS}
 
 RUN pecl install imagick \
-    docker-php-ext-configure gd \
+    && docker-php-ext-configure gd \
         --with-freetype \
         --with-jpeg \
         --with-webp \
