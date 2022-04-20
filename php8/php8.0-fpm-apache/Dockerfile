@@ -1,4 +1,4 @@
-FROM  php:8.0.17-fpm-bullseye
+FROM  php:fpm
 
 LABEL maintainer="Touch4IT <admin@touch4it.com>"
 
