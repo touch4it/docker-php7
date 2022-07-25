@@ -4,8 +4,13 @@ COPY nginx.vh.default.conf /etc/nginx/conf.d/default.conf
 
 WORKDIR /var/www/html
 
-ENV DRUPAL_VERSION 9.3.14
-ENV DRUPAL_MD5 a662097782b539ba2b08d3e1d9e76ad4
+RUN composer global config --no-plugins allow-plugins.composer/installers true
+RUN composer global config --no-plugins allow-plugins.drupal/core-composer-scaffold true
+RUN composer global config --no-plugins allow-plugins.drupal/core-project-message true
+RUN composer global config --no-plugins  allow-plugins.drupal/console-extend-plugin true
+
+ENV DRUPAL_VERSION 9.3.19
+ENV DRUPAL_MD5 ea5d03708df82582607023003f00289f
 
 RUN curl -fSL "https://ftp.drupal.org/files/projects/drupal-${DRUPAL_VERSION}.tar.gz" -o drupal.tar.gz \
 	&& echo "${DRUPAL_MD5} *drupal.tar.gz" | md5sum -c - \
