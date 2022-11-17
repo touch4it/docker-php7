@@ -1,4 +1,4 @@
-FROM  php:7.4.28-cli-alpine
+FROM  php:7.4.33-cli-alpine
 
 LABEL maintainer="Touch4IT <admin@touch4it.com>"
 

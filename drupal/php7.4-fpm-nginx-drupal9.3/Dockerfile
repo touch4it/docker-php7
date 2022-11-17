@@ -9,8 +9,8 @@ RUN composer global config --no-plugins allow-plugins.drupal/core-composer-scaff
 RUN composer global config --no-plugins allow-plugins.drupal/core-project-message true
 RUN composer global config --no-plugins  allow-plugins.drupal/console-extend-plugin true
 
-ENV DRUPAL_VERSION 9.3.19
-ENV DRUPAL_MD5 ea5d03708df82582607023003f00289f
+ENV DRUPAL_VERSION 9.3.22
+ENV DRUPAL_MD5 d0efe1a8886e597c16eb8d4de6d25006
 
 RUN curl -fSL "https://ftp.drupal.org/files/projects/drupal-${DRUPAL_VERSION}.tar.gz" -o drupal.tar.gz \
 	&& echo "${DRUPAL_MD5} *drupal.tar.gz" | md5sum -c - \
