@@ -20,9 +20,9 @@ docker build ./php8.1-fpm-nginx-drupal9.3 \
 	|| exit 1
 
 docker build ./php8.1-fpm-nginx-drupal9.4 \
-	-t touch4it/drupal-php-fpm-nginx:9.4.7 \
+	-t touch4it/drupal-php-fpm-nginx:9.4.8 \
 	-t touch4it/drupal-php-fpm-nginx:9.4-php8.1 \
-	-t touch4it/drupal-php-fpm-nginx:9.4.7-php8.1 \
+	-t touch4it/drupal-php-fpm-nginx:9.4.8-php8.1 \
 	-t touch4it/drupal-php-fpm-nginx:latest \
 	-f ./php8.1-fpm-nginx-drupal9.4/Dockerfile \
 	--platform linux/amd64 \
@@ -66,9 +66,9 @@ docker push touch4it/drupal-php-fpm-nginx:9.3-php7.4
 docker push touch4it/drupal-php-fpm-nginx:9.3.22-php8.1
 docker push touch4it/drupal-php-fpm-nginx:9.3-php8.1
 
-docker push touch4it/drupal-php-fpm-nginx:9.4.7
+docker push touch4it/drupal-php-fpm-nginx:9.4.8
 docker push touch4it/drupal-php-fpm-nginx:9.4
-docker push touch4it/drupal-php-fpm-nginx:9.4.7-php8.1
+docker push touch4it/drupal-php-fpm-nginx:9.4.8-php8.1
 docker push touch4it/drupal-php-fpm-nginx:9.4-php8.1
 
 # Push dev images

@@ -179,7 +179,7 @@ Same as in similar official PHP image on Docker Hub
 ### What other PHP images do we have?
 
 * Drupal
-  * touch4it/drupal-php-fpm-nginx:latest, 9.4.7, 9.4
+  * touch4it/drupal-php-fpm-nginx:latest, 9.4.8, 9.4
   * touch4it/drupal-php-fpm-nginx:9.3.22, 9.3
 * Drupal console
   * touch4it/drupal-php-fpm-nginx:console
