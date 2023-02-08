@@ -1,4 +1,4 @@
-FROM  php:8.0.25-apache-bullseye
+FROM  php:8.0.27-apache-bullseye
 
 ENV ADMIN_EMAIL webmaster@localhost
 ENV PHP_TIME_ZONE Europe/London
