@@ -1,4 +1,4 @@
-FROM  php:8.1.15-fpm-alpine3.15
+FROM  php:8.1.15-fpm-alpine3.16
 
 LABEL maintainer="Touch4IT <admin@touch4it.com>"
 
@@ -78,8 +78,8 @@ RUN curl -sS https://getcomposer.org/installer | php \
 # NGINX
 #
 
-ENV NGINX_VERSION 1.21.6
-ENV NJS_VERSION   0.7.2
+ENV NGINX_VERSION 1.22.1
+ENV NJS_VERSION   0.7.7
 ENV PKG_RELEASE   1
 
 RUN set -x \
@@ -110,7 +110,7 @@ RUN set -x \
                 echo "key verification failed!"; \
                 exit 1; \
             fi \
-            && apk add -X "https://nginx.org/packages/mainline/alpine/v$(egrep -o '^[0-9]+\.[0-9]+' /etc/alpine-release)/main" --no-cache $nginxPackages \
+            && apk add -X "https://nginx.org/packages/alpine/v$(egrep -o '^[0-9]+\.[0-9]+' /etc/alpine-release)/main" --no-cache $nginxPackages \
             ;; \
         *) \
             # we're on an architecture upstream doesn't officially build for
@@ -123,7 +123,7 @@ RUN set -x \
                 libc-dev \
                 make \
                 openssl-dev \
-                pcre-dev \
+                pcre2-dev \
                 zlib-dev \
                 linux-headers \
                 libxslt-dev \
@@ -138,7 +138,7 @@ RUN set -x \
                 export HOME=${tempDir} \
                 && cd ${tempDir} \
                 && curl -f -O https://hg.nginx.org/pkg-oss/archive/${NGINX_VERSION}-${PKG_RELEASE}.tar.gz \
-                && PKGOSSCHECKSUM=\"f917c27702aa89cda46878fc80d446839c592c43ce7f251b3f4ced60c7033d34496a92d283927225d458cbc4f2f89499e7fb16344923317cd7725ad722eaf93e *${NGINX_VERSION}-${PKG_RELEASE}.tar.gz\" \
+                && PKGOSSCHECKSUM=\"7266f418dcc9d89a2990f504d99ec58d10febbaf078c03630d42843955cee7e50b0f90fb317360384a32473839dc42d8b329b737015ec8dd0d028f90d4d5ed25 *${NGINX_VERSION}-${PKG_RELEASE}.tar.gz\" \
                 && if [ \"\$(openssl sha512 -r ${NGINX_VERSION}-${PKG_RELEASE}.tar.gz)\" = \"\$PKGOSSCHECKSUM\" ]; then \
                     echo \"pkg-oss tarball checksum verification succeeded!\"; \
                 else \

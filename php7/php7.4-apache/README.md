@@ -174,7 +174,7 @@ Same as in similar official PHP image on Docker Hub
 
 ### What Nginx version is on Nginx-based images?
 
-1.21.6
+1.22.6
 
 ### What other PHP images do we have?
 
