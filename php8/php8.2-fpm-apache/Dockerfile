@@ -9,11 +9,12 @@ ENV PHP_MEMORY_LIMIT 256M
 ENV PHP_UPLOAD_MAX_FILESIZE 32M
 ENV PHP_POST_MAX_SIZE 32M
 
-RUN apt update \
-  && apt install -y --no-install-recommends \
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
 		acl \
 		bash \
 		cron \
+		curl \
 		gettext \
 		git \
 		libicu-dev \
@@ -27,7 +28,9 @@ RUN apt update \
 		libxml2-dev \
 		libzip-dev \
 		zip \
-		grep
+		grep \
+	&& apt-get clean \
+	&& rm -rf /var/lib/apt/lists/*
 
 #
 # CRON
@@ -132,7 +135,11 @@ RUN { \
 	} | tee "$APACHE_CONFDIR/conf-available/docker-php.conf" \
 	&& a2enconf docker-php
 
-RUN a2enmod http2 proxy_fcgi rewrite setenvif
+RUN a2enmod \
+	http2 \
+	proxy_fcgi \
+	rewrite \
+	setenvif
 
 # https://httpd.apache.org/docs/2.4/stopping.html#gracefulstop
 STOPSIGNAL SIGQUIT

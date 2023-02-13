@@ -6,11 +6,11 @@ ENV PHP_MEMORY_LIMIT 256M
 ENV PHP_UPLOAD_MAX_FILESIZE 32M
 ENV PHP_POST_MAX_SIZE 32M
 
-ADD 000-default.conf $APACHE_CONFDIR/sites-available/000-default.conf
-ADD php-override.ini $PHP_INI_DIR/conf.d/php-override.ini
+COPY 000-default.conf $APACHE_CONFDIR/sites-available/000-default.conf
+COPY php-override.ini $PHP_INI_DIR/conf.d/php-override.ini
 
-RUN apt update \
-  && apt install -y -f apt-transport-https \
+RUN apt-get update \
+  && apt-get install -y -f apt-transport-https \
 		libicu-dev \
 		libjpeg-dev \
 		libfreetype6-dev \
@@ -23,8 +23,12 @@ RUN apt update \
 		libzip-dev \
 		acl \
 		cron \
+		curl \
 		git \
-		zip
+		zip \
+		zlib1g-dev \
+	&& apt-get clean \
+	&& rm -rf /var/lib/apt/lists/*
 
 RUN pecl install imagick \
 	&& docker-php-ext-configure gd \
@@ -55,8 +59,5 @@ RUN curl -sS https://getcomposer.org/installer | php \
 RUN a2enmod rewrite \
 	&& a2enmod http2 \
 	&& mkdir -p /etc/cron.d/ \
-	&& apt clean \
-	&& rm -rf /var/lib/apt/lists/* \
-	&& service cron start \
 	&& ln -sf /dev/stdout /var/log/apache2/access.log \
 	&& ln -sf /dev/stderr /var/log/apache2/error.log

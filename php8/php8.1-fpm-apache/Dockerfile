@@ -9,11 +9,12 @@ ENV PHP_MEMORY_LIMIT 256M
 ENV PHP_UPLOAD_MAX_FILESIZE 32M
 ENV PHP_POST_MAX_SIZE 32M
 
-RUN apt update \
-  && apt install -y --no-install-recommends \
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
 		acl \
 		bash \
 		cron \
+		curl \
 		gettext \
 		git \
 		libicu-dev \
@@ -27,7 +28,10 @@ RUN apt update \
 		libxml2-dev \
 		libzip-dev \
 		zip \
-		grep
+		zlib1g-dev \
+		grep \
+	&& apt-get clean \
+	&& rm -rf /var/lib/apt/lists/*
 
 #
 # CRON
@@ -78,8 +82,9 @@ ENV APACHE_CONFDIR /etc/apache2
 ENV APACHE_ENVVARS $APACHE_CONFDIR/envvars
 
 RUN set -eux; \
-	apt update; \
-	apt install -y --no-install-recommends apache2; \
+	apt-get update; \
+	apt-get install -y --no-install-recommends apache2; \
+	apt-get clean; \
 	rm -rf /var/lib/apt/lists/*; \
 	\
 # generically convert lines like
@@ -114,7 +119,8 @@ RUN set -eux; \
 	chown -R --no-dereference "$APACHE_RUN_USER:$APACHE_RUN_GROUP" "$APACHE_LOG_DIR"
 
 # Apache + PHP requires preforking Apache for best results
-RUN a2dismod mpm_event && a2enmod mpm_prefork
+RUN a2dismod mpm_event \
+	&& a2enmod mpm_prefork
 
 # PHP files should be handled by PHP, and should be preferred over any other file type
 RUN { \
@@ -132,7 +138,11 @@ RUN { \
 	} | tee "$APACHE_CONFDIR/conf-available/docker-php.conf" \
 	&& a2enconf docker-php
 
-RUN a2enmod http2 proxy_fcgi rewrite setenvif
+RUN a2enmod \
+	http2 \
+	proxy_fcgi \
+	rewrite \
+	setenvif
 
 # https://httpd.apache.org/docs/2.4/stopping.html#gracefulstop
 STOPSIGNAL SIGQUIT

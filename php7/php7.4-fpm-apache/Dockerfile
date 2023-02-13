@@ -13,10 +13,11 @@ ENV PHP_MEMORY_LIMIT 256M
 ENV PHP_UPLOAD_MAX_FILESIZE 32M
 ENV PHP_POST_MAX_SIZE 32M
 
-RUN apt update \
-  && apt install -y --no-install-recommends \
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
 		acl \
 		bash \
+		curl \
 		gettext \
 		git \
 		libicu-dev \
@@ -30,6 +31,7 @@ RUN apt update \
 		libxml2-dev \
 		libzip-dev \
 		zip \
+		zlib1g-dev \
 		grep
 
 RUN pecl install imagick \
@@ -41,6 +43,7 @@ RUN pecl install imagick \
 	&& docker-php-ext-configure bcmath --enable-bcmath \
 	&& docker-php-ext-install \
 		bcmath \
+		curl \
 		exif \
 		gd \
 		gettext \
@@ -58,7 +61,7 @@ RUN pecl install imagick \
 # CRON
 #
 
-RUN apt install -y --no-install-recommends cron \
+RUN apt-get install -y --no-install-recommends cron \
 	&& mkdir -m 0644 -p /etc/cron.d \
 	&& mkdir -m 0644 -p /var/log/cron \
 	&& touch /var/log/cron/cron.log
@@ -79,8 +82,9 @@ ENV APACHE_CONFDIR /etc/apache2
 ENV APACHE_ENVVARS $APACHE_CONFDIR/envvars
 
 RUN set -eux; \
-	apt update; \
-	apt install -y --no-install-recommends apache2; \
+	apt-get update; \
+	apt-get install -y --no-install-recommends apache2; \
+	apt-get clean; \
 	rm -rf /var/lib/apt/lists/*; \
 	\
 # generically convert lines like
@@ -114,7 +118,11 @@ RUN set -eux; \
 	ln -sfT /dev/stdout "$APACHE_LOG_DIR/other_vhosts_access.log"; \
 	chown -R --no-dereference "$APACHE_RUN_USER:$APACHE_RUN_GROUP" "$APACHE_LOG_DIR"
 
-RUN a2enmod http2 proxy_fcgi rewrite setenvif
+RUN a2enmod \
+	http2 \
+	proxy_fcgi \
+	rewrite \
+	setenvif
 
 # https://httpd.apache.org/docs/2.4/stopping.html#gracefulstop
 STOPSIGNAL SIGQUIT
