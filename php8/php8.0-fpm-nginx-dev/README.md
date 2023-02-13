@@ -4,34 +4,24 @@ Docker image tailored to run PHP application. Check https://hub.docker.com/r/tou
 
 ## Tags
 
-PHP 7
-
-* Debian + Apache + mod_php
-  * touch4it/docker-php7:php7.3-apache
-  * touch4it/docker-php7:php7.4-apache
-* Debian + Apache + PHP-FPM
-  * touch4it/docker-php7:php7.3-fpm-apache
-  * touch4it/docker-php7:php7.4-fpm-apache
-* Alpine + Nginx + PHP-FPM
-  * touch4it/docker-php7:php7.3-fpm-nginx
-  * touch4it/docker-php7:php7.3-fpm-nginx-dev
-  * touch4it/docker-php7:php7.4-fpm-nginx
-  * touch4it/docker-php7:php7.4-fpm-nginx-dev
-
 PHP 8
 
 * Debian + Apache + mod_php
   * touch4it/php8:php8.0-apache
   * touch4it/php8:php8.1-apache
+  * touch4it/php8:php8.2-apache
 * Debian + Apache + PHP-FPM
   * touch4it/php8:php8.0-fpm-apache
   * touch4it/php8:php8.1-fpm-apache
+  * touch4it/php8:php8.2-fpm-apache
 * Alpine + Nginx + PHP-FPM
   * touch4it/php8:latest
   * touch4it/php8:php8.0-fpm-nginx
   * touch4it/php8:php8.0-fpm-nginx-dev
   * touch4it/php8:php8.1-fpm-nginx
   * touch4it/php8:php8.1-fpm-nginx-dev
+  * touch4it/php8:php8.2-fpm-nginx
+  * touch4it/php8:php8.2-fpm-nginx-dev
 
 ## Usage
 
@@ -41,7 +31,7 @@ You can you this docker-compose.yml file to develop:
 
 ```yaml
 www:
-  image: touch4it/docker-php7:php7.4-fpm-nginx
+  image: touch4it/php8:php8.2-fpm-nginx
   volumes:
     - "app:/var/www/html/web"
   ports:
@@ -56,7 +46,7 @@ Use ```docker-compose up``` command to start your development environment.
 
 ```yaml
 www:
-  image: touch4it/docker-php7:php7.4-fpm-nginx
+  image: touch4it/php8:php8.2-fpm-nginx
   volumes:
     - "app:/var/www/html/web"
     - "php.ini:/usr/local/etc/php/conf.d/docker-vars.ini"
@@ -179,15 +169,6 @@ Same as in similar official PHP image on Docker Hub
 ### What other PHP images do we have?
 
 * Drupal
-  * touch4it/drupal-php-fpm-nginx:latest, 10.0.3, 10.0
-  * touch4it/drupal-php-fpm-nginx:9.5.3, 9.5
-  * touch4it/drupal-php-fpm-nginx:9.4.11, 9.4
-* Drupal console
-  * touch4it/drupal-php-fpm-nginx:console
+  * https://hub.docker.com/r/touch4it/drupal-php-fpm-nginx
 * Symfony
-  * touch4it/php7-apache-symfony:php7.3
-  * touch4it/php7-apache-symfony:php7.4
-  * touch4it/php-nginx-symfony:php7.3-fpm-nginx
-  * touch4it/php-nginx-symfony:php7.3-fpm-nginx-dev
-  * touch4it/php-nginx-symfony:latest, php7.4-fpm-nginx
-  * touch4it/php-nginx-symfony:php7.4-fpm-nginx-dev
+  * https://hub.docker.com/r/touch4it/php-nginx-symfony
