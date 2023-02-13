@@ -41,7 +41,6 @@ docker build ./php8.0-fpm-apache \
 docker build ./php8.1-fpm-apache \
 	-t touch4it/php8:php8.1.15-fpm-apache \
 	-t touch4it/php8:php8.1-fpm-apache \
-	-t touch4it/php8:php8-fpm-apache \
 	-f ./php8.1-fpm-apache/Dockerfile \
 	--platform linux/amd64 \
 	|| exit 1
@@ -67,7 +66,6 @@ docker build ./php8.0-fpm-nginx \
 docker build ./php8.1-fpm-nginx \
 	-t touch4it/php8:php8.1.15-fpm-nginx \
 	-t touch4it/php8:php8.1-fpm-nginx \
-	-t touch4it/php8:php8-fpm-nginx \
 	-f ./php8.1-fpm-nginx/Dockerfile \
 	--platform linux/amd64 \
 	|| exit 1
@@ -94,7 +92,6 @@ docker build ./php8.0-fpm-nginx-dev \
 docker build ./php8.1-fpm-nginx-dev \
 	-t touch4it/php8:php8.1.15-fpm-nginx-dev \
 	-t touch4it/php8:php8.1-fpm-nginx-dev \
-	-t touch4it/php8:php8-fpm-nginx-dev \
 	-f ./php8.1-fpm-nginx-dev/Dockerfile \
 	--platform linux/amd64 \
 	|| exit 1
