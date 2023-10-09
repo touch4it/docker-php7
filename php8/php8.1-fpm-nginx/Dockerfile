@@ -1,4 +1,4 @@
-FROM  php:8.1.24-fpm-alpine3.18
+FROM  php:8.1.24-fpm-alpine3.17
 
 LABEL maintainer="Touch4IT <admin@touch4it.com>"
 
@@ -30,8 +30,8 @@ RUN apk --update add --no-cache \
 	libzip-dev \
 	oniguruma-dev \
     patch \
-	php8-dom \
-	php8-xml \
+	php81-dom \
+	php81-xml \
 	postgresql-dev \
 	zip \
     ${PHPIZE_DEPS}
@@ -78,8 +78,8 @@ RUN curl -sS https://getcomposer.org/installer | php \
 # NGINX
 #
 
-ENV NGINX_VERSION 1.22.1
-ENV NJS_VERSION   0.7.7
+ENV NGINX_VERSION 1.24.0
+ENV NJS_VERSION   0.7.12
 ENV PKG_RELEASE   1
 
 RUN set -x \
@@ -101,9 +101,9 @@ RUN set -x \
         x86_64|aarch64) \
             # arches officially built by upstream
             set -x \
-            && KEY_SHA512="e7fa8303923d9b95db37a77ad46c68fd4755ff935d0a534d26eba83de193c76166c68bfe7f65471bf8881004ef4aa6df3e34689c305662750c0172fca5d8552a *stdin" \
+            && KEY_SHA512="e09fa32f0a0eab2b879ccbbc4d0e4fb9751486eedda75e35fac65802cc9faa266425edf83e261137a2f4d16281ce2c1a5f4502930fe75154723da014214f0655" \
             && wget -O /tmp/nginx_signing.rsa.pub https://nginx.org/keys/nginx_signing.rsa.pub \
-            && if [ "$(openssl rsa -pubin -in /tmp/nginx_signing.rsa.pub -text -noout | openssl sha512 -r)" = "$KEY_SHA512" ]; then \
+            && if echo "$KEY_SHA512 */tmp/nginx_signing.rsa.pub" | sha512sum -c -; then \
                 echo "key verification succeeded!"; \
                 mv /tmp/nginx_signing.rsa.pub /etc/apk/keys/; \
             else \
@@ -138,7 +138,7 @@ RUN set -x \
                 export HOME=${tempDir} \
                 && cd ${tempDir} \
                 && curl -f -O https://hg.nginx.org/pkg-oss/archive/${NGINX_VERSION}-${PKG_RELEASE}.tar.gz \
-                && PKGOSSCHECKSUM=\"7266f418dcc9d89a2990f504d99ec58d10febbaf078c03630d42843955cee7e50b0f90fb317360384a32473839dc42d8b329b737015ec8dd0d028f90d4d5ed25 *${NGINX_VERSION}-${PKG_RELEASE}.tar.gz\" \
+                && PKGOSSCHECKSUM=\"dc47dbaeb1c0874b264d34ddfec40e7d2b814e7db48d144e12d5991c743ef5fcf780ecbab72324e562dd84bb9c0e4dd71d14850b20ceaf470c46f8fe7510275b *${NGINX_VERSION}-${PKG_RELEASE}.tar.gz\" \
                 && if [ \"\$(openssl sha512 -r ${NGINX_VERSION}-${PKG_RELEASE}.tar.gz)\" = \"\$PKGOSSCHECKSUM\" ]; then \
                     echo \"pkg-oss tarball checksum verification succeeded!\"; \
                 else \
@@ -183,7 +183,7 @@ RUN set -x \
     # Bring in tzdata so users could set the timezones through the environment
     # variables
     && apk add --no-cache tzdata \
-    # Bring in curl and ca-certificates to make registering on DNS SD easier
+		# Bring in curl and ca-certificates to make registering on DNS SD easier
     && apk add --no-cache curl ca-certificates \
     # forward request and error logs to docker log collector
     && ln -sf /dev/stdout /var/log/nginx/access.log \
