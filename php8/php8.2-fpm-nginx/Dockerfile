@@ -30,8 +30,8 @@ RUN apk --update add --no-cache \
 	libzip-dev \
 	oniguruma-dev \
     patch \
-	php8-dom \
-	php8-xml \
+	php82-dom \
+	php82-xml \
 	postgresql-dev \
 	zip \
     ${PHPIZE_DEPS}
