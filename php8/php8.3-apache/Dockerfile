@@ -53,8 +53,11 @@ RUN curl -sS https://getcomposer.org/installer | php \
 # PHP extensions
 #
 
-RUN pecl install imagick \
-	&& docker-php-ext-configure gd \
+RUN \
+  # Enable imagick when https://github.com/Imagick/imagick/issues/643 is solved
+  # pecl install imagick \
+  # && docker-php-ext-enable imagick \
+	docker-php-ext-configure gd \
 		--with-freetype \
 		--with-jpeg \
 		--with-webp \
@@ -71,9 +74,7 @@ RUN pecl install imagick \
 		pdo_mysql \
 		pdo_pgsql \
 		pgsql \
-		zip \
-	&& docker-php-ext-enable \
-		imagick
+		zip
 
 #
 # Apache
