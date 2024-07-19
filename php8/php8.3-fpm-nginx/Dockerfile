@@ -1,17 +1,17 @@
-FROM  php:8.2.21-fpm-alpine3.19
+FROM  php:8.3.9-fpm-alpine3.20
 
 LABEL maintainer="Touch4IT <admin@touch4it.com>"
 
-ENV ADMIN_EMAIL webmaster@localhost
+ENV ADMIN_EMAIL=webmaster@localhost
 
 #
 # PHP extensions
 #
 
-ENV PHP_TIME_ZONE UTC
-ENV PHP_MEMORY_LIMIT 256M
-ENV PHP_UPLOAD_MAX_FILESIZE 32M
-ENV PHP_POST_MAX_SIZE 32M
+ENV PHP_TIME_ZONE=UTC
+ENV PHP_MEMORY_LIMIT=256M
+ENV PHP_UPLOAD_MAX_FILESIZE=32M
+ENV PHP_POST_MAX_SIZE=32M
 
 RUN apk update
 RUN apk search php
@@ -33,14 +33,17 @@ RUN apk --update add --no-cache \
   libzip-dev \
   oniguruma-dev \
   patch \
-  php82-dom \
-  php82-xml \
+  php83-dom \
+  php83-xml \
   postgresql-dev \
   zip \
   ${PHPIZE_DEPS}
 
-RUN pecl install imagick \
-  && docker-php-ext-configure gd \
+RUN \
+  # Enable imagick when https://github.com/Imagick/imagick/issues/643 is solved
+  # pecl install imagick \
+  # && docker-php-ext-enable imagick \
+  docker-php-ext-configure gd \
     --with-freetype \
     --with-jpeg \
     --with-webp \
@@ -57,9 +60,7 @@ RUN pecl install imagick \
     pdo_mysql \
     pdo_pgsql \
     pgsql \
-    zip \
-  && docker-php-ext-enable \
-    imagick
+    zip
 
 #
 # CRON

@@ -23,17 +23,21 @@ PHP 7
 PHP 8
 
 * Debian + Apache + mod_php
-  * touch4it/php8:php8.0-apache
   * touch4it/php8:php8.1-apache
+  * touch4it/php8:php8.2-apache
+  * touch4it/php8:php8.3-apache
 * Debian + Apache + PHP-FPM
-  * touch4it/php8:php8.0-fpm-apache
   * touch4it/php8:php8.1-fpm-apache
+  * touch4it/php8:php8.2-fpm-apache
+  * touch4it/php8:php8.3-fpm-apache
 * Alpine + Nginx + PHP-FPM
   * touch4it/php8:latest
-  * touch4it/php8:php8.0-fpm-nginx
-  * touch4it/php8:php8.0-fpm-nginx-dev
   * touch4it/php8:php8.1-fpm-nginx
+  * touch4it/php8:php8.2-fpm-nginx
+  * touch4it/php8:php8.3-fpm-nginx
   * touch4it/php8:php8.1-fpm-nginx-dev
+  * touch4it/php8:php8.2-fpm-nginx-dev
+  * touch4it/php8:php8.3-fpm-nginx-dev
 
 Frameworks
 
