@@ -1,10 +1,10 @@
-FROM  php:8.2.22-apache-bullseye
+FROM php:8.2.28-apache-bullseye
 
-ENV ADMIN_EMAIL webmaster@localhost
-ENV PHP_TIME_ZONE Europe/London
-ENV PHP_MEMORY_LIMIT 256M
-ENV PHP_UPLOAD_MAX_FILESIZE 32M
-ENV PHP_POST_MAX_SIZE 32M
+ENV ADMIN_EMAIL=webmaster@localhost
+ENV PHP_TIME_ZONE=Europe/London
+ENV PHP_MEMORY_LIMIT=256M
+ENV PHP_UPLOAD_MAX_FILESIZE=32M
+ENV PHP_POST_MAX_SIZE=32M
 
 COPY 000-default.conf $APACHE_CONFDIR/sites-available/000-default.conf
 COPY php-override.ini $PHP_INI_DIR/conf.d/php-override.ini
@@ -53,8 +53,11 @@ RUN curl -sS https://getcomposer.org/installer | php \
 # PHP extensions
 #
 
-RUN pecl install imagick \
-	&& docker-php-ext-configure gd \
+RUN \
+  # Enable imagick when https://github.com/Imagick/imagick/issues/643 is solved
+  # pecl install imagick \
+  # && docker-php-ext-enable imagick \
+	docker-php-ext-configure gd \
 		--with-freetype \
 		--with-jpeg \
 		--with-webp \
@@ -71,9 +74,7 @@ RUN pecl install imagick \
 		pdo_mysql \
 		pdo_pgsql \
 		pgsql \
-		zip \
-	&& docker-php-ext-enable \
-		imagick
+		zip
 
 #
 # Apache

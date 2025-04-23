@@ -1,17 +1,17 @@
-FROM  php:8.1.29-fpm-alpine3.19
+FROM php:8.1.32-fpm-alpine3.21
 
 LABEL maintainer="Touch4IT <admin@touch4it.com>"
 
-ENV ADMIN_EMAIL webmaster@localhost
+ENV ADMIN_EMAIL=webmaster@localhost
 
 #
 # PHP extensions
 #
 
-ENV PHP_TIME_ZONE UTC
-ENV PHP_MEMORY_LIMIT 256M
-ENV PHP_UPLOAD_MAX_FILESIZE 32M
-ENV PHP_POST_MAX_SIZE 32M
+ENV PHP_TIME_ZONE=UTC
+ENV PHP_MEMORY_LIMIT=256M
+ENV PHP_UPLOAD_MAX_FILESIZE=32M
+ENV PHP_POST_MAX_SIZE=32M
 
 RUN apk --update add --no-cache \
 	acl \
@@ -30,8 +30,8 @@ RUN apk --update add --no-cache \
 	libzip-dev \
 	oniguruma-dev \
     patch \
-	php81-dom \
-	php81-xml \
+	php-dom \
+	php-xml \
 	postgresql-dev \
 	zip \
     ${PHPIZE_DEPS}
@@ -78,8 +78,9 @@ RUN curl -sS https://getcomposer.org/installer | php \
 # NGINX
 #
 
-ENV NGINX_VERSION=1.27.0
-ENV PKG_RELEASE=2
+ENV NGINX_VERSION=1.27.5
+ENV PKG_RELEASE=1
+ENV DYNPKG_RELEASE=1
 
 RUN set -x \
 # create nginx user/group first, to be consistent throughout docker variants
@@ -124,11 +125,12 @@ RUN set -x \
                 bash \
                 alpine-sdk \
                 findutils \
+                curl \
             && su nobody -s /bin/sh -c " \
                 export HOME=${tempDir} \
                 && cd ${tempDir} \
-                && curl -f -O https://hg.nginx.org/pkg-oss/archive/${NGINX_VERSION}-${PKG_RELEASE}.tar.gz \
-                && PKGOSSCHECKSUM=\"cd3333f4dfa4a873f6df73dfe24e047adc092d779aefb46577b6307ff0d0125543508694a80158b2bfc891167ad763b0d08287829df9924d4c22f50d063e76c0 *${NGINX_VERSION}-${PKG_RELEASE}.tar.gz\" \
+                && curl -f -L -O https://github.com/nginx/pkg-oss/archive/${NGINX_VERSION}-${PKG_RELEASE}.tar.gz \
+                && PKGOSSCHECKSUM=\"c773d98b567bd585c17f55702bf3e4c7d82b676bfbde395270e90a704dca3c758dfe0380b3f01770542b4fd9bed1f1149af4ce28bfc54a27a96df6b700ac1745 *${NGINX_VERSION}-${PKG_RELEASE}.tar.gz\" \
                 && if [ \"\$(openssl sha512 -r ${NGINX_VERSION}-${PKG_RELEASE}.tar.gz)\" = \"\$PKGOSSCHECKSUM\" ]; then \
                     echo \"pkg-oss tarball checksum verification succeeded!\"; \
                 else \
@@ -152,23 +154,8 @@ RUN set -x \
 # if we have leftovers from building, let's purge them (including extra, unnecessary build deps)
     && if [ -n "$tempDir" ]; then rm -rf "$tempDir"; fi \
     && if [ -f "/etc/apk/keys/abuild-key.rsa.pub" ]; then rm -f /etc/apk/keys/abuild-key.rsa.pub; fi \
-# Bring in gettext so we can get `envsubst`, then throw
-# the rest away. To do this, we need to install `gettext`
-# then move `envsubst` out of the way so `gettext` can
-# be deleted completely, then move `envsubst` back.
-    && apk add --no-cache --virtual .gettext gettext \
-    && mv /usr/bin/envsubst /tmp/ \
-    \
-    && runDeps="$( \
-        scanelf --needed --nobanner /tmp/envsubst \
-            | awk '{ gsub(/,/, "\nso:", $2); print "so:" $2 }' \
-            | sort -u \
-            | xargs -r apk info --installed \
-            | sort -u \
-    )" \
-    && apk add --no-cache $runDeps \
-    && apk del --no-network .gettext \
-    && mv /tmp/envsubst /usr/local/bin/ \
+# Add `envsubst` for templating environment variables
+    && apk add --no-cache gettext-envsubst \
 # Bring in tzdata so users could set the timezones through the environment
 # variables
     && apk add --no-cache tzdata \

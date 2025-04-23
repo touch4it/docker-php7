@@ -1,4 +1,4 @@
-FROM  php:7.4.33-fpm-alpine3.15
+FROM php:7.4.33-fpm-alpine3.15
 
 LABEL maintainer="Touch4IT <admin@touch4it.com>"
 
@@ -8,10 +8,10 @@ ENV ADMIN_EMAIL webmaster@localhost
 # PHP extensions
 #
 
-ENV PHP_TIME_ZONE UTC
-ENV PHP_MEMORY_LIMIT 256M
-ENV PHP_UPLOAD_MAX_FILESIZE 32M
-ENV PHP_POST_MAX_SIZE 32M
+ENV PHP_TIME_ZONE=UTC
+ENV PHP_MEMORY_LIMIT=256M
+ENV PHP_UPLOAD_MAX_FILESIZE=32M
+ENV PHP_POST_MAX_SIZE=32M
 
 RUN apk --update add --no-cache \
     acl \

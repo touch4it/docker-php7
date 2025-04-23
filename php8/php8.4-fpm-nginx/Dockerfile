@@ -1,4 +1,4 @@
-FROM php:8.2.28-fpm-alpine3.21
+FROM php:8.4.6-fpm-alpine3.21
 
 LABEL maintainer="Touch4IT <admin@touch4it.com>"
 
@@ -33,14 +33,17 @@ RUN apk --update add --no-cache \
   libzip-dev \
   oniguruma-dev \
   patch \
-  php82-dom \
-  php82-xml \
+  php84-dom \
+  php84-xml \
   postgresql-dev \
   zip \
   ${PHPIZE_DEPS}
 
-RUN pecl install imagick \
-  && docker-php-ext-configure gd \
+RUN \
+  # Enable imagick when https://github.com/Imagick/imagick/issues/643 is solved
+  # pecl install imagick \
+  # && docker-php-ext-enable imagick \
+  docker-php-ext-configure gd \
     --with-freetype \
     --with-jpeg \
     --with-webp \
@@ -57,9 +60,7 @@ RUN pecl install imagick \
     pdo_mysql \
     pdo_pgsql \
     pgsql \
-    zip \
-  && docker-php-ext-enable \
-    imagick
+    zip
 
 #
 # CRON
