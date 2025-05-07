@@ -39,6 +39,26 @@ RUN apk --update add --no-cache \
   zip \
   ${PHPIZE_DEPS}
 
+# Install ImageMagick from source with compatible version for PHP 8.3/8.4
+RUN set -xe \
+  && apk add --no-cache \
+    imagemagick \
+    imagemagick-dev \
+    # Add any other dependencies needed
+  \
+  && cd /tmp \
+  && curl -sS https://pecl.php.net/get/imagick-3.8.0.tgz --output imagick-3.8.0.tgz \
+  && tar -xzf imagick-3.8.0.tgz \
+  && cd imagick-3.8.0 \
+  && phpize \
+  && ./configure \
+  && make \
+  && make install \
+  && docker-php-ext-enable imagick \
+  # Clean up
+  && cd .. \
+  && rm -rf imagick-3.8.0 imagick-3.8.0.tgz
+
 RUN \
   # Enable imagick when https://github.com/Imagick/imagick/issues/643 is solved
   # pecl install imagick \

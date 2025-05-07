@@ -14,26 +14,26 @@ ENV PHP_UPLOAD_MAX_FILESIZE=32M
 ENV PHP_POST_MAX_SIZE=32M
 
 RUN apk --update add --no-cache \
-	acl \
-	bash \
-	dcron \
-	freetype-dev \
-	gettext-dev \
-	git \
-	grep \
-	icu-dev \
+  acl \
+  bash \
+  dcron \
+  freetype-dev \
+  gettext-dev \
+  git \
+  grep \
+  icu-dev \
     imagemagick \
     imagemagick-dev \
-	libjpeg-turbo-dev \
-	libpng-dev \
+  libjpeg-turbo-dev \
+  libpng-dev \
     libwebp-dev \
-	libzip-dev \
-	oniguruma-dev \
+  libzip-dev \
+  oniguruma-dev \
     patch \
-	php-dom \
-	php-xml \
-	postgresql-dev \
-	zip \
+  php-dom \
+  php-xml \
+  postgresql-dev \
+  zip \
     ${PHPIZE_DEPS}
 
 RUN pecl install imagick \
@@ -41,20 +41,20 @@ RUN pecl install imagick \
         --with-freetype \
         --with-jpeg \
         --with-webp \
-	&& docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-	&& docker-php-ext-configure bcmath --enable-bcmath \
-	&& docker-php-ext-install \
-		bcmath \
-		exif \
-		gd \
-		gettext \
-		intl \
-		mysqli \
-		opcache \
-		pdo_mysql \
-		pdo_pgsql \
-		pgsql \
-		zip \
+  && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
+  && docker-php-ext-configure bcmath --enable-bcmath \
+  && docker-php-ext-install \
+    bcmath \
+    exif \
+    gd \
+    gettext \
+    intl \
+    mysqli \
+    opcache \
+    pdo_mysql \
+    pdo_pgsql \
+    pgsql \
+    zip \
     && docker-php-ext-enable \
         imagick
 
@@ -63,16 +63,16 @@ RUN pecl install imagick \
 #
 
 RUN mkdir -m 0644 -p /etc/cron.d \
-	&& mkdir -m 0644 -p /var/log/cron \
-	&& touch /var/log/cron/cron.log
+  && mkdir -m 0644 -p /var/log/cron \
+  && touch /var/log/cron/cron.log
 
 #
 # COMPOSER
 #
 
 RUN curl -sS https://getcomposer.org/installer | php \
-	&& mv composer.phar /usr/local/bin/composer \
-	&& composer self-update
+  && mv composer.phar /usr/local/bin/composer \
+  && composer self-update
 
 #
 # NGINX
