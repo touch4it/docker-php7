@@ -10,10 +10,16 @@ PHP 8
   * touch4it/php8:php8.1-apache
   * touch4it/php8:php8.2-apache
   * touch4it/php8:php8.3-apache
+  * touch4it/php8:php8.4-apache
+  * touch4it/php8:php8-apache
+  * touch4it/php8:latest-apache
 * Debian + Apache + PHP-FPM
   * touch4it/php8:php8.1-fpm-apache
   * touch4it/php8:php8.2-fpm-apache
   * touch4it/php8:php8.3-fpm-apache
+  * touch4it/php8:php8.4-fpm-apache
+  * touch4it/php8:php8-fpm-apache
+  * touch4it/php8:latest-fpm-apache
 * Alpine + Nginx + PHP-FPM
   * touch4it/php8:latest
   * touch4it/php8:php8.1-fpm-nginx
@@ -22,6 +28,13 @@ PHP 8
   * touch4it/php8:php8.2-fpm-nginx-dev
   * touch4it/php8:php8.3-fpm-nginx
   * touch4it/php8:php8.3-fpm-nginx-dev
+  * touch4it/php8:php8.4-fpm-nginx
+  * touch4it/php8:php8.4-fpm-nginx-dev
+  * touch4it/php8:php8-fpm-nginx
+  * touch4it/php8:latest-fpm-nginx
+  * touch4it/php8:php8-fpm-nginx-dev
+  * touch4it/php8:latest-fpm-nginx-dev
+  * touch4it/php8:latest-dev
 
 ## Usage
 
