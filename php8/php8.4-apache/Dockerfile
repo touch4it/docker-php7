@@ -1,4 +1,4 @@
-FROM php:8.4.15-apache-bullseye
+FROM php:8.4.15-apache-bookworm
 
 ENV ADMIN_EMAIL=webmaster@localhost
 ENV PHP_TIME_ZONE=Europe/London
