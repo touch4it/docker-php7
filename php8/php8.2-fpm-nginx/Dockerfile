@@ -13,7 +13,8 @@ ENV PHP_MEMORY_LIMIT=256M
 ENV PHP_UPLOAD_MAX_FILESIZE=32M
 ENV PHP_POST_MAX_SIZE=32M
 
-RUN apk --update add --no-cache \
+RUN apk update \
+  && apk add --no-cache \
   acl \
   bash \
   dcron \
@@ -34,7 +35,8 @@ RUN apk --update add --no-cache \
   php82-xml \
   postgresql-dev \
   zip \
-  ${PHPIZE_DEPS}
+  ${PHPIZE_DEPS} \
+  && rm -rf /var/cache/apk/*
 
 RUN pecl install imagick \
   && docker-php-ext-configure gd \

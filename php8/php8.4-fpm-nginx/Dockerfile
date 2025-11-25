@@ -13,7 +13,8 @@ ENV PHP_MEMORY_LIMIT=256M
 ENV PHP_UPLOAD_MAX_FILESIZE=32M
 ENV PHP_POST_MAX_SIZE=32M
 
-RUN apk --update add --no-cache \
+RUN apk update \
+  && apk add --no-cache \
   acl \
   bash \
   dcron \
@@ -34,16 +35,12 @@ RUN apk --update add --no-cache \
   php84-xml \
   postgresql-dev \
   zip \
-  ${PHPIZE_DEPS}
+  ${PHPIZE_DEPS} \
+  && rm -rf /var/cache/apk/*
 
 # Install ImageMagick from source with compatible version for PHP 8.3/8.4
 RUN set -xe \
-  && apk add --no-cache \
-    imagemagick \
-    imagemagick-dev \
-    # Add any other dependencies needed
-  \
-  && cd /tmp \
+  cd /tmp \
   && curl -sS https://pecl.php.net/get/imagick-3.8.0.tgz --output imagick-3.8.0.tgz \
   && tar -xzf imagick-3.8.0.tgz \
   && cd imagick-3.8.0 \
