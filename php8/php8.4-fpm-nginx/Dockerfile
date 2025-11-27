@@ -14,6 +14,7 @@ ENV PHP_UPLOAD_MAX_FILESIZE=32M
 ENV PHP_POST_MAX_SIZE=32M
 
 RUN apk update \
+  && apk upgrade \
   && apk add --no-cache \
   acl \
   bash \
