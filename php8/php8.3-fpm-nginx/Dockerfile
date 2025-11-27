@@ -14,8 +14,7 @@ ENV PHP_UPLOAD_MAX_FILESIZE=32M
 ENV PHP_POST_MAX_SIZE=32M
 
 RUN apk update \
-  && apk upgrade \
-  && apk add --no-cache \
+  && apk add\
   acl \
   bash \
   dcron \
@@ -36,8 +35,7 @@ RUN apk update \
   php83-xml \
   postgresql-dev \
   zip \
-  ${PHPIZE_DEPS} \
-  && rm -rf /var/cache/apk/*
+  ${PHPIZE_DEPS}
 
 # Install ImageMagick from source with compatible version for PHP 8.3/8.4
 RUN set -xe \
@@ -187,6 +185,8 @@ COPY ./docker-vars.ini /usr/local/etc/php/conf.d/docker-vars.ini
 COPY ./www.conf /usr/local/etc/php-fpm.d/www.conf
 COPY ./nginx.conf /etc/nginx/nginx.conf
 COPY ./nginx.vh.default.conf /etc/nginx/conf.d/default.conf
+
+RUN apk upgrade && rm -rf /var/cache/apk/*
 
 EXPOSE 80
 
