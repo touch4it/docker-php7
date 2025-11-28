@@ -13,6 +13,10 @@ ENV PHP_MEMORY_LIMIT=256M
 ENV PHP_UPLOAD_MAX_FILESIZE=32M
 ENV PHP_POST_MAX_SIZE=32M
 
+RUN wget https://github.com/php/pie/releases/latest/download/pie.phar \
+  && chmod +x pie.phar \
+  && mv pie.phar /usr/local/bin/pie
+
 RUN apk update \
   && apk add \
   acl \
@@ -37,26 +41,9 @@ RUN apk update \
   zip \
   ${PHPIZE_DEPS}
 
-# Install ImageMagick from source with compatible version for PHP 8.3/8.4
-RUN set -xe \
-  cd /tmp \
-  && curl -sS https://pecl.php.net/get/imagick-3.8.0.tgz --output imagick-3.8.0.tgz \
-  && tar -xzf imagick-3.8.0.tgz \
-  && cd imagick-3.8.0 \
-  && phpize \
-  && ./configure \
-  && make \
-  && make install \
-  && docker-php-ext-enable imagick \
-  # Clean up
-  && cd .. \
-  && rm -rf imagick-3.8.0 imagick-3.8.0.tgz
+RUN pie install imagick/imagick:^3.8.1 --with-imagick=/usr
 
-RUN \
-  # Enable imagick when https://github.com/Imagick/imagick/issues/643 is solved
-  # pecl install imagick \
-  # && docker-php-ext-enable imagick \
-  docker-php-ext-configure gd \
+RUN docker-php-ext-configure gd \
     --with-freetype \
     --with-jpeg \
     --with-webp \

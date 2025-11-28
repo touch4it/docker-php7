@@ -154,6 +154,7 @@ for Apache 2.4.26+ based images
 * exif
 * gd
 * gettext
+* imagick (installed via PIE)
 * intl
 * mbstring
 * opcache
@@ -166,6 +167,24 @@ for Apache 2.4.26+ based images
 ### How do I install additional php extensions?
 
 This work is based on official Docker Hub `php` images. You can use docker-php-ext-install to add new extensions. More information can be found https://hub.docker.com/_/php/
+
+#### PIE (PHP Installer/Extension)
+
+PHP 8.4 and 8.5 fpm-nginx development images include [PIE](https://github.com/php/pie) - the modern PHP extension installer (inherited from base production images).
+
+**Images with PIE:**
+
+* touch4it/php8:php8.4-fpm-nginx-dev (latest-dev)
+* touch4it/php8:php8.5-fpm-nginx-dev
+
+**Usage example:**
+
+```dockerfile
+FROM touch4it/php8:latest-dev
+RUN pie install vendor/package:^1.0
+```
+
+PIE uses Composer-style package names from Packagist and handles compilation, installation, and enabling extensions automatically.
 
 ### How do I change default PHP variables?
 
