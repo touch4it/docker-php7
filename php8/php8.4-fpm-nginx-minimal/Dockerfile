@@ -1,4 +1,4 @@
-FROM php:8.1.34-fpm-alpine3.22
+FROM php:8.4.17-fpm-alpine3.23
 
 LABEL maintainer="Touch4IT <admin@touch4it.com>"
 
@@ -13,41 +13,32 @@ ENV PHP_MEMORY_LIMIT=256M
 ENV PHP_UPLOAD_MAX_FILESIZE=32M
 ENV PHP_POST_MAX_SIZE=32M
 
+RUN wget https://github.com/php/pie/releases/latest/download/pie.phar \
+  && chmod +x pie.phar \
+  && mv pie.phar /usr/local/bin/pie
+
 RUN apk update \
-  && apk add\
+  && apk add \
   acl \
   bash \
   dcron \
-  freetype-dev \
   gettext-dev \
   git \
   grep \
   icu-dev \
-    imagemagick \
-    imagemagick-dev \
-  libjpeg-turbo-dev \
-  libpng-dev \
-    libwebp-dev \
   libzip-dev \
   oniguruma-dev \
-    patch \
-  php-dom \
-  php-xml \
+  patch \
+  php84-dom \
+  php84-xml \
   postgresql-dev \
   zip \
   ${PHPIZE_DEPS}
 
-RUN pecl install imagick \
-    && docker-php-ext-configure gd \
-        --with-freetype \
-        --with-jpeg \
-        --with-webp \
-  && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
+RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
   && docker-php-ext-configure bcmath --enable-bcmath \
   && docker-php-ext-install \
     bcmath \
-    exif \
-    gd \
     gettext \
     intl \
     mysqli \
@@ -55,9 +46,7 @@ RUN pecl install imagick \
     pdo_mysql \
     pdo_pgsql \
     pgsql \
-    zip \
-    && docker-php-ext-enable \
-        imagick
+    zip
 
 #
 # CRON
@@ -70,10 +59,10 @@ RUN mkdir -m 0644 -p /etc/cron.d \
 #
 # COMPOSER
 #
-
-RUN curl -sS https://getcomposer.org/installer | php \
-  && mv composer.phar /usr/local/bin/composer \
-  && composer self-update
+# Note: Composer installer script includes its own checksum verification
+# For additional security, consider pinning to a specific version
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+  && chmod +x /usr/local/bin/composer
 
 #
 # NGINX

@@ -1,4 +1,4 @@
-FROM php:8.5.0-apache-bookworm
+FROM php:8.5.2-apache-bookworm
 
 ENV ADMIN_EMAIL=webmaster@localhost
 ENV PHP_TIME_ZONE=Europe/London
@@ -54,22 +54,22 @@ RUN curl -sS https://getcomposer.org/installer | php \
 #
 
 # Install specific version of Imagick from source
-RUN set -xe \
-  && cd /tmp \
-  # Download specific version of Imagick PECL extension
-  && curl -sS https://pecl.php.net/get/imagick-3.8.0.tgz --output imagick-3.8.0.tgz \
-  && tar -xzf imagick-3.8.0.tgz \
-  && cd imagick-3.8.0 \
-  # Configure and install
-  && phpize \
-  && ./configure \
-  && make \
-  && make install \
-  # Enable the extension
-  && docker-php-ext-enable imagick \
-  # Clean up
-  && cd .. \
-  && rm -rf imagick-3.8.0 imagick-3.8.0.tgz
+# RUN set -xe \
+#   && cd /tmp \
+#   # Download specific version of Imagick PECL extension
+#   && curl -sS https://pecl.php.net/get/imagick-3.8.1.tgz --output imagick-3.8.1.tgz \
+#   && tar -xzf imagick-3.8.1.tgz \
+#   && cd imagick-3.8.1 \
+#   # Configure and install
+#   && phpize \
+#   && ./configure \
+#   && make \
+#   && make install \
+#   # Enable the extension
+#   && docker-php-ext-enable imagick \
+#   # Clean up
+#   && cd .. \
+#   && rm -rf imagick-3.8.1 imagick-3.8.1.tgz
 
 RUN \
   # Enable imagick when https://github.com/Imagick/imagick/issues/643 is solved
