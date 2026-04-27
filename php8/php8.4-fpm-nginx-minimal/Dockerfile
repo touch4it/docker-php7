@@ -1,4 +1,4 @@
-FROM php:8.4.17-fpm-alpine3.23
+FROM php:8.4.20-fpm-alpine3.23
 
 LABEL maintainer="Touch4IT <admin@touch4it.com>"
 
@@ -68,7 +68,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # NGINX
 #
 
-ENV NGINX_VERSION=1.28.2
+ENV NGINX_VERSION=1.30.0
 ENV PKG_RELEASE=1
 ENV DYNPKG_RELEASE=1
 
@@ -96,7 +96,16 @@ RUN set -x \
                 echo "key verification failed!"; \
                 exit 1; \
             fi \
-            && apk add -X "https://nginx.org/packages/alpine/v$(egrep -o '^[0-9]+\.[0-9]+' /etc/alpine-release)/main" --no-cache $nginxPackages \
+# we need to make sure nginx.org packages are pulled in, which isnt guaranteed
+# as Alpine repos might have the same version in the repos.
+# query nginx.org binaries for the dependencies
+            && DEPS=$(apk query --summarize depends --recursive --no-cache \
+                       --repository "@nginxorg https://nginx.org/packages/alpine/v$(egrep -o '^[0-9]+\.[0-9]+' /etc/alpine-release)/main" \
+                       ${nginxPackages/=/@nginxorg=}) \
+# install those dependencies from Alpine repos
+            && apk add --no-cache $DEPS \
+# limit apk to nginx.org repos only to install the requested packages
+            && apk add --repositories-file /dev/null -X "https://nginx.org/packages/alpine/v$(egrep -o '^[0-9]+\.[0-9]+' /etc/alpine-release)/main" --no-cache $nginxPackages \
             ;; \
         *) \
 # we're on an architecture upstream doesn't officially build for
@@ -120,7 +129,7 @@ RUN set -x \
                 export HOME=${tempDir} \
                 && cd ${tempDir} \
                 && curl -f -L -O https://github.com/nginx/pkg-oss/archive/${NGINX_VERSION}-${PKG_RELEASE}.tar.gz \
-                && PKGOSSCHECKSUM=\"ef4545c05b1632a056482e3dbb47bb5d7393238318db3491e8bb308218cdb5f32dbb2ac73509097ac2426fd73270bc97836843a8b1846a396fd94e60826f7e3f *${NGINX_VERSION}-${PKG_RELEASE}.tar.gz\" \
+                && PKGOSSCHECKSUM=\"a090f4aecd628ab4b4124376efa55f617a272f9bae4e306df9b659b1b850133b0806cac31fb2a72faf1cc36bde8f5a19f4f5da5fd73502d3bbe374697920344e *${NGINX_VERSION}-${PKG_RELEASE}.tar.gz\" \
                 && if [ \"\$(openssl sha512 -r ${NGINX_VERSION}-${PKG_RELEASE}.tar.gz)\" = \"\$PKGOSSCHECKSUM\" ]; then \
                     echo \"pkg-oss tarball checksum verification succeeded!\"; \
                 else \
@@ -136,7 +145,13 @@ RUN set -x \
                 " \
             && cp ${tempDir}/.abuild/abuild-key.rsa.pub /etc/apk/keys/ \
             && apk del --no-network .build-deps \
-            && apk add -X ${tempDir}/packages/alpine/ --no-cache $nginxPackages \
+# same as in the "arches officially built by upstream" block, we want to make
+# sure the packages we've just built will get installed
+            && DEPS=$(apk query --summarize depends --recursive --no-cache \
+                       --repository "@nginxorg ${tempDir}/packages/alpine/" \
+                       ${nginxPackages/=/@nginxorg=}) \
+            && apk add --no-cache $DEPS \
+            && apk add --repositories-file /dev/null -X ${tempDir}/packages/alpine/ --no-cache $nginxPackages \
             ;; \
     esac \
 # remove checksum deps
