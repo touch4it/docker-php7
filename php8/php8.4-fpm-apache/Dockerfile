@@ -1,4 +1,4 @@
-FROM php:8.4.20-fpm-bookworm
+FROM php:8.4.22-fpm-bookworm
 
 LABEL maintainer="Touch4IT <admin@touch4it.com>"
 

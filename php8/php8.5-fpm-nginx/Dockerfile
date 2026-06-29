@@ -1,4 +1,4 @@
-FROM php:8.5.2-fpm-alpine3.23
+FROM php:8.5.7-fpm-alpine3.23
 
 LABEL maintainer="Touch4IT <admin@touch4it.com>"
 
