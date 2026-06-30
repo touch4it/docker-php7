@@ -56,7 +56,6 @@ RUN docker-php-ext-configure gd \
     gettext \
     intl \
     mysqli \
-    opcache \
     pdo_mysql \
     pdo_pgsql \
     pgsql \
