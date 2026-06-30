@@ -1,4 +1,4 @@
-FROM php:8.2.31-fpm-alpine3.22
+FROM php:8.2.31-fpm-alpine3.24
 
 LABEL maintainer="Touch4IT <admin@touch4it.com>"
 
@@ -31,8 +31,6 @@ RUN apk update \
   libzip-dev \
   oniguruma-dev \
   patch \
-  php82-dom \
-  php82-xml \
   postgresql-dev \
   zip \
   ${PHPIZE_DEPS}
