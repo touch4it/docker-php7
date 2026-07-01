@@ -1,4 +1,4 @@
-FROM php:8.5.2-apache-bookworm
+FROM php:8.5.7-apache-trixie
 
 ENV ADMIN_EMAIL=webmaster@localhost
 ENV PHP_TIME_ZONE=Europe/London
@@ -88,7 +88,6 @@ RUN \
     gettext \
     intl \
     mysqli \
-    opcache \
     pdo_mysql \
     pdo_pgsql \
     pgsql \

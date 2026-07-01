@@ -1,4 +1,4 @@
-FROM php:8.5.2-fpm-bookworm
+FROM php:8.5.7-fpm-trixie
 
 LABEL maintainer="Touch4IT <admin@touch4it.com>"
 
@@ -87,7 +87,6 @@ RUN \
     gettext \
     intl \
     mysqli \
-    opcache \
     pdo_mysql \
     pdo_pgsql \
     pgsql \

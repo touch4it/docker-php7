@@ -1,4 +1,4 @@
-FROM php:8.2.30-apache-bookworm
+FROM php:8.2.31-apache-trixie
 
 ENV ADMIN_EMAIL=webmaster@localhost
 ENV PHP_TIME_ZONE=Europe/London
