@@ -104,7 +104,6 @@ def alpine_num(label):
 # --------------------------------------------------------------------------- #
 # Official base, e.g.:
 #   FROM php:8.4.20-fpm-alpine3.23
-#   FROM php:8.1.34-apache-bullseye
 #   FROM php:8.3.30-fpm-bookworm
 OFFICIAL_RE = re.compile(
     r"^FROM\s+php:(?P<ver>\d+\.\d+\.\d+)-(?P<type>fpm|apache)-"
