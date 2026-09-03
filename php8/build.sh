@@ -14,7 +14,7 @@ docker build ./php8.2-apache \
 	|| exit 1
 
 docker build ./php8.3-apache \
-	-t touch4it/php8:php8.3.31-apache \
+	-t touch4it/php8:php8.3.33-apache \
 	-t touch4it/php8:php8.3-apache \
 	-f ./php8.3-apache/Dockerfile \
 	--platform linux/amd64 \
@@ -46,7 +46,7 @@ docker build ./php8.2-fpm-apache \
 	|| exit 1
 
 docker build ./php8.3-fpm-apache \
-	-t touch4it/php8:php8.3.31-fpm-apache \
+	-t touch4it/php8:php8.3.33-fpm-apache \
 	-t touch4it/php8:php8.3-fpm-apache \
 	-f ./php8.3-fpm-apache/Dockerfile \
 	--platform linux/amd64 \
@@ -78,7 +78,7 @@ docker build ./php8.2-fpm-nginx \
 	|| exit 1
 
 docker build ./php8.3-fpm-nginx \
-	-t touch4it/php8:php8.3.31-fpm-nginx \
+	-t touch4it/php8:php8.3.33-fpm-nginx \
 	-t touch4it/php8:php8.3-fpm-nginx \
 	-f ./php8.3-fpm-nginx/Dockerfile \
 	--platform linux/amd64 \
@@ -111,7 +111,7 @@ docker build ./php8.2-fpm-nginx-dev \
 	|| exit 1
 
 docker build ./php8.3-fpm-nginx-dev \
-	-t touch4it/php8:php8.3.31-fpm-nginx-dev \
+	-t touch4it/php8:php8.3.33-fpm-nginx-dev \
 	-t touch4it/php8:php8.3-fpm-nginx-dev \
 	-f ./php8.3-fpm-nginx-dev/Dockerfile \
 	--platform linux/amd64 \
@@ -141,7 +141,7 @@ echo "Pushing PHP images"
 docker image push touch4it/php8:php8.2.31-apache
 docker image push touch4it/php8:php8.2-apache
 
-docker image push touch4it/php8:php8.3.31-apache
+docker image push touch4it/php8:php8.3.33-apache
 docker image push touch4it/php8:php8.3-apache
 
 docker image push touch4it/php8:php8.4.22-apache
@@ -155,7 +155,7 @@ docker image push touch4it/php8:php8.5-apache
 docker image push touch4it/php8:php8.2.31-fpm-apache
 docker image push touch4it/php8:php8.2-fpm-apache
 
-docker image push touch4it/php8:php8.3.31-fpm-apache
+docker image push touch4it/php8:php8.3.33-fpm-apache
 docker image push touch4it/php8:php8.3-fpm-apache
 
 docker image push touch4it/php8:php8.4.22-fpm-apache
@@ -169,7 +169,7 @@ docker image push touch4it/php8:php8.5-fpm-apache
 docker image push touch4it/php8:php8.2.31-fpm-nginx
 docker image push touch4it/php8:php8.2-fpm-nginx
 
-docker image push touch4it/php8:php8.3.31-fpm-nginx
+docker image push touch4it/php8:php8.3.33-fpm-nginx
 docker image push touch4it/php8:php8.3-fpm-nginx
 
 docker image push touch4it/php8:php8.4.22-fpm-nginx
@@ -187,7 +187,7 @@ docker image push touch4it/php8:latest
 docker image push touch4it/php8:php8.2.31-fpm-nginx-dev
 docker image push touch4it/php8:php8.2-fpm-nginx-dev
 
-docker image push touch4it/php8:php8.3.31-fpm-nginx-dev
+docker image push touch4it/php8:php8.3.33-fpm-nginx-dev
 docker image push touch4it/php8:php8.3-fpm-nginx-dev
 
 docker image push touch4it/php8:php8.4.22-fpm-nginx-dev
