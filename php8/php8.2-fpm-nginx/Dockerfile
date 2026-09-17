@@ -1,4 +1,4 @@
-FROM php:8.2.31-fpm-alpine3.24
+FROM php:8.2.33-fpm-alpine3.24
 
 LABEL maintainer="Touch4IT <admin@touch4it.com>"
 
@@ -93,7 +93,7 @@ RUN curl -sS https://getcomposer.org/installer -o composer-setup.php \
 # NGINX
 #
 
-ENV NGINX_VERSION=1.30.3
+ENV NGINX_VERSION=1.30.5
 ENV PKG_RELEASE=1
 ENV DYNPKG_RELEASE=1
 
@@ -154,7 +154,7 @@ RUN set -x \
                 export HOME=${tempDir} \
                 && cd ${tempDir} \
                 && curl -f -L -O https://github.com/nginx/pkg-oss/archive/${NGINX_VERSION}-${PKG_RELEASE}.tar.gz \
-                && PKGOSSCHECKSUM=\"e602521342632b9cd61ff29049864eb5e233dea98918f1a4d842c4fb8304af1f916a9630e9cd00236366f713a011ed6b05e068ebcc136d3d820af0c31f932a71 *${NGINX_VERSION}-${PKG_RELEASE}.tar.gz\" \
+                && PKGOSSCHECKSUM=\"feaa7c9e587e59a01e229c2396433a9f0bccd6ce381afae9311b7496d1c2b53f93b2b0b2adece8f76fa06b92ca6b6a706103ef2c0a26e00afe82dfcdf8135a23 *${NGINX_VERSION}-${PKG_RELEASE}.tar.gz\" \
                 && if [ \"\$(openssl sha512 -r ${NGINX_VERSION}-${PKG_RELEASE}.tar.gz)\" = \"\$PKGOSSCHECKSUM\" ]; then \
                     echo \"pkg-oss tarball checksum verification succeeded!\"; \
                 else \
