@@ -13,7 +13,10 @@ ENV PHP_MEMORY_LIMIT=256M
 ENV PHP_UPLOAD_MAX_FILESIZE=32M
 ENV PHP_POST_MAX_SIZE=32M
 
-RUN wget https://github.com/php/pie/releases/latest/download/pie.phar \
+ENV PIE_VERSION=1.4.7
+ENV PIE_SHA256=e8d27c100e85720f374a55f79d63fa8d686dedabc9ccbc6567085e0baf646d55
+RUN wget -O pie.phar https://github.com/php/pie/releases/download/${PIE_VERSION}/pie.phar \
+  && echo "${PIE_SHA256}  pie.phar" | sha256sum -c - \
   && chmod +x pie.phar \
   && mv pie.phar /usr/local/bin/pie
 
@@ -52,17 +55,20 @@ RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
 # CRON
 #
 
-RUN mkdir -m 0644 -p /etc/cron.d \
-  && mkdir -m 0644 -p /var/log/cron \
+RUN mkdir -m 0755 -p /etc/cron.d \
+  && mkdir -m 0755 -p /var/log/cron \
   && touch /var/log/cron/cron.log
 
 #
 # COMPOSER
 #
-# Note: Composer installer script includes its own checksum verification
-# For additional security, consider pinning to a specific version
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
-  && chmod +x /usr/local/bin/composer
+# Install Composer (verify installer signature before running)
+RUN curl -sS https://getcomposer.org/installer -o composer-setup.php \
+  && EXPECTED="$(curl -sS https://composer.github.io/installer.sig)" \
+  && ACTUAL="$(php -r "echo hash_file('sha384', 'composer-setup.php');")" \
+  && [ "$EXPECTED" = "$ACTUAL" ] || { echo 'ERROR: Invalid composer installer checksum'; exit 1; } \
+  && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
+  && rm composer-setup.php
 
 #
 # NGINX

@@ -36,17 +36,21 @@ RUN apt-get update \
 # CRON
 #
 
-RUN mkdir -m 0644 -p /etc/cron.d \
-  && mkdir -m 0644 -p /var/log/cron \
+RUN mkdir -m 0755 -p /etc/cron.d \
+  && mkdir -m 0755 -p /var/log/cron \
   && touch /var/log/cron/cron.log
 
 #
 # COMPOSER
 #
 
-RUN curl -sS https://getcomposer.org/installer | php \
-  && mv composer.phar /usr/local/bin/composer \
-  && composer self-update
+# Install Composer (verify installer signature before running)
+RUN curl -sS https://getcomposer.org/installer -o composer-setup.php \
+  && EXPECTED="$(curl -sS https://composer.github.io/installer.sig)" \
+  && ACTUAL="$(php -r "echo hash_file('sha384', 'composer-setup.php');")" \
+  && [ "$EXPECTED" = "$ACTUAL" ] || { echo 'ERROR: Invalid composer installer checksum'; exit 1; } \
+  && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
+  && rm composer-setup.php
 
 #
 # PHP extensions
