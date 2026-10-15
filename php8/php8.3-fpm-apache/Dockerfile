@@ -1,4 +1,4 @@
-FROM php:8.3.33-fpm-trixie
+FROM php:8.3.35-fpm-trixie
 
 LABEL maintainer="Touch4IT <admin@touch4it.com>"
 
