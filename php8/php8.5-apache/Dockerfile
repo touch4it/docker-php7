@@ -6,9 +6,6 @@ ENV PHP_MEMORY_LIMIT=256M
 ENV PHP_UPLOAD_MAX_FILESIZE=32M
 ENV PHP_POST_MAX_SIZE=32M
 
-COPY 000-default.conf $APACHE_CONFDIR/sites-available/000-default.conf
-COPY php-override.ini $PHP_INI_DIR/conf.d/php-override.ini
-
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
     acl \
@@ -85,7 +82,7 @@ RUN \
     --with-webp \
   && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
   && docker-php-ext-configure bcmath --enable-bcmath \
-  && docker-php-ext-install \
+  && docker-php-ext-install -j"$(nproc)" \
     bcmath \
     exif \
     gd \
@@ -97,6 +94,11 @@ RUN \
     pgsql \
     zip
 
+# dom/xml/opcache ship enabled in the base image; fail the build if that ever changes
+RUN for ext in dom xml libxml SimpleXML xmlreader xmlwriter "Zend OPcache"; do \
+    php -m | grep -qix "$ext" || { echo "ERROR: PHP extension $ext missing"; exit 1; }; \
+  done
+
 #
 # Apache
 #
@@ -105,3 +107,7 @@ RUN a2enmod rewrite \
   && a2enmod http2 \
   && ln -sf /dev/stdout /var/log/apache2/access.log \
   && ln -sf /dev/stderr /var/log/apache2/error.log
+
+# Add configuration
+COPY 000-default.conf $APACHE_CONFDIR/sites-available/000-default.conf
+COPY php-override.ini $PHP_INI_DIR/conf.d/php-override.ini

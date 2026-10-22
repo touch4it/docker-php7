@@ -20,8 +20,7 @@ RUN wget -O pie.phar https://github.com/php/pie/releases/download/${PIE_VERSION}
   && chmod +x pie.phar \
   && mv pie.phar /usr/local/bin/pie
 
-RUN apk update \
-  && apk add \
+RUN apk add --no-cache \
   acl \
   bash \
   dcron \
@@ -38,8 +37,6 @@ RUN apk update \
   libzip-dev \
   oniguruma-dev \
   patch \
-  php84-dom \
-  php84-xml \
   postgresql-dev \
   zip \
   ${PHPIZE_DEPS}
@@ -52,18 +49,22 @@ RUN docker-php-ext-configure gd \
     --with-webp \
   && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
   && docker-php-ext-configure bcmath --enable-bcmath \
-  && docker-php-ext-install \
+  && docker-php-ext-install -j"$(nproc)" \
     bcmath \
     exif \
     gd \
     gettext \
     intl \
     mysqli \
-    opcache \
     pdo_mysql \
     pdo_pgsql \
     pgsql \
     zip
+
+# dom/xml/opcache ship enabled in the base image; fail the build if that ever changes
+RUN for ext in dom xml libxml SimpleXML xmlreader xmlwriter "Zend OPcache"; do \
+    php -m | grep -qix "$ext" || { echo "ERROR: PHP extension $ext missing"; exit 1; }; \
+  done
 
 #
 # CRON
@@ -188,13 +189,13 @@ RUN set -x \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log
 
+RUN apk upgrade && rm -rf /var/cache/apk/*
+
 # Add configuration
 COPY ./docker-vars.ini /usr/local/etc/php/conf.d/docker-vars.ini
 COPY ./www.conf /usr/local/etc/php-fpm.d/www.conf
 COPY ./nginx.conf /etc/nginx/nginx.conf
 COPY ./nginx.vh.default.conf /etc/nginx/conf.d/default.conf
-
-RUN apk upgrade && rm -rf /var/cache/apk/*
 
 EXPOSE 80
 

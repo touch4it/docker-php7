@@ -13,8 +13,7 @@ ENV PHP_MEMORY_LIMIT=256M
 ENV PHP_UPLOAD_MAX_FILESIZE=32M
 ENV PHP_POST_MAX_SIZE=32M
 
-RUN apk update \
-  && apk add\
+RUN apk add --no-cache \
   acl \
   bash \
   dcron \
@@ -43,7 +42,7 @@ RUN set -xe \
   && cd imagick-3.8.1 \
   && phpize \
   && ./configure \
-  && make \
+  && make -j"$(nproc)" \
   && make install \
   && docker-php-ext-enable imagick \
   # Clean up
@@ -56,18 +55,22 @@ RUN docker-php-ext-configure gd \
     --with-webp \
   && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
   && docker-php-ext-configure bcmath --enable-bcmath \
-  && docker-php-ext-install \
+  && docker-php-ext-install -j"$(nproc)" \
     bcmath \
     exif \
     gd \
     gettext \
     intl \
     mysqli \
-    opcache \
     pdo_mysql \
     pdo_pgsql \
     pgsql \
     zip
+
+# dom/xml/opcache ship enabled in the base image; fail the build if that ever changes
+RUN for ext in dom xml libxml SimpleXML xmlreader xmlwriter "Zend OPcache"; do \
+    php -m | grep -qix "$ext" || { echo "ERROR: PHP extension $ext missing"; exit 1; }; \
+  done
 
 #
 # CRON
@@ -193,13 +196,13 @@ RUN set -x \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log
 
+RUN apk upgrade && rm -rf /var/cache/apk/*
+
 # Add configuration
 COPY ./docker-vars.ini /usr/local/etc/php/conf.d/docker-vars.ini
 COPY ./www.conf /usr/local/etc/php-fpm.d/www.conf
 COPY ./nginx.conf /etc/nginx/nginx.conf
 COPY ./nginx.vh.default.conf /etc/nginx/conf.d/default.conf
-
-RUN apk upgrade && rm -rf /var/cache/apk/*
 
 EXPOSE 80
 

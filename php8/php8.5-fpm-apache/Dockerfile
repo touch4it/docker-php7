@@ -66,7 +66,7 @@ RUN set -xe \
   # Configure and install
   && phpize \
   && ./configure \
-  && make \
+  && make -j"$(nproc)" \
   && make install \
   # Enable the extension
   && docker-php-ext-enable imagick \
@@ -84,7 +84,7 @@ RUN \
     --with-webp \
   && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
   && docker-php-ext-configure bcmath --enable-bcmath \
-  && docker-php-ext-install \
+  && docker-php-ext-install -j"$(nproc)" \
     bcmath \
     exif \
     gd \
@@ -95,6 +95,11 @@ RUN \
     pdo_pgsql \
     pgsql \
     zip
+
+# dom/xml/opcache ship enabled in the base image; fail the build if that ever changes
+RUN for ext in dom xml libxml SimpleXML xmlreader xmlwriter "Zend OPcache"; do \
+    php -m | grep -qix "$ext" || { echo "ERROR: PHP extension $ext missing"; exit 1; }; \
+  done
 
 #
 # APACHE
