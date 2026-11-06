@@ -1,9 +1,7 @@
 # Authoritative sources & certainty gates
 
-The whole point of this skill is that **no version or checksum is ever guessed**.
-Each decision traces to one of these sources, and image tags are confirmed to
-exist before being written. If a source is unreachable or disagrees with a
-cross-check, stop and flag — do not substitute a plausible value.
+Which source backs each decision in `check_versions.py`, and how to query it by
+hand when a flag needs investigation.
 
 ## PHP version & base images — docker-library/php `versions.json`
 
@@ -100,3 +98,42 @@ nginx bumps, the embedded build installs nginx from `nginx.org/packages/alpine/v
 Confirm the new nginx version is published for the **new** Alpine minor before
 trusting the build (the pkg-oss checksum itself is Alpine-independent, but apk
 package availability is not). If unsure, flag it rather than assume.
+
+## Alpine inside the php base image (report only)
+
+`php:X.Y.Z-fpm-alpine3.24` is built `FROM alpine:3.24`, a floating tag, so the
+Alpine **patch** inside it depends on when docker-library last rebuilt it. The
+tag name doesn't tell you; the image layers do.
+
+**Alpine's releases**, from its machine-readable index:
+
+```
+https://alpinelinux.org/releases.json
+```
+
+- `latest_stable` → newest stable minor (e.g. `"v3.24"`).
+- `release_branches[]` where `rel_branch == "v3.24"` → `releases[].version` /
+  `.date` (every 3.24.x patch) and `eol_date`.
+
+**Patch actually in the php image:** compare the linux/amd64 rootfs (bottom)
+layer digest of `php:<tag>` with `alpine:<x.y.z>` tags, newest first. The first
+match is the patch the image was built on. The script does this through the
+anonymous registry API:
+
+```bash
+TOKEN=$(curl -fsSL "https://auth.docker.io/token?service=registry.docker.io&scope=repository:library/php:pull" | jq -r .token)
+curl -fsSL -H "Authorization: Bearer $TOKEN" \
+  -H "Accept: application/vnd.oci.image.index.v1+json" \
+  https://registry-1.docker.io/v2/library/php/manifests/8.4.27-fpm-alpine3.24
+# -> pick the linux/amd64 manifest digest, fetch it, read .layers[0].digest;
+#    repeat for library/alpine:3.24.N and compare.
+```
+
+How to read the results:
+- **Matches the newest patch** → up to date.
+- **Matches an older patch** → behind. If `alpine:<newest>` is not on Docker Hub
+  yet, Alpine has only just released it; otherwise the php image hasn't been
+  rebuilt. Either way it clears up on upstream's next rebuild followed by ours.
+- **Matches nothing** → report "unknown". Don't infer a patch from dates.
+- **`latest_stable` newer than the newest `alpineX.YY` in `versions.json`** for
+  that PHP minor → minor drift. Nothing to apply until docker-library adds it.
