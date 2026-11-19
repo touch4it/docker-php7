@@ -1,4 +1,4 @@
-FROM php:8.5.12-apache-trixie
+FROM php:8.5.13-apache-trixie
 
 ENV ADMIN_EMAIL=webmaster@localhost
 ENV PHP_TIME_ZONE=Europe/London
